@@ -372,13 +372,14 @@
     mapVisual.dataset.bg = DATA.mapBackgroundImage;
   }
 
-  // ===== Page-hero фоны (из data-bg атрибутов в HTML) =====
-  document.querySelectorAll('.page-hero').forEach(function (el) {
-    const bg = el.dataset.bg;
+  // ===== Page-hero фоны (берутся из DATA.pageHero) =====
+  document.querySelectorAll('.page-hero[data-page-hero]').forEach(function (el) {
+    const pageId = el.dataset.pageHero;
+    const bg = DATA.pageHero && DATA.pageHero[pageId];
     if (bg) {
-      el.classList.add('lazy-bg');
-      // Накладываем градиент поверх изображения
+      el.dataset.bg = bg;
       el.dataset.bgOverlay = 'linear-gradient(180deg, rgba(10,9,8,0.4), rgba(10,9,8,0.85))';
+      el.classList.add('lazy-bg');
     }
   });
 
