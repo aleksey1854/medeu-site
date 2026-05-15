@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="ru" class="theme-light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#FAF7F0">
+  <meta name="description" content="Гостиничный комплекс «Медеу» — европейская утончённость и восточное гостеприимство в сердце Костаная. Номера, ресторан, банкетный зал, конференц-зал.">
+  <meta name="keywords" content="Медеу, гостиница Костанай, отель Костанай, банкетный зал Костанай, ресторан Костанай">
+
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="MEDEU · Гостиничный комплекс в Костанае">
+  <meta property="og:description" content="Европейская утончённость и восточное гостеприимство в сердце Костаная">
+  <meta property="og:locale" content="ru_RU">
+
+  <title>MEDEU · Гостиничный комплекс в Костанае</title>
+
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%230A0908'/%3E%3Ctext x='16' y='22' text-anchor='middle' font-family='serif' font-size='14' fill='%23B89968' letter-spacing='1'%3EM%3C/text%3E%3C/svg%3E">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://images.unsplash.com">
+
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@300;400;500&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+  <!-- ==================== HEADER ==================== -->
+  <div class="header-gradient"></div>
+
+  <header class="header header--on-hero" id="header">
+    <div class="header-inner">
+      <div class="header-bar">
+
+        <button class="menu-btn" id="menu-btn" aria-label="Меню">
+          <span class="menu-lines">
+            <span class="menu-line"></span>
+            <span class="menu-line"></span>
+            <span class="menu-line"></span>
+          </span>
+          <span class="menu-mobile-icon" id="menu-mobile-icon" aria-hidden="true">
+            <!-- иконка вставляется JS-ом -->
+          </span>
+          <span class="menu-label">Меню</span>
+        </button>
+
+        <a href="#home" class="logo-wrap" data-nav="home" aria-label="MEDEU — Главная">
+          <span class="logo-text">MEDEU</span>
+          <span class="logo-lines">
+            <span class="logo-line logo-line--gold"></span>
+            <span class="logo-line logo-line--silver"></span>
+            <span class="logo-line logo-line--accent"></span>
+          </span>
+        </a>
+
+        <div class="header-right">
+          <button class="theme-toggle" id="theme-toggle" aria-label="Переключить тему">
+            <!-- иконка вставляется JS-ом -->
+          </button>
+
+          <div class="lang-wrap" id="lang-wrap">
+            <button class="lang-btn">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+              <span id="current-lang">RU</span>
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" id="lang-chevron" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <div class="lang-dropdown" id="lang-dropdown">
+              <div class="lang-dropdown-inner">
+                <button class="lang-item is-active" data-lang="RU">RU</button>
+                <button class="lang-item" data-lang="EN">EN</button>
+                <button class="lang-item" data-lang="AR">AR</button>
+                <button class="lang-item" data-lang="CH">CH</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="nav-dropdown" id="nav-dropdown">
+        <div class="vignette nav-vignette">
+          <span class="vignette-line"></span>
+          <svg width="28" height="10" viewBox="0 0 28 10" aria-hidden="true">
+            <path d="M14 1 L20 5 L14 9 L8 5 Z" fill="none" stroke="currentColor" stroke-width="0.6" style="color: var(--c-gold);"/>
+            <circle cx="14" cy="5" r="0.8" fill="currentColor" style="color: var(--c-gold);"/>
+          </svg>
+          <span class="vignette-line"></span>
+        </div>
+        <nav class="nav-links">
+          <a href="#home" class="nav-link is-active" data-nav="home">Главная<span class="nav-link__underline"></span></a>
+          <a href="#rooms" class="nav-link" data-nav="rooms">Номера<span class="nav-link__underline"></span></a>
+          <a href="#restaurant" class="nav-link" data-nav="restaurant">Ресторан<span class="nav-link__underline"></span></a>
+          <a href="#banquet" class="nav-link" data-nav="banquet">Банкетный зал<span class="nav-link__underline"></span></a>
+          <a href="#contacts" class="nav-link" data-nav="contacts">Контакты<span class="nav-link__underline"></span></a>
+        </nav>
+      </div>
+    </div>
+
+    <div class="mobile-menu" id="mobile-menu">
+      <div class="mobile-menu-inner">
+        <a href="#home" class="mobile-link" data-nav="home">Главная</a>
+        <a href="#rooms" class="mobile-link" data-nav="rooms">Номера</a>
+        <a href="#restaurant" class="mobile-link" data-nav="restaurant">Ресторан</a>
+        <a href="#banquet" class="mobile-link" data-nav="banquet">Банкетный зал</a>
+        <a href="#contacts" class="mobile-link" data-nav="contacts">Контакты</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- ==================== WHATSAPP FLOAT ==================== -->
+  <a href="#" class="wa-float" id="wa-float" target="_blank" rel="noopener noreferrer">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#B89968" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+    <span class="wa-float-text">
+      <span class="wa-float-label" id="wa-label">Связь</span>
+      <span class="wa-float-action">WhatsApp</span>
+    </span>
+  </a>
+
+  <!-- ==================== MAIN ==================== -->
+  <main id="app">
+
+    <!-- ===== ГЛАВНАЯ ===== -->
+    <section class="page page--active" id="page-home">
+
+      <div class="carousel hero-carousel" id="hero-carousel">
+        <div class="carousel-overlay"></div>
+
+        <div class="hero-content">
+          <div class="hero-overline">— Гостиничный комплекс · Костанай —</div>
+          <h1 class="hero-title">MEDEU</h1>
+          <div class="hero-tagline-wrap">
+            <div class="vignette vignette--on-image mb-6">
+              <span class="vignette-line"></span>
+              <svg width="28" height="10" viewBox="0 0 28 10" aria-hidden="true">
+                <path d="M14 1 L20 5 L14 9 L8 5 Z" fill="none" stroke="#B89968" stroke-width="0.6"/>
+                <circle cx="14" cy="5" r="0.8" fill="#B89968"/>
+              </svg>
+              <span class="vignette-line"></span>
+            </div>
+            <p class="hero-tagline">Европейская утончённость и восточное гостеприимство в сердце Костаная</p>
+          </div>
+          <div style="margin-top: 48px;">
+            <a href="#rooms" data-nav="rooms" class="gold-btn">
+              <span class="gold-btn__bg"></span>
+              <span class="gold-btn__label">Забронировать номер</span>
+            </a>
+          </div>
+        </div>
+
+        <div class="scroll-hint">
+          <div class="hero-overline" style="font-size: 9px;">Прокрутите</div>
+          <div class="scroll-line"><div class="scroll-line__fill"></div></div>
+        </div>
+
+        <div class="carousel-dots" id="hero-dots"></div>
+      </div>
+
+      <section class="section section--lg">
+        <div class="ctnr-md">
+          <div style="text-align: center; margin-bottom: 64px;">
+            <div class="overline">— О гостинице —</div>
+            <h2 class="display-h2">Добро пожаловать в комплекс Медеу</h2>
+          </div>
+          <div class="two-col">
+            <div class="prose-stack">
+              <p class="body-prose body-prose--bright">
+                Гостиничный комплекс «Медеу» идеально расположен в самом центре города Костаная. Комплекс представляет собой гостиницу, ресторан, ВИП-зал, Thai Spa. В непосредственной близости с нами находятся все важнейшие деловые, культурные и административные центры.
+              </p>
+              <p class="body-prose">
+                Наш комплекс сочетает европейскую утончённость с восточным гостеприимством. Комфортабельные номера оборудованы в соответствии с самыми высокими стандартами индустрии гостеприимства.
+              </p>
+            </div>
+            <div class="prose-stack">
+              <p class="body-prose">
+                Шведский стол на завтрак включён в стоимость номера. Квалифицированный персонал со знанием казахского, русского и английского языков сделает Ваше пребывание максимально комфортным и приятным.
+              </p>
+              <p class="body-prose body-prose--bright">
+                Гибкая система тарифов предусматривает значительные скидки постоянным и корпоративным клиентам. Наша главная задача — чтобы гости возвращались.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section style="padding: 0 0 96px; background: var(--c-bg);">
+        <div class="ctnr-xl">
+          <div class="facility-grid" id="facility-grid"></div>
+        </div>
+      </section>
+
+      <section class="map-section-wrap">
+        <div class="map-grid">
+          <div class="map-info">
+            <div style="text-align: left;">
+              <div class="overline">— Расположение —</div>
+              <h2 class="display-h2">В сердце Костаная</h2>
+            </div>
+            <div class="vignette my-8">
+              <span class="vignette-line"></span>
+              <svg width="28" height="10" viewBox="0 0 28 10" aria-hidden="true">
+                <path d="M14 1 L20 5 L14 9 L8 5 Z" fill="none" stroke="currentColor" stroke-width="0.6" style="color: var(--c-gold);"/>
+                <circle cx="14" cy="5" r="0.8" fill="currentColor" style="color: var(--c-gold);"/>
+              </svg>
+              <span class="vignette-line"></span>
+            </div>
+            <div class="contact-items">
+              <div>
+                <div class="overline">Адрес</div>
+                <div class="contact-value" id="addr-value"></div>
+              </div>
+              <div>
+                <div class="overline">Телефон</div>
+                <div class="contact-value" id="phone1-value"></div>
+                <div class="contact-value" id="phone2-value"></div>
+              </div>
+              <div>
+                <div class="overline">Почта</div>
+                <div class="contact-value" id="email-value"></div>
+              </div>
+            </div>
+            <div class="map-buttons">
+              <a class="gold-btn gold-btn--sm" id="btn-2gis" target="_blank" rel="noopener noreferrer">
+                <span class="gold-btn__bg"></span>
+                <span class="gold-btn__label">Открыть 2GIS</span>
+              </a>
+              <a class="gold-btn gold-btn--sm" id="btn-google" target="_blank" rel="noopener noreferrer">
+                <span class="gold-btn__bg"></span>
+                <span class="gold-btn__label">Google Maps</span>
+              </a>
+            </div>
+          </div>
+          <div class="map-visual" id="map-visual">
+            <div class="map-placeholder">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#B89968" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" style="margin: 0 auto 16px; display: block;" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              <div class="map-placeholder__text">
+                Здесь будет встроена интерактивная карта<br>2GIS или Google Maps
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </section><!-- /page-home -->
+
+    <!-- ===== НОМЕРА ===== -->
+    <section class="page" id="page-rooms">
+      <div class="page-hero" data-bg="https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=1920&q=80&auto=format&fit=crop">
+        <div class="ctnr-xl page-hero-content">
+          <div class="hero-overline" style="margin-bottom: 24px;">— Размещение —</div>
+          <h1 class="page-hero-title">Номера</h1>
+          <p class="page-hero-tagline">Шесть категорий номеров, оборудованных в соответствии с высочайшими стандартами индустрии гостеприимства</p>
+        </div>
+      </div>
+
+      <section class="section section--lg">
+        <div class="ctnr-lg">
+          <div class="rooms-stack" id="rooms-stack"></div>
+        </div>
+      </section>
+    </section><!-- /page-rooms -->
+
+    <!-- ===== РЕСТОРАН ===== -->
+    <section class="page" id="page-restaurant">
+      <div class="page-hero" data-bg="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=1920&q=80&auto=format&fit=crop">
+        <div class="ctnr-xl page-hero-content">
+          <div class="hero-overline" style="margin-bottom: 24px;">— Гастрономия —</div>
+          <h1 class="page-hero-title">Ресторан</h1>
+          <p class="page-hero-tagline">Четыре пространства, объединённых одной философией гостеприимства</p>
+        </div>
+      </div>
+
+      <section class="section section--lg">
+        <div class="ctnr-lg">
+          <div class="venues-stack" id="venues-stack"></div>
+        </div>
+      </section>
+    </section><!-- /page-restaurant -->
+
+    <!-- ===== БАНКЕТНЫЙ ЗАЛ ===== -->
+    <section class="page" id="page-banquet">
+      <div class="page-hero" data-bg="https://images.unsplash.com/photo-1519167758481-83f550bb49b3?w=1920&q=80&auto=format&fit=crop">
+        <div class="ctnr-xl page-hero-content">
+          <div class="hero-overline" style="margin-bottom: 24px;">— Особые события —</div>
+          <h1 class="page-hero-title">Банкетный зал</h1>
+          <p class="page-hero-tagline">Пространство для торжеств, корпоративных и деловых событий</p>
+        </div>
+      </div>
+
+      <section class="section section--lg">
+        <div class="ctnr-lg">
+
+          <div class="carousel banquet-carousel" id="banquet-carousel" style="height: 70vh;">
+            <div class="carousel-overlay"></div>
+            <div class="banquet-hero-caption">
+              <div class="hero-overline">— Medeu —</div>
+              <h2 class="banquet-hero-title">Банкетный зал «Medeu»</h2>
+            </div>
+            <div class="carousel-dots" id="banquet-dots"></div>
+          </div>
+
+          <div class="banquet-grid">
+            <div>
+              <div style="text-align: left;">
+                <div class="overline">— О пространстве —</div>
+                <h2 class="display-h2">Эффектный двухуровневый зал</h2>
+              </div>
+              <div class="vignette my-8">
+                <span class="vignette-line"></span>
+                <svg width="28" height="10" viewBox="0 0 28 10" aria-hidden="true">
+                  <path d="M14 1 L20 5 L14 9 L8 5 Z" fill="none" stroke="currentColor" stroke-width="0.6" style="color: var(--c-gold);"/>
+                  <circle cx="14" cy="5" r="0.8" fill="currentColor" style="color: var(--c-gold);"/>
+                </svg>
+                <span class="vignette-line"></span>
+              </div>
+              <p class="body-prose">
+                Главный банкетный зал гостиницы «Медеу» создан для торжественных событий любого формата. Свадьбы, юбилеи, корпоративные мероприятия, презентации — всё проходит на высочайшем уровне. Профессиональная команда менеджеров возьмёт на себя все организационные вопросы.
+              </p>
+              <div class="capacity-stack">
+                <div class="capacity-row">
+                  <div class="capacity-number">до 200</div>
+                  <div>
+                    <div class="overline">Гостей</div>
+                    <div class="capacity-label">Банкет с рассадкой</div>
+                  </div>
+                </div>
+                <div class="capacity-row">
+                  <div class="capacity-number">до 300</div>
+                  <div>
+                    <div class="overline">Гостей</div>
+                    <div class="capacity-label">Фуршетный формат</div>
+                  </div>
+                </div>
+              </div>
+              <div style="margin-top: 40px;">
+                <button class="gold-btn" onclick="alert('Бронирование банкета')">
+                  <span class="gold-btn__bg"></span>
+                  <span class="gold-btn__label">Забронировать дату</span>
+                </button>
+              </div>
+            </div>
+
+            <div class="restoplace-card">
+              <div class="overline" style="margin-bottom: 24px;">— Онлайн-бронирование —</div>
+              <h3 class="restoplace-title">Выберите дату и время</h3>
+              <p class="body-prose" style="margin-bottom: 32px;">
+                Здесь будет встроен виджет Restoplace для онлайн-бронирования банкетного зала.
+              </p>
+              <!-- Когда подтвердится актуальность кода виджета — раскомментировать строку ниже
+                   и удалить блок .widget-placeholder -->
+              <!-- <script src="//app.restoplace.cc/widget.js?h=57d0bcbf4b55ea8a0b4f"></script> -->
+              <div class="widget-placeholder">
+                <div class="widget-code">&lt;script src="//app.restoplace.cc/widget.js?h=57d0bcbf4b55ea8a0b4f"&gt;</div>
+                <div class="widget-fields">
+                  <div class="widget-field">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" style="color: var(--c-gold);" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                    <span>Дата</span>
+                  </div>
+                  <div class="widget-field">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" style="color: var(--c-gold);" aria-hidden="true"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                    <span>Гости</span>
+                  </div>
+                </div>
+                <button class="gold-btn gold-btn--sm" onclick="alert('Виджет Restoplace откроется здесь')">
+                  <span class="gold-btn__bg"></span>
+                  <span class="gold-btn__label">Проверить доступность</span>
+                </button>
+              </div>
+              <div class="manager-card">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" style="color: var(--c-gold); flex-shrink: 0;" aria-hidden="true"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+                <div>
+                  <div class="overline">Банкетный менеджер</div>
+                  <div class="manager-value">WhatsApp · номер уточняется</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section section--lg" style="border-top: 1px solid var(--c-divider);">
+        <div class="ctnr-lg conference-grid">
+          <div class="conference-text">
+            <div class="overline" style="margin-bottom: 12px;">— Деловой формат —</div>
+            <h3 class="display-h3">Конференц-зал</h3>
+            <div class="vignette my-6">
+              <span class="vignette-line"></span>
+              <svg width="28" height="10" viewBox="0 0 28 10" aria-hidden="true">
+                <path d="M14 1 L20 5 L14 9 L8 5 Z" fill="none" stroke="currentColor" stroke-width="0.6" style="color: var(--c-gold);"/>
+                <circle cx="14" cy="5" r="0.8" fill="currentColor" style="color: var(--c-gold);"/>
+              </svg>
+              <span class="vignette-line"></span>
+            </div>
+            <p class="body-prose">
+              Современный конференц-зал, оборудованный профессиональной техникой для проведения семинаров, тренингов, презентаций и деловых переговоров. Возможна различная рассадка в зависимости от формата мероприятия.
+            </p>
+            <div style="margin-top: 32px;">
+              <button class="gold-btn gold-btn--sm" onclick="alert('Запрос на конференц-зал')">
+                <span class="gold-btn__bg"></span>
+                <span class="gold-btn__label">Узнать подробнее</span>
+              </button>
+            </div>
+          </div>
+          <div class="conference-image-wrap">
+            <div class="conference-image" id="conference-image"></div>
+          </div>
+        </div>
+      </section>
+    </section><!-- /page-banquet -->
+
+    <!-- ===== КОНТАКТЫ ===== -->
+    <section class="page" id="page-contacts">
+      <div class="contacts-page">
+        <div class="ctnr-md">
+          <div style="text-align: center; margin-bottom: 64px;">
+            <div class="overline">— Связаться с нами —</div>
+            <h2 class="display-h2">Контакты</h2>
+          </div>
+          <div class="vignette mb-12">
+            <span class="vignette-line"></span>
+            <svg width="28" height="10" viewBox="0 0 28 10" aria-hidden="true">
+              <path d="M14 1 L20 5 L14 9 L8 5 Z" fill="none" stroke="currentColor" stroke-width="0.6" style="color: var(--c-gold);"/>
+              <circle cx="14" cy="5" r="0.8" fill="currentColor" style="color: var(--c-gold);"/>
+            </svg>
+            <span class="vignette-line"></span>
+          </div>
+          <div class="contacts-grid" id="contacts-grid"></div>
+        </div>
+      </div>
+    </section><!-- /page-contacts -->
+
+  </main>
+
+  <!-- ==================== FOOTER ==================== -->
+  <footer class="footer">
+    <div class="ctnr-xl">
+      <div class="footer-grid">
+        <div>
+          <div class="logo-text logo-text--sm">MEDEU</div>
+          <div class="logo-lines logo-lines--sm">
+            <span class="logo-line logo-line--gold"></span>
+            <span class="logo-line logo-line--silver"></span>
+            <span class="logo-line logo-line--accent"></span>
+          </div>
+          <p class="footer-tagline">Гостиничный комплекс в центре Костаная</p>
+        </div>
+        <div>
+          <div class="overline overline--gold" style="margin-bottom: 16px;">Навигация</div>
+          <a href="#home" class="footer-link" data-nav="home">Главная</a>
+          <a href="#rooms" class="footer-link" data-nav="rooms">Номера</a>
+          <a href="#restaurant" class="footer-link" data-nav="restaurant">Ресторан</a>
+          <a href="#banquet" class="footer-link" data-nav="banquet">Банкетный зал</a>
+        </div>
+        <div>
+          <div class="overline overline--gold" style="margin-bottom: 16px;">Контакты</div>
+          <div class="footer-info" id="footer-contacts"></div>
+        </div>
+        <div>
+          <div class="overline overline--gold" style="margin-bottom: 16px;">Часы работы</div>
+          <div class="footer-info">
+            Заселение: 14:00<br>
+            Выезд: 12:00<br>
+            Ресепшен: 24/7
+          </div>
+        </div>
+      </div>
+      <div class="vignette mb-8">
+        <span class="vignette-line"></span>
+        <svg width="28" height="10" viewBox="0 0 28 10" aria-hidden="true">
+          <path d="M14 1 L20 5 L14 9 L8 5 Z" fill="none" stroke="currentColor" stroke-width="0.6" style="color: var(--c-gold);"/>
+          <circle cx="14" cy="5" r="0.8" fill="currentColor" style="color: var(--c-gold);"/>
+        </svg>
+        <span class="vignette-line"></span>
+      </div>
+      <div class="footer-bottom">
+        <div class="footer-copy">© <span id="year"></span> Гостиничный комплекс «Медеу»</div>
+        <div class="overline">v1.0 · Тестовая версия</div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="data.js"></script>
+  <script src="script.js" defer></script>
+</body>
+</html>
