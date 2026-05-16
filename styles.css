@@ -1628,6 +1628,71 @@ img { display: block; max-width: 100%; height: auto; }
   margin-top: 16px;
   flex-wrap: wrap;
 }
+
+/* В модале бронирования — две основные кнопки рядом */
+.form-actions--booking {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+  margin-top: 24px;
+}
+@media (min-width: 520px) {
+  .form-actions--booking { grid-template-columns: 1fr 1fr; }
+}
+.form-actions--booking .gold-btn { width: 100%; }
+
+/* Кнопка WhatsApp в модале — серая обводка, не золото (визуально отделить от основной) */
+.wa-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 16px 24px;
+  background: transparent;
+  border: 1px solid var(--c-divider-strong);
+  font-family: var(--f-body);
+  font-size: 12px;
+  font-weight: 400;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--c-text);
+  cursor: pointer;
+  transition: border-color 0.3s, color 0.3s, background 0.3s;
+}
+.wa-btn svg { color: var(--c-gold); }
+.wa-btn:hover {
+  border-color: var(--c-gold);
+  background: rgba(184, 153, 104, 0.05);
+}
+
+/* Success-блок после отправки */
+.booking-success {
+  text-align: center;
+  padding: 24px 0;
+}
+.booking-success-icon {
+  color: var(--c-gold);
+  margin-bottom: 24px;
+  display: inline-block;
+}
+.booking-success-title {
+  font-family: var(--f-display);
+  font-size: clamp(1.5rem, 4vw, 2rem);
+  font-weight: 300;
+  letter-spacing: 0.02em;
+  color: var(--c-text);
+  margin: 0 0 16px;
+}
+.booking-success-text {
+  font-family: var(--f-body);
+  font-size: 14px;
+  line-height: 1.7;
+  color: var(--c-text-dim);
+  margin: 0 0 32px;
+  max-width: 400px;
+  margin-left: auto;
+  margin-right: auto;
+}
 .text-btn {
   background: transparent;
   border: none;

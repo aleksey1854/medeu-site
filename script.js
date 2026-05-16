@@ -459,20 +459,67 @@
 
   triggerLazyLoad();
 
-  // ===== СКРОЛЛ-СТРАХОВКА ДЛЯ RESTOPLACE =====
-  // Виджет может сбрасывать scroll при открытии. Сохраняем позицию и восстанавливаем.
+  // ===== СКРОЛЛ-ЛОК ДЛЯ RESTOPLACE =====
+  // Виджет сбрасывает скролл при открытии. Полностью блокируем body через
+  // position:fixed на время работы виджета, восстанавливаем после закрытия.
+  // Открытие/закрытие отслеживаем через MutationObserver (виджет вставляет
+  // свой overlay-div в body, при закрытии удаляет).
+  let rpSavedY = null;
+
+  function rpLockBody() {
+    if (rpSavedY !== null) return;
+    rpSavedY = window.scrollY;
+    document.body.style.position = 'fixed';
+    document.body.style.top = '-' + rpSavedY + 'px';
+    document.body.style.left = '0';
+    document.body.style.right = '0';
+    document.body.style.width = '100%';
+  }
+
+  function rpUnlockBody() {
+    if (rpSavedY === null) return;
+    const y = rpSavedY;
+    rpSavedY = null;
+    document.body.style.position = '';
+    document.body.style.top = '';
+    document.body.style.left = '';
+    document.body.style.right = '';
+    document.body.style.width = '';
+    window.scrollTo(0, y);
+  }
+
   document.addEventListener('click', function (e) {
     const btn = e.target.closest('.restoplace-click-open');
     if (!btn) return;
-    const savedY = window.scrollY;
-    // Несколько попыток восстановления — виджет загружается асинхронно
-    [50, 200, 500, 1000].forEach(function (delay) {
-      setTimeout(function () {
-        if (Math.abs(window.scrollY - savedY) > 30) {
-          window.scrollTo({ top: savedY, behavior: 'instant' });
-        }
-      }, delay);
+
+    // Зафиксировать какие дети были у body ДО клика
+    const initialChildren = new Set(Array.from(document.body.children));
+    rpLockBody();
+
+    let widgetNode = null;
+    const obs = new MutationObserver(function (mutations) {
+      mutations.forEach(function (m) {
+        m.addedNodes.forEach(function (n) {
+          // первый новый прямой ребёнок body — это и есть модал виджета
+          if (n.nodeType === 1 && !initialChildren.has(n) && !widgetNode) {
+            widgetNode = n;
+          }
+        });
+        m.removedNodes.forEach(function (n) {
+          if (n === widgetNode) {
+            obs.disconnect();
+            rpUnlockBody();
+          }
+        });
+      });
     });
+    obs.observe(document.body, { childList: true });
+
+    // Safety: отключить наблюдатель через 10 минут максимум
+    setTimeout(function () {
+      obs.disconnect();
+      if (rpSavedY !== null) rpUnlockBody();
+    }, 10 * 60 * 1000);
   });
 
   // ===== МОДАЛ БРОНИРОВАНИЯ НОМЕРА =====
@@ -530,34 +577,148 @@
       }
     });
 
-    // Submit формы → собрать текст и открыть WhatsApp ресепшна
+    // Сбор данных в плоский объект — нужен и для email, и для WhatsApp
+    function collectBookingData() {
+      const fd = new FormData(bookingForm);
+      const fmtDate = function (s) {
+        if (!s) return '—';
+        const d = new Date(s);
+        return d.toLocaleDateString('ru-RU', { day: '2-digit', month: '2-digit', year: 'numeric' });
+      };
+      return {
+        name:     fd.get('name') || '—',
+        phone:    fd.get('phone') || '—',
+        roomType: fd.get('roomType') || '—',
+        dateIn:   fmtDate(fd.get('dateIn')),
+        timeIn:   fd.get('timeIn') || '—',
+        dateOut:  fmtDate(fd.get('dateOut')),
+        timeOut:  fd.get('timeOut') || '—',
+        adults:   fd.get('adults') || '1',
+        children: fd.get('children') || '0',
+        note:     fd.get('note') || '',
+      };
+    }
+
+    // Формируем красивый текст заявки (для email и WhatsApp)
+    function formatBookingMessage(d) {
+      const lines = [
+        'Заявка на бронирование номера с сайта medeuhotel.kz',
+        '',
+        'ФИО: ' + d.name,
+        'Телефон: ' + d.phone,
+        'Тип номера: ' + d.roomType,
+        'Заезд: ' + d.dateIn + ', ' + d.timeIn,
+        'Выезд: ' + d.dateOut + ', ' + d.timeOut,
+        'Гостей: ' + d.adults + ' взр.' + (parseInt(d.children, 10) > 0 ? ' + ' + d.children + ' дет.' : ''),
+      ];
+      if (d.note) {
+        lines.push('');
+        lines.push('Примечание: ' + d.note);
+      }
+      return lines.join('\n');
+    }
+
+    // Показ success-сообщения в модале
+    function showBookingSuccess() {
+      const form = bookingForm;
+      const success = document.getElementById('booking-success');
+      if (form && success) {
+        form.style.display = 'none';
+        success.style.display = 'block';
+      }
+    }
+    function resetBookingForm() {
+      const form = bookingForm;
+      const success = document.getElementById('booking-success');
+      if (form && success) {
+        form.style.display = '';
+        success.style.display = 'none';
+        form.reset();
+      }
+    }
+
+    // Главный submit — отправка на email (Formspree → mailto: fallback)
     if (bookingForm) {
       bookingForm.addEventListener('submit', function (e) {
         e.preventDefault();
-        const fd = new FormData(bookingForm);
-        const lines = ['Здравствуйте! Хочу забронировать номер.', ''];
-        const fmtDate = function (s) {
-          if (!s) return '—';
-          const d = new Date(s);
-          return d.toLocaleDateString('ru-RU', { day: '2-digit', month: '2-digit', year: 'numeric' });
-        };
-        lines.push('ФИО: ' + (fd.get('name') || '—'));
-        lines.push('Телефон: ' + (fd.get('phone') || '—'));
-        lines.push('Тип номера: ' + (fd.get('roomType') || '—'));
-        lines.push('Заезд: ' + fmtDate(fd.get('dateIn')) + ', ' + (fd.get('timeIn') || '—'));
-        lines.push('Выезд: ' + fmtDate(fd.get('dateOut')) + ', ' + (fd.get('timeOut') || '—'));
-        lines.push('Гостей: ' + (fd.get('adults') || '1') + ' взр.' + (parseInt(fd.get('children'), 10) > 0 ? ' + ' + fd.get('children') + ' дет.' : ''));
-        if (fd.get('note')) {
-          lines.push('');
-          lines.push('Примечание: ' + fd.get('note'));
+        const data = collectBookingData();
+        const message = formatBookingMessage(data);
+        const subject = 'Бронирование номера — ' + data.name + ' (' + data.roomType + ')';
+
+        const formspreeUrl = (DATA.contacts.formspreeUrl || '').trim();
+
+        if (formspreeUrl) {
+          // Отправка через Formspree
+          const submitBtn = bookingForm.querySelector('[type="submit"]');
+          if (submitBtn) submitBtn.disabled = true;
+
+          fetch(formspreeUrl, {
+            method: 'POST',
+            headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              _subject: subject,
+              message: message,
+              name: data.name,
+              phone: data.phone,
+              roomType: data.roomType,
+              dateIn: data.dateIn + ' ' + data.timeIn,
+              dateOut: data.dateOut + ' ' + data.timeOut,
+              guests: data.adults + ' взр. + ' + data.children + ' дет.',
+              note: data.note,
+            }),
+          })
+          .then(function (res) {
+            if (res.ok) showBookingSuccess();
+            else fallbackMailto();
+          })
+          .catch(function () { fallbackMailto(); })
+          .finally(function () {
+            if (submitBtn) submitBtn.disabled = false;
+          });
+        } else {
+          // Formspree не подключён — открываем почтовый клиент пользователя
+          fallbackMailto();
         }
-        const text = encodeURIComponent(lines.join('\n'));
-        const phone = (DATA.contacts.waReception || '77714944599').replace(/[^0-9]/g, '');
-        window.open('https://wa.me/' + phone + '?text=' + text, '_blank', 'noopener');
-        closeBookingModal();
-        bookingForm.reset();
+
+        function fallbackMailto() {
+          const email = DATA.contacts.bookingEmail || DATA.contacts.email;
+          const href = 'mailto:' + email +
+            '?subject=' + encodeURIComponent(subject) +
+            '&body=' + encodeURIComponent(message);
+          window.location.href = href;
+          // Через секунду закрываем модал — большинство email-клиентов уже откроется
+          setTimeout(function () { showBookingSuccess(); }, 500);
+        }
       });
     }
+
+    // Запасная кнопка — отправка через WhatsApp
+    const waBookBtn = document.getElementById('booking-wa-btn');
+    if (waBookBtn) {
+      waBookBtn.addEventListener('click', function () {
+        // Базовая валидация — нужны хотя бы ФИО и телефон
+        if (!bookingForm.querySelector('[name="name"]').value.trim()) {
+          alert('Пожалуйста, укажите ФИО');
+          return;
+        }
+        if (!bookingForm.querySelector('[name="phone"]').value.trim()) {
+          alert('Пожалуйста, укажите телефон');
+          return;
+        }
+        const data = collectBookingData();
+        const text = encodeURIComponent('Здравствуйте! ' + formatBookingMessage(data));
+        const phone = (DATA.contacts.waReception || '77714944599').replace(/[^0-9]/g, '');
+        window.open('https://wa.me/' + phone + '?text=' + text, '_blank', 'noopener');
+        showBookingSuccess();
+      });
+    }
+
+    // При закрытии модала — сбросить форму обратно в исходное состояние
+    bookingModal.addEventListener('click', function (e) {
+      if (e.target.closest('[data-close]') || e.target === bookingModal) {
+        setTimeout(resetBookingForm, 300);
+      }
+    });
   }
 
   // ===== Стартовая навигация (по hash из URL) =====

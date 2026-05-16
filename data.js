@@ -11,10 +11,10 @@ const DATA = {
   // ГЛАВНАЯ — карусель hero
   // ============================================================
   heroSlides: [
-    'https://i.ibb.co.com/FbnztHwK/4-1536x1024.png',         // Главная 4 — фасад вечером
-    'https://i.ibb.co.com/TzKrCLQ/10-1338x841.jpg',          // Банкет 10 — белый зал с люстрами
-    'https://i.ibb.co.com/wrdQLtkQ/1-1920x1080.jpg',         // Бильярд 1 — камин
-    'https://i.ibb.co.com/mr4Xc44Y/7-1536x1024.png',         // Летняя веранда 7
+    'assets/photos/home/home-4.webp',         // Главная 4 — фасад вечером
+    'assets/photos/banquet/main-10.webp',          // Банкет 10 — белый зал с люстрами
+    'assets/photos/restaurant/billiard-1.webp',         // Бильярд 1 — камин
+    'assets/photos/restaurant/veranda-7.webp',         // Летняя веранда 7
   ],
 
   // 4 категории на главной
@@ -23,25 +23,25 @@ const DATA = {
       id: 'rooms',
       name: 'Номера',
       desc: 'Шесть категорий — от стандарта до апартаментов',
-      img: 'https://i.ibb.co.com/TMBPyTWv/1-1537x1023.png',  // Апартаменты 1
+      img: 'assets/photos/rooms/apartments-1.webp',  // Апартаменты 1
     },
     {
       id: 'restaurant',
-      name: 'Ресторан',
+      name: 'Гастрономия',
       desc: 'Пространство сдержанной элегантности',
-      img: 'https://i.ibb.co.com/PsSThJ2g/11-1536x1024.png', // Летняя веранда 11
+      img: 'assets/photos/restaurant/veranda-11.webp', // Летняя веранда 11
     },
     {
       id: 'banquet',
       name: 'Банкетный зал',
       desc: 'Для торжеств и деловых событий',
-      img: 'https://i.ibb.co.com/gLhm4XXF/7-1387x810.jpg',   // Банкет 7
+      img: 'assets/photos/banquet/main-7.webp',   // Банкет 7
     },
     {
       id: 'contacts',
       name: 'Контакты',
       desc: 'Связь и расположение',
-      img: 'https://i.ibb.co.com/V5tFYkr/4-1402x963.jpg',    // Бильярд 4
+      img: 'assets/photos/restaurant/billiard-4.webp',    // Бильярд 4
     },
   ],
 
@@ -54,42 +54,42 @@ const DATA = {
       area: '27 м²',
       price: '28 000 ₸',
       description: 'Одноместный номер с полуторной кроватью (140×200). Мини-бар, кондиционер, кабельное ТВ, беспроводной интернет, телефон с междугородним подключением, сейф. Завтрак включён в стоимость.',
-      image: 'https://i.ibb.co.com/p6bKmpwk/2-1536x1024.png', // Стандарт 2 — спальня
+      image: 'assets/photos/rooms/standard-2.webp', // Стандарт 2 — спальня
     },
     {
       name: 'Полулюкс',
       area: '48 м²',
       price: '34 000 ₸',
       description: 'Просторный номер с двуспальной кроватью 180×200. Возможно двухместное размещение с доплатой. Полный набор удобств: мини-бар, кондиционер, кабельное ТВ, интернет, сейф. Завтрак включён.',
-      image: 'https://i.ibb.co.com/d0LRSrxj/1-1537x1023.png', // Полулюкс 1
+      image: 'assets/photos/rooms/polulux-1.webp', // Полулюкс 1
     },
     {
       name: 'Двухместный полулюкс',
       area: '27 м²',
       price: '45 000 ₸',
       description: 'Две раздельные кровати 120×200 — идеально для двух гостей. Мини-бар, кондиционер, кабельное ТВ, интернет, сейф. Завтрак включён.',
-      image: 'https://i.ibb.co.com/Zp7R4gkd/C-2-1537x1023.png', // Полулюкс с раздельными 2 ← по выбору заказчика
+      image: 'assets/photos/rooms/polulux-twin-2.webp', // Полулюкс с раздельными 2 ← по выбору заказчика
     },
     {
       name: 'Семейный',
       area: '65 м²',
       price: '55 000 ₸',
       description: 'Три комнаты: две спальни и гостиная. Трёхместное или четырёхместное размещение. Полный набор удобств. Завтрак включён в стоимость номера.',
-      image: 'https://i.ibb.co.com/h1V7m9VH/1-1966x800.png', // Семейный 1 ← по выбору заказчика
+      image: 'assets/photos/rooms/family-1.webp', // Семейный 1 ← по выбору заказчика
     },
     {
       name: 'Люкс',
       area: '65 м²',
       price: '44 000 ₸',
       description: 'Две комнаты: спальня и гостиная. Двуспальная кровать 180×200. Мини-бар, кондиционер, кабельное ТВ, интернет, сейф. Завтрак включён.',
-      image: 'https://i.ibb.co.com/d49btq8b/1-1844x853.png', // Люкс 1 ← по выбору заказчика
+      image: 'assets/photos/rooms/lux-1.webp', // Люкс 1 ← по выбору заказчика
     },
     {
       name: 'Апартамент',
       area: '130 м²',
       price: '100 000 ₸',
       description: 'Высшая категория. Три комнаты: спальня, гостиная с обеденной и мягкой зонами, отдельный кабинет. Душевая кабина и джакузи, двуспальная кровать 180×200. Полный набор удобств, комплимент от гостиницы — свежие фрукты по приезду.',
-      image: 'https://i.ibb.co.com/LDpRLqh4/4-1537x916.jpg', // Апартаменты 4 ← по выбору заказчика
+      image: 'assets/photos/rooms/apartments-4.webp', // Апартаменты 4 ← по выбору заказчика
     },
   ],
 
@@ -102,28 +102,28 @@ const DATA = {
       subtitle: 'Medeu',
       tagline: 'Оазис в самом центре города',
       description: 'Первый этаж расположен в тени деревьев. Комфортные мягкие зоны готовы принять самых искушённых гостей. Отлично подходит для семейного отдыха — есть прекрасная детская зона с батутом, где маленьким гостям не будет скучно.',
-      image: 'https://i.ibb.co.com/mr4Xc44Y/7-1536x1024.png',
+      image: 'assets/photos/restaurant/veranda-7.webp',
     },
     {
       name: 'Lounge-ресторан',
       subtitle: 'Medeu',
       tagline: 'Пространство с атмосферой сдержанной элегантности',
       description: 'Эффектное двухуровневое пространство с комфортной посадкой и атмосферой lounge-ресторана. Создано для гастрономических встреч и деловых ужинов. Работаем ежедневно с 07:30 до 01:00. Шведский стол — 07:30–10:30 (5 000 ₸/чел). Бизнес-ланчи по будням 12:00–15:00.',
-      image: 'https://i.ibb.co.com/fzD6Jvj1/Medeu-6-1536x1024.jpg', // Ресторан Medeu 6 — горизонтальный кадр от заказчика
+      image: 'assets/photos/restaurant/medeu-6.webp', // Ресторан Medeu 6 — горизонтальный кадр от заказчика
     },
     {
       name: 'Lounge-пространство с караоке',
       subtitle: 'kazakhka',
       tagline: 'В атмосфере паназиатской эстетики',
       description: 'Уютное приватное пространство, сочетающее современный интерьер, атмосферу паназиатского стиля и комфортный формат отдыха для небольших компаний и закрытых мероприятий. Аренда — 6 000 ₸/час, после 24:00 — 10 000 ₸/час.',
-      image: 'https://i.ibb.co.com/200WHsjf/1-1537x1023.png',
+      image: 'assets/photos/restaurant/karaoke-1.webp',
     },
     {
       name: 'Камерный зал',
       subtitle: 'Бильярд',
       tagline: 'Пространство для приватных мероприятий',
       description: 'Элегантное пространство с атмосферой уединённого комфорта, идеально подходящее для частных встреч, семейных торжеств и закрытых мероприятий. Современный европейский интерьер с акцентом на комфорт и приватность.',
-      image: 'https://i.ibb.co.com/JP3dDxR/3-1536x1024.png', // Бильярд 3 — гостиная с камином (выбор заказчика)
+      image: 'assets/photos/restaurant/billiard-3.webp', // Бильярд 3 — гостиная с камином (выбор заказчика)
     },
   ],
 
@@ -131,11 +131,11 @@ const DATA = {
   // БАНКЕТНЫЙ ЗАЛ — только подготовленные интерьеры
   // ============================================================
   banquetSlides: [
-    'https://i.ibb.co.com/gLhm4XXF/7-1387x810.jpg',
-    'https://i.ibb.co.com/TzKrCLQ/10-1338x841.jpg',
-    'https://i.ibb.co.com/hRL9f3P8/9-1534x1025.png',
+    'assets/photos/banquet/main-7.webp',
+    'assets/photos/banquet/main-10.webp',
+    'assets/photos/banquet/main-9.webp',
   ],
-  conferenceImage: 'https://i.ibb.co.com/PZTJ725g/1-1448x1086.png',
+  conferenceImage: 'assets/photos/banquet/conference-1.webp',
 
   // ============================================================
   // УСЛУГИ — отдельная страница (#services)
@@ -191,10 +191,10 @@ const DATA = {
   // PAGE-HERO фоны для подстраниц
   // ============================================================
   pageHero: {
-    rooms:      'https://i.ibb.co.com/d49btq8b/1-1844x853.png',
-    restaurant: 'https://i.ibb.co.com/mr4Xc44Y/7-1536x1024.png',
-    banquet:    'https://i.ibb.co.com/TzKrCLQ/10-1338x841.jpg',
-    services:   'https://i.ibb.co.com/V5tFYkr/4-1402x963.jpg', // Бильярд 4 — элегантный интерьер
+    rooms:      'assets/photos/rooms/lux-1.webp',
+    restaurant: 'assets/photos/restaurant/veranda-7.webp',
+    banquet:    'assets/photos/banquet/main-10.webp',
+    services:   'assets/photos/restaurant/billiard-4.webp', // Бильярд 4 — элегантный интерьер
   },
 
   // ============================================================
@@ -225,6 +225,18 @@ const DATA = {
     waReception:  '77714944599',
     waRestaurant: '77073291635',
     waBanquet:    '77755215706',
+
+    // ============================================================
+    // FORMSPREE — endpoint для отправки заявок на email
+    // ============================================================
+    // 1. Зарегистрируйся на https://formspree.io (5 минут)
+    // 2. Создай форму, укажи email менеджера (например info@medeuhotel.kz)
+    // 3. Скопируй URL формы вида https://formspree.io/f/xxxxxxx
+    // 4. Подставь ниже — и форма реально начнёт слать на почту
+    //
+    // Пока строка пустая — форма открывает почтовый клиент пользователя (mailto:)
+    formspreeUrl: '',
+    bookingEmail: 'info@medeuhotel.kz',
 
     instagram: 'https://www.instagram.com/hotel_medeu_kostanay/',
     facebook:  '',
