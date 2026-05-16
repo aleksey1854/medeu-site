@@ -269,10 +269,10 @@
       +     '<p class="body-prose">' + room.description + '</p>'
       +     '<div class="room-bottom">'
       +       '<div><div class="overline">Цена за сутки</div><div class="price">' + room.price + '</div></div>'
-      +       '<button class="gold-btn gold-btn--sm" onclick="alert(\'Бронирование: ' + room.name + '\')">'
+      +       '<a href="javascript:void(0)" class="gold-btn gold-btn--sm booking-open" data-room="' + room.name + '">'
       +         '<span class="gold-btn__bg"></span>'
       +         '<span class="gold-btn__label">Забронировать</span>'
-      +       '</button>'
+      +       '</a>'
       +     '</div>'
       +   '</div>'
       + '</div>';
@@ -305,10 +305,10 @@
       +     '<p class="venue-tagline">' + venue.tagline + '</p>'
       +     '<p class="body-prose">' + venue.description + '</p>'
       +     '<div style="margin-top: 32px;">'
-      +       '<button type="button" class="gold-btn gold-btn--sm restoplace-click-open">'
+      +       '<a href="javascript:void(0)" class="gold-btn gold-btn--sm restoplace-click-open">'
       +         '<span class="gold-btn__bg"></span>'
       +         '<span class="gold-btn__label">Забронировать</span>'
-      +       '</button>'
+      +       '</a>'
       +     '</div>'
       +   '</div>'
       + '</div>';
@@ -346,23 +346,36 @@
 
   // ===== РЕНДЕР: КОНТАКТЫ =====
   const contactsGrid = document.getElementById('contacts-grid');
+  const phoneRowsHtml = function (rows) {
+    return rows.map(function (r) {
+      const clean = r.number.replace(/[^0-9+]/g, '');
+      return '<div class="contact-row">'
+        + '<span class="contact-row-label">' + r.label + '</span>'
+        + '<a href="tel:' + clean + '" class="contact-row-value">' + r.number + '</a>'
+        + '</div>';
+    }).join('');
+  };
   contactsGrid.innerHTML = ''
-    + '<div class="contact-card">'
-    +   '<div style="color: var(--c-gold); margin: 0 auto 24px; display: inline-block;">' + ICONS.phone + '</div>'
-    +   '<div class="overline" style="margin-bottom: 12px;">Телефон</div>'
-    +   '<div class="contact-value">' + DATA.contacts.phone1 + '</div>'
-    +   '<div class="contact-secondary">' + DATA.contacts.phone2 + '</div>'
+    + '<div class="contact-card contact-card--list">'
+    +   '<div style="color: var(--c-gold); margin: 0 auto 20px;">' + ICONS.phone + '</div>'
+    +   '<div class="overline" style="margin-bottom: 16px;">Гостиница</div>'
+    +   phoneRowsHtml(DATA.contacts.hotelPhones)
+    + '</div>'
+    + '<div class="contact-card contact-card--list">'
+    +   '<div style="color: var(--c-gold); margin: 0 auto 20px;">' + ICONS.phone + '</div>'
+    +   '<div class="overline" style="margin-bottom: 16px;">Ресторан и банкет</div>'
+    +   phoneRowsHtml(DATA.contacts.restaurantPhones)
     + '</div>'
     + '<div class="contact-card">'
-    +   '<div style="color: var(--c-gold); margin: 0 auto 24px; display: inline-block;">' + ICONS.pin + '</div>'
+    +   '<div style="color: var(--c-gold); margin: 0 auto 24px;">' + ICONS.pin + '</div>'
     +   '<div class="overline" style="margin-bottom: 12px;">Адрес</div>'
     +   '<div class="contact-value">' + DATA.contacts.address + '</div>'
     +   '<div class="contact-secondary">центр города</div>'
     + '</div>'
     + '<div class="contact-card">'
-    +   '<div style="color: var(--c-gold); margin: 0 auto 24px; display: inline-block;">' + ICONS.mail + '</div>'
+    +   '<div style="color: var(--c-gold); margin: 0 auto 24px;">' + ICONS.mail + '</div>'
     +   '<div class="overline" style="margin-bottom: 12px;">Почта</div>'
-    +   '<div class="contact-value">' + DATA.contacts.email + '</div>'
+    +   '<a href="mailto:' + DATA.contacts.email + '" class="contact-value contact-value--link">' + DATA.contacts.email + '</a>'
     +   '<div class="contact-secondary">круглосуточно</div>'
     + '</div>';
 
@@ -445,6 +458,107 @@
   }
 
   triggerLazyLoad();
+
+  // ===== СКРОЛЛ-СТРАХОВКА ДЛЯ RESTOPLACE =====
+  // Виджет может сбрасывать scroll при открытии. Сохраняем позицию и восстанавливаем.
+  document.addEventListener('click', function (e) {
+    const btn = e.target.closest('.restoplace-click-open');
+    if (!btn) return;
+    const savedY = window.scrollY;
+    // Несколько попыток восстановления — виджет загружается асинхронно
+    [50, 200, 500, 1000].forEach(function (delay) {
+      setTimeout(function () {
+        if (Math.abs(window.scrollY - savedY) > 30) {
+          window.scrollTo({ top: savedY, behavior: 'instant' });
+        }
+      }, delay);
+    });
+  });
+
+  // ===== МОДАЛ БРОНИРОВАНИЯ НОМЕРА =====
+  // Открывается с любой кнопки `.booking-open` (главный hero + каждая карточка номера).
+  // Собирает данные → формирует структурированный текст → открывает WhatsApp ресепшна.
+  const bookingModal = document.getElementById('booking-modal');
+  const bookingForm = document.getElementById('booking-form');
+  const bookingRoomSelect = document.getElementById('booking-room');
+
+  function openBookingModal(prefRoom) {
+    if (!bookingModal) return;
+    if (prefRoom && bookingRoomSelect) {
+      // Предзаполняем тип номера, если открыли с конкретной карточки
+      Array.from(bookingRoomSelect.options).forEach(function (opt) {
+        if (opt.value === prefRoom) opt.selected = true;
+      });
+    }
+    bookingModal.classList.add('modal--open');
+    document.body.style.overflow = 'hidden';
+    // Дата заезда по умолчанию = сегодня; выезда = +1 день
+    const today = new Date();
+    const tomorrow = new Date(today.getTime() + 24 * 60 * 60 * 1000);
+    const fmt = function (d) { return d.toISOString().slice(0, 10); };
+    const dateIn = document.getElementById('booking-date-in');
+    const dateOut = document.getElementById('booking-date-out');
+    if (dateIn && !dateIn.value) dateIn.value = fmt(today);
+    if (dateOut && !dateOut.value) dateOut.value = fmt(tomorrow);
+  }
+
+  function closeBookingModal() {
+    if (!bookingModal) return;
+    bookingModal.classList.remove('modal--open');
+    document.body.style.overflow = '';
+  }
+
+  if (bookingModal) {
+    // Любая кнопка/ссылка с классом .booking-open открывает модал
+    document.addEventListener('click', function (e) {
+      const trigger = e.target.closest('.booking-open');
+      if (!trigger) return;
+      e.preventDefault();
+      const prefRoom = trigger.dataset.room || '';
+      openBookingModal(prefRoom);
+    });
+
+    // Закрытие — крестик, кнопка отмены, клик по фону, Escape
+    bookingModal.addEventListener('click', function (e) {
+      if (e.target.closest('[data-close]') || e.target === bookingModal) {
+        closeBookingModal();
+      }
+    });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && bookingModal.classList.contains('modal--open')) {
+        closeBookingModal();
+      }
+    });
+
+    // Submit формы → собрать текст и открыть WhatsApp ресепшна
+    if (bookingForm) {
+      bookingForm.addEventListener('submit', function (e) {
+        e.preventDefault();
+        const fd = new FormData(bookingForm);
+        const lines = ['Здравствуйте! Хочу забронировать номер.', ''];
+        const fmtDate = function (s) {
+          if (!s) return '—';
+          const d = new Date(s);
+          return d.toLocaleDateString('ru-RU', { day: '2-digit', month: '2-digit', year: 'numeric' });
+        };
+        lines.push('ФИО: ' + (fd.get('name') || '—'));
+        lines.push('Телефон: ' + (fd.get('phone') || '—'));
+        lines.push('Тип номера: ' + (fd.get('roomType') || '—'));
+        lines.push('Заезд: ' + fmtDate(fd.get('dateIn')) + ', ' + (fd.get('timeIn') || '—'));
+        lines.push('Выезд: ' + fmtDate(fd.get('dateOut')) + ', ' + (fd.get('timeOut') || '—'));
+        lines.push('Гостей: ' + (fd.get('adults') || '1') + ' взр.' + (parseInt(fd.get('children'), 10) > 0 ? ' + ' + fd.get('children') + ' дет.' : ''));
+        if (fd.get('note')) {
+          lines.push('');
+          lines.push('Примечание: ' + fd.get('note'));
+        }
+        const text = encodeURIComponent(lines.join('\n'));
+        const phone = (DATA.contacts.waReception || '77714944599').replace(/[^0-9]/g, '');
+        window.open('https://wa.me/' + phone + '?text=' + text, '_blank', 'noopener');
+        closeBookingModal();
+        bookingForm.reset();
+      });
+    }
+  }
 
   // ===== Стартовая навигация (по hash из URL) =====
   const initialPage = window.location.hash.slice(1) || 'home';

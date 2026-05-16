@@ -188,7 +188,7 @@
             <p class="hero-tagline">Европейская утончённость и восточное гостеприимство в сердце Костаная</p>
           </div>
           <div style="margin-top: 48px;">
-            <a href="#rooms" data-nav="rooms" class="gold-btn">
+            <a href="javascript:void(0)" class="gold-btn booking-open">
               <span class="gold-btn__bg"></span>
               <span class="gold-btn__label">Забронировать номер</span>
             </a>
@@ -209,23 +209,19 @@
             <div class="overline">— О гостинице —</div>
             <h2 class="display-h2">Добро пожаловать в комплекс Медеу</h2>
           </div>
-          <div class="two-col">
-            <div class="prose-stack">
-              <p class="body-prose body-prose--bright">
-                Гостиничный комплекс «Медеу» — четырёхзвёздная гостиница из 58 номеров шести категорий, идеально расположенная в самом центре Костаная. Мы рады вновь приветствовать Вас в нашем комплексе.
-              </p>
-              <p class="body-prose">
-                Все номера оборудованы в соответствии с самыми высокими стандартами индустрии гостеприимства и готовы принять самых взыскательных гостей. В непосредственной близости находятся все деловые, культурные и административные центры города.
-              </p>
-            </div>
-            <div class="prose-stack">
-              <p class="body-prose">
-                Безопасность гостей обеспечивается службой охраны, видеонаблюдением, системами пожарной сигнализации и электронными замками. Квалифицированный персонал со знанием казахского, русского и английского языков сделает Ваше пребывание максимально комфортным.
-              </p>
-              <p class="body-prose body-prose--bright">
-                Шведский стол на завтрак включён в стоимость номера. Гибкая система тарифов предусматривает значительные скидки постоянным и корпоративным клиентам.
-              </p>
-            </div>
+          <div class="about-prose">
+            <p class="body-prose body-prose--bright">
+              Гостиничный комплекс «Медеу» — четырёхзвёздная гостиница из 58 номеров шести категорий, идеально расположенная в самом центре Костаная. Мы рады вновь приветствовать Вас в нашем комплексе.
+            </p>
+            <p class="body-prose">
+              Все номера оборудованы в соответствии с самыми высокими стандартами индустрии гостеприимства и готовы принять самых взыскательных гостей. В непосредственной близости находятся все деловые, культурные и административные центры города.
+            </p>
+            <p class="body-prose">
+              Безопасность гостей обеспечивается службой охраны, видеонаблюдением, системами пожарной сигнализации и электронными замками. Квалифицированный персонал со знанием казахского, русского и английского языков сделает Ваше пребывание максимально комфортным.
+            </p>
+            <p class="body-prose body-prose--bright">
+              Шведский стол на завтрак включён в стоимость номера. Гибкая система тарифов предусматривает значительные скидки постоянным и корпоративным клиентам.
+            </p>
           </div>
         </div>
       </section>
@@ -237,13 +233,10 @@
       </section>
 
       <section class="map-section-wrap">
-        <div class="map-grid">
-          <div class="map-info">
-            <div style="text-align: left;">
-              <div class="overline">— Расположение —</div>
-              <h2 class="display-h2">В сердце Костаная</h2>
-            </div>
-            <div class="vignette my-8">
+        <div class="ctnr-xl map-stack">
+          <div class="map-stack-head">
+            <div class="overline">— Расположение —</div>
+            <div class="vignette my-6">
               <span class="vignette-line"></span>
               <svg width="28" height="10" viewBox="0 0 28 10" aria-hidden="true">
                 <path d="M14 1 L20 5 L14 9 L8 5 Z" fill="none" stroke="currentColor" stroke-width="0.6" style="color: var(--c-gold);"/>
@@ -251,44 +244,47 @@
               </svg>
               <span class="vignette-line"></span>
             </div>
-            <div class="contact-items">
-              <div>
-                <div class="overline">Адрес</div>
-                <div class="contact-value" id="addr-value"></div>
-              </div>
-              <div>
-                <div class="overline">Телефон</div>
-                <div class="contact-value" id="phone1-value"></div>
-                <div class="contact-value" id="phone2-value"></div>
-              </div>
-              <div>
-                <div class="overline">Почта</div>
-                <div class="contact-value" id="email-value"></div>
-              </div>
-            </div>
-            <div class="map-buttons">
-              <a class="gold-btn gold-btn--sm" id="btn-2gis" target="_blank" rel="noopener noreferrer">
-                <span class="gold-btn__bg"></span>
-                <span class="gold-btn__label">Открыть 2GIS</span>
-              </a>
-              <a class="gold-btn gold-btn--sm" id="btn-google" target="_blank" rel="noopener noreferrer">
-                <span class="gold-btn__bg"></span>
-                <span class="gold-btn__label">Google Maps</span>
-              </a>
-            </div>
           </div>
-          <div class="map-visual" id="map-visual">
+
+          <div class="map-visual map-visual--wide" id="map-visual">
             <!-- Google Maps embed: отель Medeu, Костанай -->
             <iframe
               src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2389.0268420643847!2d63.62989167661875!3d53.217367072252216!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x43cc8a6880243bc3%3A0xb5b5f1a737bf79fa!2sMedeu%20Hotel!5e0!3m2!1sru!2skz!4v1778926223061!5m2!1sru!2skz"
               width="100%"
-              height="600"
+              height="500"
               style="border:0;"
               allowfullscreen=""
               loading="lazy"
               referrerpolicy="no-referrer-when-downgrade"
               title="Карта расположения гостиницы Медеу в Костанае"
             ></iframe>
+          </div>
+
+          <div class="map-buttons map-buttons--center">
+            <a class="gold-btn gold-btn--sm" id="btn-2gis" target="_blank" rel="noopener noreferrer">
+              <span class="gold-btn__bg"></span>
+              <span class="gold-btn__label">Открыть в 2GIS</span>
+            </a>
+            <a class="gold-btn gold-btn--sm" id="btn-google" target="_blank" rel="noopener noreferrer">
+              <span class="gold-btn__bg"></span>
+              <span class="gold-btn__label">Google Maps</span>
+            </a>
+          </div>
+
+          <div class="map-info-row">
+            <div class="map-info-item">
+              <div class="overline">Адрес</div>
+              <div class="contact-value" id="addr-value"></div>
+            </div>
+            <div class="map-info-item">
+              <div class="overline">Телефон</div>
+              <div class="contact-value" id="phone1-value"></div>
+              <div class="contact-value" id="phone2-value"></div>
+            </div>
+            <div class="map-info-item">
+              <div class="overline">Почта</div>
+              <div class="contact-value" id="email-value"></div>
+            </div>
           </div>
         </div>
       </section>
@@ -378,10 +374,10 @@
                 </div>
               </div>
               <div style="margin-top: 40px;">
-                <button type="button" class="gold-btn restoplace-click-open">
+                <a href="javascript:void(0)" class="gold-btn restoplace-click-open">
                   <span class="gold-btn__bg"></span>
                   <span class="gold-btn__label">Забронировать дату</span>
-                </button>
+                </a>
               </div>
             </div>
 
@@ -564,6 +560,98 @@
       </div>
     </div>
   </footer>
+
+  <!-- ================== МОДАЛ БРОНИРОВАНИЯ НОМЕРА ================== -->
+  <div class="modal" id="booking-modal" role="dialog" aria-modal="true" aria-labelledby="booking-modal-title">
+    <div class="modal-overlay" data-close></div>
+    <div class="modal-window">
+      <button type="button" class="modal-close" data-close aria-label="Закрыть">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+
+      <div class="modal-head">
+        <div class="overline">— Бронирование —</div>
+        <h2 id="booking-modal-title" class="modal-title">Забронировать номер</h2>
+        <p class="modal-subtitle">Заполните детали — отправим менеджеру ресепшна в WhatsApp для подтверждения</p>
+      </div>
+
+      <form id="booking-form" class="booking-form" novalidate>
+        <div class="form-row">
+          <label class="form-field">
+            <span class="form-label">Полное имя (ФИО) *</span>
+            <input type="text" name="name" required autocomplete="name">
+          </label>
+          <label class="form-field">
+            <span class="form-label">Телефон *</span>
+            <input type="tel" name="phone" required placeholder="+7 ___ ___ __ __" autocomplete="tel">
+          </label>
+        </div>
+
+        <div class="form-row">
+          <label class="form-field">
+            <span class="form-label">Дата заезда *</span>
+            <input type="date" name="dateIn" id="booking-date-in" required>
+          </label>
+          <label class="form-field">
+            <span class="form-label">Время заезда</span>
+            <input type="time" name="timeIn" value="14:00">
+          </label>
+        </div>
+
+        <div class="form-row">
+          <label class="form-field">
+            <span class="form-label">Дата выезда *</span>
+            <input type="date" name="dateOut" id="booking-date-out" required>
+          </label>
+          <label class="form-field">
+            <span class="form-label">Время выезда</span>
+            <input type="time" name="timeOut" value="12:00">
+          </label>
+        </div>
+
+        <div class="form-row">
+          <label class="form-field form-field--full">
+            <span class="form-label">Тип номера *</span>
+            <select name="roomType" id="booking-room" required>
+              <option value="">Выберите категорию</option>
+              <option value="Стандарт">Стандарт · 28 000 ₸</option>
+              <option value="Полулюкс">Полулюкс · 34 000 ₸</option>
+              <option value="Двухместный полулюкс">Двухместный полулюкс · 45 000 ₸</option>
+              <option value="Семейный">Семейный · 55 000 ₸</option>
+              <option value="Люкс">Люкс · 44 000 ₸</option>
+              <option value="Апартамент">Апартамент · 100 000 ₸</option>
+            </select>
+          </label>
+        </div>
+
+        <div class="form-row">
+          <label class="form-field">
+            <span class="form-label">Взрослых</span>
+            <input type="number" name="adults" min="1" max="10" value="2">
+          </label>
+          <label class="form-field">
+            <span class="form-label">Детей</span>
+            <input type="number" name="children" min="0" max="10" value="0">
+          </label>
+        </div>
+
+        <label class="form-field form-field--full">
+          <span class="form-label">Примечание (необязательно)</span>
+          <textarea name="note" rows="3" placeholder="Особые пожелания, трансфер, время раннего заезда…"></textarea>
+        </label>
+
+        <div class="form-actions">
+          <button type="button" class="text-btn" data-close>Отмена</button>
+          <button type="submit" class="gold-btn">
+            <span class="gold-btn__bg"></span>
+            <span class="gold-btn__label">Отправить в WhatsApp</span>
+          </button>
+        </div>
+
+        <p class="form-disclaimer">Нажав «Отправить», вы откроете WhatsApp с подготовленным сообщением для менеджера ресепшна. Бронь подтверждается после звонка администратора.</p>
+      </form>
+    </div>
+  </div>
 
   <script src="data.js"></script>
   <script src="script.js" defer></script>

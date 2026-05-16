@@ -751,22 +751,22 @@ img { display: block; max-width: 100%; height: auto; }
 
 .map-section-wrap {
   background: var(--c-bg);
+  padding: 96px 0;
   transition: background 0.5s ease;
 }
-.map-grid {
-  display: grid;
-  grid-template-columns: 1fr;
+@media (max-width: 768px) {
+  .map-section-wrap { padding: 64px 0; }
 }
-@media (min-width: 768px) {
-  .map-grid { grid-template-columns: 1fr 1fr; }
-}
-.map-info {
-  padding: 96px 24px;
+
+.map-stack {
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  align-items: center;
 }
-@media (min-width: 768px) { .map-info { padding: 96px 64px; } }
+.map-stack-head {
+  text-align: center;
+  margin-bottom: 32px;
+}
 
 .contact-items {
   display: flex;
@@ -794,6 +794,27 @@ img { display: block; max-width: 100%; height: auto; }
   flex-wrap: wrap;
   margin-top: 40px;
 }
+.map-buttons--center {
+  justify-content: center;
+  margin-top: 32px;
+}
+
+/* Информация под картой — в строку на десктопе, столбец на мобильном */
+.map-info-row {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 32px;
+  margin-top: 56px;
+  padding-top: 56px;
+  border-top: 1px solid var(--c-divider);
+  width: 100%;
+  text-align: center;
+}
+@media (min-width: 768px) {
+  .map-info-row { grid-template-columns: repeat(3, 1fr); }
+}
+.map-info-item .contact-value { font-size: 1.15rem; }
+
 .map-visual {
   position: relative;
   min-height: 500px;
@@ -802,16 +823,26 @@ img { display: block; max-width: 100%; height: auto; }
 }
 @media (min-width: 768px) { .map-visual { min-height: 600px; } }
 
+/* Широкая версия — full-width внутри map-stack */
+.map-visual--wide {
+  width: 100%;
+  min-height: 420px;
+  border: 1px solid var(--c-divider);
+}
+@media (min-width: 768px) {
+  .map-visual--wide { min-height: 500px; }
+}
+
 /* Google Maps iframe — занимает весь контейнер */
 .map-visual iframe {
   display: block;
   width: 100%;
   height: 100%;
-  min-height: 500px;
+  min-height: 420px;
   border: 0;
 }
 @media (min-width: 768px) {
-  .map-visual iframe { min-height: 600px; }
+  .map-visual iframe { min-height: 500px; }
 }
 
 .map-placeholder {
@@ -1164,11 +1195,69 @@ img { display: block; max-width: 100%; height: auto; }
 .contacts-grid {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 48px;
+  gap: 32px;
 }
-@media (min-width: 640px) { .contacts-grid { grid-template-columns: repeat(3, 1fr); } }
+@media (min-width: 640px) {
+  .contacts-grid { grid-template-columns: repeat(2, 1fr); gap: 40px; }
+}
+@media (min-width: 1024px) {
+  .contacts-grid { grid-template-columns: repeat(4, 1fr); gap: 32px; }
+}
 
-.contact-card { text-align: center; }
+/* О гостинице — одна центрированная колонка */
+.about-prose {
+  max-width: 720px;
+  margin: 0 auto;
+  text-align: center;
+}
+.about-prose .body-prose { margin-bottom: 24px; }
+.about-prose .body-prose:last-child { margin-bottom: 0; }
+
+.contact-card {
+  text-align: center;
+  padding: 32px 24px;
+  background: var(--c-bg-2);
+  border: 1px solid var(--c-divider);
+  transition: background 0.5s, border-color 0.5s;
+}
+.contact-card > div:first-child { display: inline-block; }
+
+.contact-value--link {
+  display: inline-block;
+  color: var(--c-text);
+  border-bottom: 1px solid transparent;
+  transition: color 0.3s, border-color 0.3s;
+}
+.contact-value--link:hover {
+  color: var(--c-gold);
+  border-bottom-color: var(--c-gold);
+}
+
+/* Карточка-список (несколько телефонов внутри одной карточки) */
+.contact-card--list { text-align: center; }
+.contact-row {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--c-divider);
+}
+.contact-row:last-child { border-bottom: none; }
+.contact-row-label {
+  font-family: var(--f-body);
+  font-size: 10px;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--c-text-dim);
+}
+.contact-row-value {
+  font-family: var(--f-body);
+  font-size: 15px;
+  letter-spacing: 0.04em;
+  color: var(--c-text);
+  transition: color 0.3s;
+}
+.contact-row-value:hover { color: var(--c-gold); }
 
 /* ===== УСЛУГИ ===== */
 .services-intro {
@@ -1405,6 +1494,172 @@ img { display: block; max-width: 100%; height: auto; }
   letter-spacing: 0.2em;
   color: var(--c-silver);
   font-weight: 300;
+}
+
+/* ===== МОДАЛ БРОНИРОВАНИЯ ===== */
+.modal {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: none;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 40px 16px;
+  overflow-y: auto;
+}
+.modal--open { display: flex; }
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(10, 9, 8, 0.75);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  animation: modalFade 0.3s ease;
+}
+.modal-window {
+  position: relative;
+  width: 100%;
+  max-width: 640px;
+  background: var(--c-bg);
+  border: 1px solid var(--c-divider-strong);
+  padding: 48px 40px 40px;
+  margin: auto;
+  animation: modalSlide 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+@media (max-width: 640px) {
+  .modal-window { padding: 40px 24px 32px; }
+  .modal { padding: 20px 12px; }
+}
+.modal-close {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  width: 36px;
+  height: 36px;
+  border: 1px solid var(--c-divider);
+  background: transparent;
+  color: var(--c-text-dim);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: color 0.3s, border-color 0.3s;
+}
+.modal-close:hover { color: var(--c-gold); border-color: var(--c-gold); }
+
+.modal-head { text-align: center; margin-bottom: 32px; }
+.modal-title {
+  font-family: var(--f-display);
+  font-size: clamp(1.75rem, 4vw, 2.5rem);
+  font-weight: 300;
+  letter-spacing: 0.02em;
+  color: var(--c-text);
+  margin: 12px 0 12px;
+  line-height: 1.2;
+}
+.modal-subtitle {
+  font-family: var(--f-display);
+  font-style: italic;
+  font-weight: 300;
+  font-size: 0.95rem;
+  color: var(--c-text-dim);
+  margin: 0;
+  max-width: 440px;
+  margin: 0 auto;
+  line-height: 1.5;
+}
+
+.booking-form { display: flex; flex-direction: column; gap: 20px; }
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+}
+@media (min-width: 520px) {
+  .form-row { grid-template-columns: 1fr 1fr; }
+}
+.form-field { display: flex; flex-direction: column; gap: 8px; }
+.form-field--full { grid-column: 1 / -1; }
+.form-label {
+  font-family: var(--f-body);
+  font-size: 10px;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--c-text-dim);
+}
+.form-field input,
+.form-field select,
+.form-field textarea {
+  width: 100%;
+  padding: 12px 14px;
+  background: transparent;
+  border: 1px solid var(--c-divider-strong);
+  font-family: var(--f-body);
+  font-size: 14px;
+  font-weight: 300;
+  color: var(--c-text);
+  transition: border-color 0.3s, background 0.3s;
+  appearance: none;
+  -webkit-appearance: none;
+  border-radius: 0;
+  box-sizing: border-box;
+}
+.form-field input:focus,
+.form-field select:focus,
+.form-field textarea:focus {
+  outline: none;
+  border-color: var(--c-gold);
+  background: rgba(184, 153, 104, 0.04);
+}
+.form-field textarea { resize: vertical; min-height: 80px; font-family: var(--f-body); }
+.form-field select {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%239A7E50' stroke-width='1.5'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  background-size: 14px;
+  padding-right: 36px;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  margin-top: 16px;
+  flex-wrap: wrap;
+}
+.text-btn {
+  background: transparent;
+  border: none;
+  font-family: var(--f-body);
+  font-size: 12px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--c-text-dim);
+  cursor: pointer;
+  padding: 12px 8px;
+  transition: color 0.3s;
+}
+.text-btn:hover { color: var(--c-gold); }
+
+.form-disclaimer {
+  font-family: var(--f-body);
+  font-size: 11px;
+  line-height: 1.6;
+  color: var(--c-text-dim);
+  margin: 0;
+  text-align: center;
+  border-top: 1px solid var(--c-divider);
+  padding-top: 20px;
+}
+
+@keyframes modalFade {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+@keyframes modalSlide {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 
 /* ===== 11. SPA-ПЕРЕХОДЫ + АНИМАЦИИ ===== */
