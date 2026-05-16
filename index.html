@@ -4,17 +4,72 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="theme-color" content="#FAF7F0">
-  <meta name="description" content="Гостиничный комплекс «Медеу» — европейская утончённость и восточное гостеприимство в сердце Костаная. Номера, ресторан, банкетный зал, конференц-зал.">
-  <meta name="keywords" content="Медеу, гостиница Костанай, отель Костанай, банкетный зал Костанай, ресторан Костанай">
+  <meta name="description" content="Гостиничный комплекс «Медеу» — четырёхзвёздная гостиница из 58 номеров в самом центре Костаная. Номера, lounge-ресторан, банкетный зал, конференц-зал.">
+  <meta name="keywords" content="Медеу, гостиница Костанай, отель Костанай, банкетный зал Костанай, ресторан Костанай, бронирование номера Костанай">
 
+  <link rel="canonical" href="https://aleksey1854.github.io/medeu-site/">
+
+  <!-- Open Graph (Facebook, WhatsApp, Telegram) -->
   <meta property="og:type" content="website">
+  <meta property="og:site_name" content="MEDEU Hotel">
   <meta property="og:title" content="MEDEU · Гостиничный комплекс в Костанае">
-  <meta property="og:description" content="Европейская утончённость и восточное гостеприимство в сердце Костаная">
+  <meta property="og:description" content="Четырёхзвёздная гостиница в сердце Костаная. Lounge-ресторан, банкетный зал, конференц-зал, летняя веранда.">
+  <meta property="og:url" content="https://aleksey1854.github.io/medeu-site/">
+  <meta property="og:image" content="https://aleksey1854.github.io/medeu-site/assets/og-image.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
   <meta property="og:locale" content="ru_RU">
+
+  <!-- Twitter cards -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="MEDEU · Гостиничный комплекс в Костанае">
+  <meta name="twitter:description" content="Четырёхзвёздная гостиница в сердце Костаная.">
+  <meta name="twitter:image" content="https://aleksey1854.github.io/medeu-site/assets/og-image.jpg">
 
   <title>MEDEU · Гостиничный комплекс в Костанае</title>
 
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%230A0908'/%3E%3Ctext x='16' y='22' text-anchor='middle' font-family='serif' font-size='14' fill='%23B89968' letter-spacing='1'%3EM%3C/text%3E%3C/svg%3E">
+  <!-- Favicons -->
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="assets/apple-touch-icon.png">
+
+  <!-- Schema.org Hotel — для Google Maps и поисковиков -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Hotel",
+    "name": "Гостиничный комплекс «Медеу»",
+    "description": "Четырёхзвёздная гостиница из 58 номеров шести категорий, идеально расположенная в самом центре Костаная.",
+    "url": "https://aleksey1854.github.io/medeu-site/",
+    "image": "https://aleksey1854.github.io/medeu-site/assets/og-image.jpg",
+    "logo": "https://aleksey1854.github.io/medeu-site/assets/logo.png",
+    "telephone": "+77142545845",
+    "email": "info@medeuhotel.kz",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "ул. Баймагамбетова 166а",
+      "addressLocality": "Костанай",
+      "addressCountry": "KZ"
+    },
+    "starRating": {
+      "@type": "Rating",
+      "ratingValue": "4"
+    },
+    "priceRange": "₸₸₸",
+    "checkinTime": "14:00",
+    "checkoutTime": "12:00",
+    "amenityFeature": [
+      {"@type": "LocationFeatureSpecification", "name": "Бесплатный Wi-Fi", "value": true},
+      {"@type": "LocationFeatureSpecification", "name": "Кондиционер", "value": true},
+      {"@type": "LocationFeatureSpecification", "name": "Ресторан", "value": true},
+      {"@type": "LocationFeatureSpecification", "name": "Банкетный зал", "value": true},
+      {"@type": "LocationFeatureSpecification", "name": "Конференц-зал", "value": true},
+      {"@type": "LocationFeatureSpecification", "name": "Шведский стол на завтрак", "value": true}
+    ],
+    "sameAs": [
+      "https://www.instagram.com/hotel_medeu_kostanay/"
+    ]
+  }
+  </script>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -47,12 +102,7 @@
         </button>
 
         <a href="#home" class="logo-wrap" data-nav="home" aria-label="MEDEU — Главная">
-          <span class="logo-text">MEDEU</span>
-          <span class="logo-lines">
-            <span class="logo-line logo-line--gold"></span>
-            <span class="logo-line logo-line--silver"></span>
-            <span class="logo-line logo-line--accent"></span>
-          </span>
+          <img src="assets/logo.png" alt="MEDEU" class="logo-img">
         </a>
 
         <div class="header-right">
@@ -63,15 +113,14 @@
           <div class="lang-wrap" id="lang-wrap">
             <button class="lang-btn">
               <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
-              <span id="current-lang">RU</span>
+              <span id="current-lang">РУ</span>
               <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" id="lang-chevron" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
             </button>
             <div class="lang-dropdown" id="lang-dropdown">
               <div class="lang-dropdown-inner">
-                <button class="lang-item is-active" data-lang="RU">RU</button>
+                <button class="lang-item is-active" data-lang="РУ">РУ</button>
                 <button class="lang-item" data-lang="EN">EN</button>
-                <button class="lang-item" data-lang="AR">AR</button>
-                <button class="lang-item" data-lang="CH">CH</button>
+                <button class="lang-item" data-lang="ҚЗ">ҚЗ</button>
               </div>
             </div>
           </div>
@@ -92,6 +141,7 @@
           <a href="#rooms" class="nav-link" data-nav="rooms">Номера<span class="nav-link__underline"></span></a>
           <a href="#restaurant" class="nav-link" data-nav="restaurant">Ресторан<span class="nav-link__underline"></span></a>
           <a href="#banquet" class="nav-link" data-nav="banquet">Банкетный зал<span class="nav-link__underline"></span></a>
+          <a href="#services" class="nav-link" data-nav="services">Услуги<span class="nav-link__underline"></span></a>
           <a href="#contacts" class="nav-link" data-nav="contacts">Контакты<span class="nav-link__underline"></span></a>
         </nav>
       </div>
@@ -103,6 +153,7 @@
         <a href="#rooms" class="mobile-link" data-nav="rooms">Номера</a>
         <a href="#restaurant" class="mobile-link" data-nav="restaurant">Ресторан</a>
         <a href="#banquet" class="mobile-link" data-nav="banquet">Банкетный зал</a>
+        <a href="#services" class="mobile-link" data-nav="services">Услуги</a>
         <a href="#contacts" class="mobile-link" data-nav="contacts">Контакты</a>
       </div>
     </div>
@@ -165,18 +216,18 @@
           <div class="two-col">
             <div class="prose-stack">
               <p class="body-prose body-prose--bright">
-                Гостиничный комплекс «Медеу» идеально расположен в самом центре города Костаная. Комплекс представляет собой гостиницу, ресторан, ВИП-зал, Thai Spa. В непосредственной близости с нами находятся все важнейшие деловые, культурные и административные центры.
+                Гостиничный комплекс «Медеу» — четырёхзвёздная гостиница из 58 номеров шести категорий, идеально расположенная в самом центре Костаная. Мы рады вновь приветствовать Вас в нашем комплексе.
               </p>
               <p class="body-prose">
-                Наш комплекс сочетает европейскую утончённость с восточным гостеприимством. Комфортабельные номера оборудованы в соответствии с самыми высокими стандартами индустрии гостеприимства.
+                Все номера оборудованы в соответствии с самыми высокими стандартами индустрии гостеприимства и готовы принять самых взыскательных гостей. В непосредственной близости находятся все деловые, культурные и административные центры города.
               </p>
             </div>
             <div class="prose-stack">
               <p class="body-prose">
-                Шведский стол на завтрак включён в стоимость номера. Квалифицированный персонал со знанием казахского, русского и английского языков сделает Ваше пребывание максимально комфортным и приятным.
+                Безопасность гостей обеспечивается службой охраны, видеонаблюдением, системами пожарной сигнализации и электронными замками. Квалифицированный персонал со знанием казахского, русского и английского языков сделает Ваше пребывание максимально комфортным.
               </p>
               <p class="body-prose body-prose--bright">
-                Гибкая система тарифов предусматривает значительные скидки постоянным и корпоративным клиентам. Наша главная задача — чтобы гости возвращались.
+                Шведский стол на завтрак включён в стоимость номера. Гибкая система тарифов предусматривает значительные скидки постоянным и корпоративным клиентам.
               </p>
             </div>
           </div>
@@ -231,12 +282,13 @@
             </div>
           </div>
           <div class="map-visual" id="map-visual">
-            <div class="map-placeholder">
-              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#B89968" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" style="margin: 0 auto 16px; display: block;" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-              <div class="map-placeholder__text">
-                Здесь будет встроена интерактивная карта<br>2GIS или Google Maps
-              </div>
-            </div>
+            <!-- 2GIS виджет: маркер отеля + интерактивная карта -->
+            <a class="dg-widget-link" href="https://2gis.kz/kostanay/firm/70000001041793828/center/63.63519430160523,53.21770043608851/zoom/16">Посмотреть на карте Костаная</a>
+            <div class="dg-widget-link"><a href="https://2gis.kz/kostanay/firm/70000001041793828/photos/70000001041793828/center/63.63519430160523,53.21770043608851/zoom/17">Фотографии компании</a></div>
+            <div class="dg-widget-link"><a href="https://2gis.kz/kostanay/center/63.632292,53.217346/zoom/16/routeTab/rsType/bus/to/63.632292,53.217346╎Медеу, гостиничный комплекс">Найти проезд до Медеу, гостиничный комплекс</a></div>
+            <script charset="utf-8" src="https://widgets.2gis.com/js/DGWidgetLoader.js"></script>
+            <script charset="utf-8">new DGWidgetLoader({"width":640,"height":600,"borderColor":"transparent","pos":{"lat":53.21770043608851,"lon":63.63519430160523,"zoom":16},"opt":{"city":"kostanay"},"org":[{"id":"70000001041793828"}]});</script>
+            <noscript style="color:#c00;font-size:14px;">Карта 2GIS требует JavaScript. Включите его в браузере.</noscript>
           </div>
         </div>
       </section>
@@ -314,29 +366,22 @@
                 <span class="vignette-line"></span>
               </div>
               <p class="body-prose">
-                Главный банкетный зал гостиницы «Медеу» создан для торжественных событий любого формата. Свадьбы, юбилеи, корпоративные мероприятия, презентации — всё проходит на высочайшем уровне. Профессиональная команда менеджеров возьмёт на себя все организационные вопросы.
+                Элегантный банкетный зал в самом центре города, объединяющий масштаб, современное техническое оснащение и атмосферу безупречного сервиса для мероприятий любого формата. Светлый, просторный зал оснащён профессиональным музыкальным и световым оборудованием, тремя LED-экранами. Профессиональная команда менеджеров возьмёт на себя все организационные вопросы.
               </p>
               <div class="capacity-stack">
                 <div class="capacity-row">
-                  <div class="capacity-number">до 200</div>
+                  <div class="capacity-number">до 230</div>
                   <div>
                     <div class="overline">Гостей</div>
-                    <div class="capacity-label">Банкет с рассадкой</div>
-                  </div>
-                </div>
-                <div class="capacity-row">
-                  <div class="capacity-number">до 300</div>
-                  <div>
-                    <div class="overline">Гостей</div>
-                    <div class="capacity-label">Фуршетный формат</div>
+                    <div class="capacity-label">Вместимость зала</div>
                   </div>
                 </div>
               </div>
               <div style="margin-top: 40px;">
-                <button class="gold-btn" onclick="alert('Бронирование банкета')">
+                <a href="https://wa.me/77755215706?text=Здравствуйте! Хочу забронировать банкетный зал." target="_blank" rel="noopener noreferrer" class="gold-btn">
                   <span class="gold-btn__bg"></span>
                   <span class="gold-btn__label">Забронировать дату</span>
-                </button>
+                </a>
               </div>
             </div>
 
@@ -369,8 +414,8 @@
               <div class="manager-card">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" style="color: var(--c-gold); flex-shrink: 0;" aria-hidden="true"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
                 <div>
-                  <div class="overline">Банкетный менеджер</div>
-                  <div class="manager-value">WhatsApp · номер уточняется</div>
+                  <div class="overline">Банкетный зал</div>
+                  <div class="manager-value">+7 (775) 521-57-06 · WhatsApp</div>
                 </div>
               </div>
             </div>
@@ -392,13 +437,22 @@
               <span class="vignette-line"></span>
             </div>
             <p class="body-prose">
-              Современный конференц-зал, оборудованный профессиональной техникой для проведения семинаров, тренингов, презентаций и деловых переговоров. Возможна различная рассадка в зависимости от формата мероприятия.
+              Конференц-зал оснащён всем необходимым оборудованием для деловых встреч и презентаций: флип-чарт, маркерная доска, мультимедийное оборудование, безлимитный интернет. Возможна организация кофе-брейков.
             </p>
+            <div class="capacity-stack">
+              <div class="capacity-row">
+                <div class="capacity-number">до 30</div>
+                <div>
+                  <div class="overline">Человек</div>
+                  <div class="capacity-label">Вместимость зала</div>
+                </div>
+              </div>
+            </div>
             <div style="margin-top: 32px;">
-              <button class="gold-btn gold-btn--sm" onclick="alert('Запрос на конференц-зал')">
+              <a href="https://wa.me/77714944599?text=Здравствуйте! Хочу уточнить свободные даты для конференц-зала." target="_blank" rel="noopener noreferrer" class="gold-btn gold-btn--sm">
                 <span class="gold-btn__bg"></span>
-                <span class="gold-btn__label">Узнать подробнее</span>
-              </button>
+                <span class="gold-btn__label">Уточнить свободные даты</span>
+              </a>
             </div>
           </div>
           <div class="conference-image-wrap">
@@ -407,6 +461,38 @@
         </div>
       </section>
     </section><!-- /page-banquet -->
+
+    <!-- ===== УСЛУГИ ===== -->
+    <section class="page" id="page-services">
+      <div class="page-hero" data-page-hero="services">
+        <div class="ctnr-xl page-hero-content">
+          <div class="hero-overline" style="margin-bottom: 24px;">— Дополнительные услуги —</div>
+          <h1 class="page-hero-title">Услуги</h1>
+          <div class="vignette" style="margin: 24px auto;">
+            <span class="vignette-line"></span>
+            <svg width="28" height="10" viewBox="0 0 28 10" aria-hidden="true">
+              <path d="M14 1 L20 5 L14 9 L8 5 Z" fill="none" stroke="#B89968" stroke-width="0.6"/>
+              <circle cx="14" cy="5" r="0.8" fill="#B89968"/>
+            </svg>
+            <span class="vignette-line"></span>
+          </div>
+          <p class="page-hero-subtitle">Всё для комфортного пребывания и торжественных событий</p>
+        </div>
+      </div>
+
+      <section class="section-pad">
+        <div class="ctnr-lg">
+          <div style="text-align: center; max-width: 720px; margin: 0 auto 80px;">
+            <p class="body-prose body-prose--bright">
+              В дополнение к проживанию и гастрономии мы предлагаем гостям и партнёрам комплекс сервисов — от тайского СПА до организации трансферов и оформления праздничных столов.
+            </p>
+          </div>
+          <div class="services-grid" id="services-list">
+            <!-- Карточки услуг рендерятся из data.js через script.js -->
+          </div>
+        </div>
+      </section>
+    </section><!-- /page-services -->
 
     <!-- ===== КОНТАКТЫ ===== -->
     <section class="page" id="page-contacts">
@@ -436,13 +522,18 @@
     <div class="ctnr-xl">
       <div class="footer-grid">
         <div>
-          <div class="logo-text logo-text--sm">MEDEU</div>
-          <div class="logo-lines logo-lines--sm">
-            <span class="logo-line logo-line--gold"></span>
-            <span class="logo-line logo-line--silver"></span>
-            <span class="logo-line logo-line--accent"></span>
-          </div>
+          <img src="assets/logo.png" alt="MEDEU" class="logo-img logo-img--footer">
           <p class="footer-tagline">Гостиничный комплекс в центре Костаная</p>
+          <div class="footer-social">
+            <a href="https://www.instagram.com/hotel_medeu_kostanay/" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="Instagram">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+                <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
+                <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
+              </svg>
+              <span>@hotel_medeu_kostanay</span>
+            </a>
+          </div>
         </div>
         <div>
           <div class="overline overline--gold" style="margin-bottom: 16px;">Навигация</div>
@@ -450,6 +541,7 @@
           <a href="#rooms" class="footer-link" data-nav="rooms">Номера</a>
           <a href="#restaurant" class="footer-link" data-nav="restaurant">Ресторан</a>
           <a href="#banquet" class="footer-link" data-nav="banquet">Банкетный зал</a>
+          <a href="#services" class="footer-link" data-nav="services">Услуги</a>
         </div>
         <div>
           <div class="overline overline--gold" style="margin-bottom: 16px;">Контакты</div>
@@ -481,5 +573,8 @@
 
   <script src="data.js"></script>
   <script src="script.js" defer></script>
+
+  <!-- Restoplace widget — онлайн-бронирование для ресторана и банкетного зала -->
+  <script src="https://app.restoplace.cc/widget.js?h=57d0bcbf4b55ea8a0b4f" async></script>
 </body>
 </html>

@@ -24,6 +24,11 @@
     pin: '<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>',
     phone: '<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>',
     mail: '<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>',
+    spa: '<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="0.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22c1.25-1.25 2.5-3 2.5-5.5 0-2-1-3.5-2.5-5-1.5 1.5-2.5 3-2.5 5 0 2.5 1.25 4.25 2.5 5.5z"/><path d="M5 12c1.5-1.5 4-2.5 7-2.5s5.5 1 7 2.5c-1.5 1.5-4 2.5-7 2.5s-5.5-1-7-2.5z"/><path d="M12 9.5c.5-2 2-4 4.5-5.5-.5 2.5-2 4.5-4.5 5.5z"/><path d="M12 9.5c-.5-2-2-4-4.5-5.5.5 2.5 2 4.5 4.5 5.5z"/></svg>',
+    laundry: '<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="0.9" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3" width="16" height="18" rx="2"/><circle cx="12" cy="13" r="5"/><circle cx="12" cy="13" r="2"/><circle cx="8" cy="6.5" r="0.5" fill="currentColor"/><circle cx="11" cy="6.5" r="0.5" fill="currentColor"/></svg>',
+    transfer: '<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="0.9" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17h2l1.5-7.5a2 2 0 0 1 2-1.5h7a2 2 0 0 1 2 1.5L19 17h2"/><path d="M3 17v3h2v-3M19 17v3h2v-3"/><circle cx="7.5" cy="16.5" r="1.5"/><circle cx="16.5" cy="16.5" r="1.5"/><line x1="9" y1="13" x2="15" y2="13"/></svg>',
+    bike: '<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="0.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="5.5" cy="17.5" r="3.5"/><circle cx="18.5" cy="17.5" r="3.5"/><path d="M15 6h2l2 8M8.5 14h6l-3-8H10"/><circle cx="11.5" cy="6" r="0.5" fill="currentColor"/></svg>',
+    decor: '<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="0.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 8c-1.5-3-4-3-4-3s0 2.5 3 4"/><path d="M12 8c1.5-3 4-3 4-3s0 2.5-3 4"/><path d="M12 8c-3 0-3 2-3 2s2 0 3-1.5"/><path d="M12 8c3 0 3 2 3 2s-2 0-3-1.5"/><circle cx="12" cy="9.5" r="1.5"/><path d="M12 11v9M9 20h6"/></svg>',
   };
 
   // ===== ТЕМА =====
@@ -66,6 +71,7 @@
     rooms: document.getElementById('page-rooms'),
     restaurant: document.getElementById('page-restaurant'),
     banquet: document.getElementById('page-banquet'),
+    services: document.getElementById('page-services'),
     contacts: document.getElementById('page-contacts'),
   };
 
@@ -133,7 +139,7 @@
     const scrolled = window.scrollY > 50;
     header.classList.toggle('header--scrolled', scrolled);
     header.classList.toggle('header--on-hero', !scrolled);
-    if (headerGradient) headerGradient.classList.toggle('is-hidden', scrolled);
+    // header-gradient теперь всегда видим — он всегда поверх всех слоёв (carltonmoscow.com style)
   }
 
   window.addEventListener('scroll', onScroll, { passive: true });
@@ -310,14 +316,44 @@
       +     '<p class="venue-tagline">' + venue.tagline + '</p>'
       +     '<p class="body-prose">' + venue.description + '</p>'
       +     '<div style="margin-top: 32px;">'
-      +       '<button class="gold-btn gold-btn--sm" onclick="alert(\'Бронирование: ' + venue.name + '\')">'
+      +       '<a href="https://wa.me/' + DATA.contacts.waRestaurant + '?text=' + encodeURIComponent('Здравствуйте! Хочу забронировать «' + venue.name + '».') + '" target="_blank" rel="noopener noreferrer" class="gold-btn gold-btn--sm">'
       +         '<span class="gold-btn__bg"></span>'
       +         '<span class="gold-btn__label">Забронировать</span>'
-      +       '</button>'
+      +       '</a>'
       +     '</div>'
       +   '</div>'
       + '</div>';
   }).join('');
+
+  // ===== РЕНДЕР: УСЛУГИ =====
+  const servicesList = document.getElementById('services-list');
+  if (servicesList && DATA.services) {
+    servicesList.innerHTML = DATA.services.map(function (service, idx) {
+      const num = '0' + (idx + 1);
+      const icon = ICONS[service.icon] || ICONS.phone;
+      const hoursLine = service.hours
+        ? '<div class="service-meta-row"><span class="overline">Часы</span> ' + service.hours + '</div>'
+        : '';
+      const phoneClean = service.phone.replace(/[^\d+]/g, '');
+      const waText = encodeURIComponent('Здравствуйте! Хочу узнать подробнее об услуге «' + service.name + '».');
+      return ''
+        + '<div class="service-card">'
+        +   '<div class="service-card-num">№ ' + num + '</div>'
+        +   '<div class="service-icon">' + icon + '</div>'
+        +   '<h3 class="service-name">' + service.name + '</h3>'
+        +   '<p class="service-subtitle">' + service.subtitle + '</p>'
+        +   '<div class="service-divider"></div>'
+        +   '<p class="service-desc">' + service.description + '</p>'
+        +   hoursLine
+        +   '<div class="service-actions">'
+        +     '<a href="tel:' + phoneClean + '" class="service-phone">' + service.phone + '</a>'
+        +     '<a href="https://wa.me/' + service.waNumber + '?text=' + waText + '" target="_blank" rel="noopener noreferrer" class="service-wa" aria-label="WhatsApp">'
+        +       '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>'
+        +     '</a>'
+        +   '</div>'
+        + '</div>';
+    }).join('');
+  }
 
   // ===== РЕНДЕР: КОНТАКТЫ =====
   const contactsGrid = document.getElementById('contacts-grid');
@@ -365,12 +401,7 @@
     confImg.dataset.bg = DATA.conferenceImage;
   }
 
-  // ===== Map-visual фон =====
-  const mapVisual = document.getElementById('map-visual');
-  if (mapVisual) {
-    mapVisual.classList.add('lazy-bg', 'img-skeleton');
-    mapVisual.dataset.bg = DATA.mapBackgroundImage;
-  }
+  // ===== Map-visual: теперь 2GIS виджет (вставлен в HTML, фон не нужен) =====
 
   // ===== Page-hero фоны (берутся из DATA.pageHero) =====
   document.querySelectorAll('.page-hero[data-page-hero]').forEach(function (el) {
