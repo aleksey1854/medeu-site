@@ -160,12 +160,8 @@
   </header>
 
   <!-- ==================== WHATSAPP FLOAT ==================== -->
-  <a href="#" class="wa-float" id="wa-float" target="_blank" rel="noopener noreferrer">
-    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#B89968" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
-    <span class="wa-float-text">
-      <span class="wa-float-label" id="wa-label">Связь</span>
-      <span class="wa-float-action">WhatsApp</span>
-    </span>
+  <a href="#" class="wa-float" id="wa-float" target="_blank" rel="noopener noreferrer" aria-label="Написать в WhatsApp">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
   </a>
 
   <!-- ==================== MAIN ==================== -->
@@ -282,13 +278,17 @@
             </div>
           </div>
           <div class="map-visual" id="map-visual">
-            <!-- 2GIS виджет: маркер отеля + интерактивная карта -->
-            <a class="dg-widget-link" href="https://2gis.kz/kostanay/firm/70000001041793828/center/63.63519430160523,53.21770043608851/zoom/16">Посмотреть на карте Костаная</a>
-            <div class="dg-widget-link"><a href="https://2gis.kz/kostanay/firm/70000001041793828/photos/70000001041793828/center/63.63519430160523,53.21770043608851/zoom/17">Фотографии компании</a></div>
-            <div class="dg-widget-link"><a href="https://2gis.kz/kostanay/center/63.632292,53.217346/zoom/16/routeTab/rsType/bus/to/63.632292,53.217346╎Медеу, гостиничный комплекс">Найти проезд до Медеу, гостиничный комплекс</a></div>
-            <script charset="utf-8" src="https://widgets.2gis.com/js/DGWidgetLoader.js"></script>
-            <script charset="utf-8">new DGWidgetLoader({"width":640,"height":600,"borderColor":"transparent","pos":{"lat":53.21770043608851,"lon":63.63519430160523,"zoom":16},"opt":{"city":"kostanay"},"org":[{"id":"70000001041793828"}]});</script>
-            <noscript style="color:#c00;font-size:14px;">Карта 2GIS требует JavaScript. Включите его в браузере.</noscript>
+            <!-- Google Maps embed: отель Medeu, Костанай -->
+            <iframe
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2389.0268420643847!2d63.62989167661875!3d53.217367072252216!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x43cc8a6880243bc3%3A0xb5b5f1a737bf79fa!2sMedeu%20Hotel!5e0!3m2!1sru!2skz!4v1778926223061!5m2!1sru!2skz"
+              width="100%"
+              height="600"
+              style="border:0;"
+              allowfullscreen=""
+              loading="lazy"
+              referrerpolicy="no-referrer-when-downgrade"
+              title="Карта расположения гостиницы Медеу в Костанае"
+            ></iframe>
           </div>
         </div>
       </section>
@@ -378,46 +378,40 @@
                 </div>
               </div>
               <div style="margin-top: 40px;">
-                <a href="https://wa.me/77755215706?text=Здравствуйте! Хочу забронировать банкетный зал." target="_blank" rel="noopener noreferrer" class="gold-btn">
+                <button type="button" class="gold-btn restoplace-click-open">
                   <span class="gold-btn__bg"></span>
                   <span class="gold-btn__label">Забронировать дату</span>
-                </a>
+                </button>
               </div>
             </div>
 
             <div class="restoplace-card">
-              <div class="overline" style="margin-bottom: 24px;">— Онлайн-бронирование —</div>
-              <h3 class="restoplace-title">Выберите дату и время</h3>
-              <p class="body-prose" style="margin-bottom: 32px;">
-                Здесь будет встроен виджет Restoplace для онлайн-бронирования банкетного зала.
-              </p>
-              <!-- Когда подтвердится актуальность кода виджета — раскомментировать строку ниже
-                   и удалить блок .widget-placeholder -->
-              <!-- <script src="//app.restoplace.cc/widget.js?h=57d0bcbf4b55ea8a0b4f"></script> -->
-              <div class="widget-placeholder">
-                <div class="widget-code">&lt;script src="//app.restoplace.cc/widget.js?h=57d0bcbf4b55ea8a0b4f"&gt;</div>
-                <div class="widget-fields">
-                  <div class="widget-field">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" style="color: var(--c-gold);" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-                    <span>Дата</span>
-                  </div>
-                  <div class="widget-field">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" style="color: var(--c-gold);" aria-hidden="true"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-                    <span>Гости</span>
-                  </div>
-                </div>
-                <button class="gold-btn gold-btn--sm" onclick="alert('Виджет Restoplace откроется здесь')">
-                  <span class="gold-btn__bg"></span>
-                  <span class="gold-btn__label">Проверить доступность</span>
-                </button>
+              <div class="overline" style="margin-bottom: 24px;">— Что включено —</div>
+              <h3 class="restoplace-title">Полный комплекс<br>для торжества</h3>
+              <ul class="banquet-features">
+                <li>Профессиональное звуковое и световое оборудование</li>
+                <li>Три LED-экрана для презентаций и оформления</li>
+                <li>Сопровождение опытной команды менеджеров</li>
+                <li>Подбор меню под формат мероприятия</li>
+                <li>Кофе-брейки и фуршеты по запросу</li>
+              </ul>
+
+              <div class="vignette my-6">
+                <span class="vignette-line"></span>
+                <svg width="28" height="10" viewBox="0 0 28 10" aria-hidden="true">
+                  <path d="M14 1 L20 5 L14 9 L8 5 Z" fill="none" stroke="currentColor" stroke-width="0.6" style="color: var(--c-gold);"/>
+                  <circle cx="14" cy="5" r="0.8" fill="currentColor" style="color: var(--c-gold);"/>
+                </svg>
+                <span class="vignette-line"></span>
               </div>
-              <div class="manager-card">
+
+              <a href="https://wa.me/77755215706?text=Здравствуйте! Хочу уточнить детали по банкетному залу." target="_blank" rel="noopener noreferrer" class="manager-card manager-card--link">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" style="color: var(--c-gold); flex-shrink: 0;" aria-hidden="true"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
                 <div>
-                  <div class="overline">Банкетный зал</div>
+                  <div class="overline">Банкетный менеджер</div>
                   <div class="manager-value">+7 (775) 521-57-06 · WhatsApp</div>
                 </div>
-              </div>
+              </a>
             </div>
           </div>
         </div>
@@ -468,21 +462,21 @@
         <div class="ctnr-xl page-hero-content">
           <div class="hero-overline" style="margin-bottom: 24px;">— Дополнительные услуги —</div>
           <h1 class="page-hero-title">Услуги</h1>
-          <div class="vignette" style="margin: 24px auto;">
-            <span class="vignette-line"></span>
-            <svg width="28" height="10" viewBox="0 0 28 10" aria-hidden="true">
-              <path d="M14 1 L20 5 L14 9 L8 5 Z" fill="none" stroke="#B89968" stroke-width="0.6"/>
-              <circle cx="14" cy="5" r="0.8" fill="#B89968"/>
-            </svg>
-            <span class="vignette-line"></span>
-          </div>
-          <p class="page-hero-subtitle">Всё для комфортного пребывания и торжественных событий</p>
+          <p class="page-hero-tagline">Всё для комфортного пребывания и торжественных событий</p>
         </div>
       </div>
 
-      <section class="section-pad">
+      <section class="section section--lg">
         <div class="ctnr-lg">
-          <div style="text-align: center; max-width: 720px; margin: 0 auto 80px;">
+          <div class="services-intro">
+            <div class="vignette mb-8">
+              <span class="vignette-line"></span>
+              <svg width="28" height="10" viewBox="0 0 28 10" aria-hidden="true">
+                <path d="M14 1 L20 5 L14 9 L8 5 Z" fill="none" stroke="currentColor" stroke-width="0.6" style="color: var(--c-gold);"/>
+                <circle cx="14" cy="5" r="0.8" fill="currentColor" style="color: var(--c-gold);"/>
+              </svg>
+              <span class="vignette-line"></span>
+            </div>
             <p class="body-prose body-prose--bright">
               В дополнение к проживанию и гастрономии мы предлагаем гостям и партнёрам комплекс сервисов — от тайского СПА до организации трансферов и оформления праздничных столов.
             </p>

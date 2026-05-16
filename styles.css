@@ -484,36 +484,41 @@ img { display: block; max-width: 100%; height: auto; }
 
 .wa-float {
   position: fixed;
-  bottom: 32px;
-  right: 32px;
+  bottom: 28px;
+  right: 28px; /* справа снизу — стандартное место, плавающая кнопка Restoplace скрыта */
   z-index: 50;
-  display: flex;
+  display: inline-flex;
   align-items: center;
-  gap: 12px;
-  padding: 14px 22px;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
   background: var(--c-bg-card);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
   border: 1px solid var(--c-gold);
-  color: var(--c-text);
-  box-shadow: 0 8px 32px rgba(0,0,0,0.12);
-  transition: all 0.4s;
+  color: var(--c-gold);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.18);
+  transition: background 0.3s, color 0.3s, transform 0.3s;
 }
-.wa-float:hover { background: var(--c-bg-2); }
-.wa-float-text { display: flex; flex-direction: column; align-items: flex-start; }
-.wa-float-label {
-  font-family: var(--f-body);
-  font-size: 9px;
-  letter-spacing: 0.3em;
-  text-transform: uppercase;
-  color: var(--c-silver);
+.wa-float:hover {
+  background: var(--c-gold);
+  color: var(--c-bg);
+  transform: translateY(-2px);
 }
-.wa-float-action {
-  font-family: var(--f-body);
-  font-size: 12px;
-  letter-spacing: 0.05em;
-  color: var(--c-text);
+
+@media (max-width: 640px) {
+  .wa-float {
+    bottom: 20px;
+    right: 16px;
+    width: 50px;
+    height: 50px;
+  }
 }
+
+/* Скрываем плавающую кнопку Restoplace — наши «Забронировать» открывают тот же виджет
+   через класс restoplace-click-open (по официальной инструкции Restoplace) */
+#restoplace-wrapper-btn { display: none !important; }
 
 /* ===== 8. КАРУСЕЛЬ + HERO ===== */
 
@@ -794,18 +799,19 @@ img { display: block; max-width: 100%; height: auto; }
   min-height: 500px;
   background: var(--c-bg-2);
   overflow: hidden;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
 @media (min-width: 768px) { .map-visual { min-height: 600px; } }
 
-/* 2GIS виджет — скрываем сопутствующие текстовые ссылки, оставляем только карту */
-.map-visual .dg-widget-link { display: none; }
-.map-visual iframe { max-width: 100%; }
-/* Виджет вставляется как div — оборачиваем под наш размер */
-.map-visual > div:not(.dg-widget-link) {
-  max-width: 100%;
+/* Google Maps iframe — занимает весь контейнер */
+.map-visual iframe {
+  display: block;
+  width: 100%;
+  height: 100%;
+  min-height: 500px;
+  border: 0;
+}
+@media (min-width: 768px) {
+  .map-visual iframe { min-height: 600px; }
 }
 
 .map-placeholder {
@@ -1067,49 +1073,54 @@ img { display: block; max-width: 100%; height: auto; }
   font-weight: 300;
   color: var(--c-text);
   margin: 0 0 24px;
+  line-height: 1.2;
 }
-.widget-placeholder {
-  padding: 32px;
-  background: var(--c-bg);
-  border: 1px dashed var(--c-divider-strong);
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
+
+/* Список особенностей банкета */
+.banquet-features {
+  list-style: none;
+  padding: 0;
+  margin: 0;
 }
-.widget-code {
+.banquet-features li {
+  position: relative;
+  padding-left: 24px;
+  margin-bottom: 14px;
   font-family: var(--f-body);
-  font-size: 10px;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: var(--c-silver);
-  word-break: break-all;
-}
-.widget-fields {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 16px;
-}
-.widget-field {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 16px;
-  border: 1px solid var(--c-divider);
-}
-.widget-field span {
-  font-family: var(--f-body);
-  font-size: 11px;
+  font-size: 14px;
+  font-weight: 300;
+  line-height: 1.6;
   color: var(--c-text);
-  letter-spacing: 0.2em;
 }
+.banquet-features li:last-child { margin-bottom: 0; }
+.banquet-features li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.55em;
+  width: 7px;
+  height: 7px;
+  background: var(--c-gold);
+  transform: rotate(45deg);
+  opacity: 0.7;
+}
+
 .manager-card {
-  margin-top: 32px;
   display: flex;
   align-items: center;
   gap: 12px;
   padding: 16px;
   background: rgba(184,153,104,0.08);
   border: 1px solid var(--c-divider);
+  transition: background 0.3s, border-color 0.3s;
+}
+.manager-card--link {
+  text-decoration: none;
+  cursor: pointer;
+}
+.manager-card--link:hover {
+  background: rgba(184,153,104,0.15);
+  border-color: var(--c-gold);
 }
 .manager-value {
   font-family: var(--f-body);
@@ -1160,16 +1171,38 @@ img { display: block; max-width: 100%; height: auto; }
 .contact-card { text-align: center; }
 
 /* ===== УСЛУГИ ===== */
+.services-intro {
+  text-align: center;
+  max-width: 720px;
+  margin: 0 auto 80px;
+}
+@media (min-width: 768px) {
+  .services-intro { margin-bottom: 96px; }
+}
+
 .services-grid {
-  display: grid;
-  grid-template-columns: 1fr;
+  display: flex;
+  flex-wrap: wrap;
   gap: 32px;
+  justify-content: center;
+}
+.services-grid > .service-card {
+  flex: 1 1 100%;
+  max-width: 100%;
 }
 @media (min-width: 640px) {
-  .services-grid { grid-template-columns: repeat(2, 1fr); gap: 40px; }
+  .services-grid { gap: 40px; }
+  .services-grid > .service-card {
+    flex: 0 0 calc(50% - 20px);
+    max-width: calc(50% - 20px);
+  }
 }
 @media (min-width: 1024px) {
-  .services-grid { grid-template-columns: repeat(3, 1fr); gap: 48px; }
+  .services-grid { gap: 48px; }
+  .services-grid > .service-card {
+    flex: 0 0 calc(33.333% - 32px);
+    max-width: calc(33.333% - 32px);
+  }
 }
 
 .service-card {

@@ -231,6 +231,6 @@ const DATA = {
 
     // Карты — прямые ссылки на отель
     gis2Url:   'https://go.2gis.com/M2V07',
-    googleUrl: 'https://www.google.com/maps/search/?api=1&query=53.21770043608851,63.63519430160523',
+    googleUrl: 'https://maps.app.goo.gl/ndN3XnVWUE4iur318',
   },
 };

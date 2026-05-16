@@ -75,14 +75,6 @@
     contacts: document.getElementById('page-contacts'),
   };
 
-  const waLabels = {
-    home: 'Связь',
-    rooms: 'Связь',
-    restaurant: 'Ресторан',
-    banquet: 'Банкетный менеджер',
-    contacts: 'Связь',
-  };
-
   function navigate(pageId) {
     if (!pages[pageId]) pageId = 'home';
 
@@ -94,15 +86,12 @@
       el.classList.toggle('is-active', el.dataset.nav === pageId);
     });
 
-    // WhatsApp кнопка
-    const waLabel = document.getElementById('wa-label');
+    // WhatsApp кнопка — меняем только номер по странице (текста нет, теперь иконка)
     const waFloat = document.getElementById('wa-float');
-    waLabel.textContent = waLabels[pageId] || 'Связь';
-
     let waNumber = DATA.contacts.waReception;
     if (pageId === 'restaurant') waNumber = DATA.contacts.waRestaurant;
     if (pageId === 'banquet') waNumber = DATA.contacts.waBanquet;
-    waFloat.href = 'https://wa.me/' + waNumber.replace(/[^0-9]/g, '');
+    if (waFloat) waFloat.href = 'https://wa.me/' + waNumber.replace(/[^0-9]/g, '');
 
     // Прокрутка в верх
     window.scrollTo({ top: 0, behavior: 'instant' });
@@ -316,10 +305,10 @@
       +     '<p class="venue-tagline">' + venue.tagline + '</p>'
       +     '<p class="body-prose">' + venue.description + '</p>'
       +     '<div style="margin-top: 32px;">'
-      +       '<a href="https://wa.me/' + DATA.contacts.waRestaurant + '?text=' + encodeURIComponent('Здравствуйте! Хочу забронировать «' + venue.name + '».') + '" target="_blank" rel="noopener noreferrer" class="gold-btn gold-btn--sm">'
+      +       '<button type="button" class="gold-btn gold-btn--sm restoplace-click-open">'
       +         '<span class="gold-btn__bg"></span>'
       +         '<span class="gold-btn__label">Забронировать</span>'
-      +       '</a>'
+      +       '</button>'
       +     '</div>'
       +   '</div>'
       + '</div>';
