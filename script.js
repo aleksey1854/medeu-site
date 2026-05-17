@@ -1,20 +1,8 @@
-/* ============================================================
-   MEDEU HOTEL — SCRIPT
-   ============================================================
-   Делает:
-   1. Переключение темы (с сохранением в localStorage)
-   2. SPA-роутинг через #hash
-   3. Реакция шапки на скролл
-   4. Мобильное меню и dropdown языка
-   5. Карусели (hero + banquet)
-   6. Рендер списков (номера, заведения, карточки) из data.js
-   7. Lazy-loading фоновых картинок через IntersectionObserver
-   ============================================================ */
+
 
 (function () {
   'use strict';
 
-  // ===== ИКОНКИ (lucide-style SVG как строки) =====
   const ICONS = {
     sun: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>',
     moon: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>',
@@ -31,7 +19,6 @@
     decor: '<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="0.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 8c-1.5-3-4-3-4-3s0 2.5 3 4"/><path d="M12 8c1.5-3 4-3 4-3s0 2.5-3 4"/><path d="M12 8c-3 0-3 2-3 2s2 0 3-1.5"/><path d="M12 8c3 0 3 2 3 2s-2 0-3-1.5"/><circle cx="12" cy="9.5" r="1.5"/><path d="M12 11v9M9 20h6"/></svg>',
   };
 
-  // ===== ТЕМА =====
   const html = document.documentElement;
   const themeToggle = document.getElementById('theme-toggle');
 
@@ -49,7 +36,6 @@
     themeToggle.innerHTML = theme === 'light' ? ICONS.moon : ICONS.sun;
     try { localStorage.setItem('medeu-theme', theme); } catch (e) {}
 
-    // Поменять theme-color мету (для мобильной адресной строки)
     const themeMeta = document.querySelector('meta[name="theme-color"]');
     if (themeMeta) themeMeta.setAttribute('content', theme === 'light' ? '#FAF7F0' : '#0A0908');
   }
@@ -61,11 +47,9 @@
     setTheme(current === 'light' ? 'dark' : 'light');
   });
 
-  // ===== ИКОНКА МОБИЛЬНОГО МЕНЮ =====
   const menuMobileIcon = document.getElementById('menu-mobile-icon');
   menuMobileIcon.innerHTML = ICONS.menu;
 
-  // ===== РОУТИНГ =====
   const pages = {
     home: document.getElementById('page-home'),
     rooms: document.getElementById('page-rooms'),
@@ -86,21 +70,17 @@
       el.classList.toggle('is-active', el.dataset.nav === pageId);
     });
 
-    // WhatsApp кнопка — меняем только номер по странице (текста нет, теперь иконка)
     const waFloat = document.getElementById('wa-float');
     let waNumber = DATA.contacts.waReception;
     if (pageId === 'restaurant') waNumber = DATA.contacts.waRestaurant;
     if (pageId === 'banquet') waNumber = DATA.contacts.waBanquet;
     if (waFloat) waFloat.href = 'https://wa.me/' + waNumber.replace(/[^0-9]/g, '');
 
-    // Прокрутка в верх
     window.scrollTo({ top: 0, behavior: 'instant' });
 
-    // Запустить lazy-load для новой страницы
     triggerLazyLoad();
   }
 
-  // Клик по любому элементу с data-nav
   document.addEventListener('click', function (e) {
     const target = e.target.closest('[data-nav]');
     if (!target) return;
@@ -114,13 +94,11 @@
     closeMobileMenu();
   });
 
-  // Реакция на смену hash в URL
   window.addEventListener('hashchange', function () {
     const pageId = window.location.hash.slice(1) || 'home';
     navigate(pageId);
   });
 
-  // ===== СКРОЛЛ ШАПКИ =====
   const header = document.getElementById('header');
   const headerGradient = document.querySelector('.header-gradient');
 
@@ -128,13 +106,12 @@
     const scrolled = window.scrollY > 50;
     header.classList.toggle('header--scrolled', scrolled);
     header.classList.toggle('header--on-hero', !scrolled);
-    // header-gradient теперь всегда видим — он всегда поверх всех слоёв (carltonmoscow.com style)
+
   }
 
   window.addEventListener('scroll', onScroll, { passive: true });
   onScroll();
 
-  // ===== МОБИЛЬНОЕ МЕНЮ =====
   const menuBtn = document.getElementById('menu-btn');
   const mobileMenu = document.getElementById('mobile-menu');
   const navDropdown = document.getElementById('nav-dropdown');
@@ -145,12 +122,11 @@
   }
 
   menuBtn.addEventListener('click', function () {
-    if (window.innerWidth >= 768) return; // десктоп: hover открывает nav-dropdown
+    if (window.innerWidth >= 768) return;
     const isOpen = mobileMenu.classList.toggle('is-open');
     menuMobileIcon.innerHTML = isOpen ? ICONS.close : ICONS.menu;
   });
 
-  // Hover на меню на десктопе → открывает nav-dropdown
   menuBtn.addEventListener('mouseenter', function () {
     if (window.innerWidth >= 768) navDropdown.classList.add('is-open');
   });
@@ -161,40 +137,47 @@
     navDropdown.classList.remove('is-open');
   });
 
-  // ===== ЯЗЫКОВОЙ DROPDOWN =====
   const langWrap = document.getElementById('lang-wrap');
   const currentLangEl = document.getElementById('current-lang');
 
   const LANG_LABELS = { ru: 'РУ', kz: 'ҚЗ', en: 'EN' };
 
-  // Применить выбранный язык ко всему сайту
   function applyLang(lang) {
     if (!window.I18N || !I18N[lang]) return;
     I18N.current = lang;
-    // <html lang="..">
+
     document.documentElement.lang = lang;
-    // 1. Все элементы с data-i18n
+
     document.querySelectorAll('[data-i18n]').forEach(function (el) {
       const key = el.dataset.i18n;
       const val = I18N.t(key);
       if (val && val !== key) {
-        // Если в значении есть HTML (например <br>) — пишем innerHTML, иначе textContent
+
         if (/<[a-z]+/i.test(val)) el.innerHTML = val;
         else el.textContent = val;
       }
     });
-    // 2. Селектор языка — обновить «текущий»
+
+    ['placeholder', 'aria-label', 'title'].forEach(function (attr) {
+      const dataKey = 'data-i18n-' + attr;
+      document.querySelectorAll('[' + dataKey + ']').forEach(function (el) {
+        const key = el.getAttribute(dataKey);
+        const val = I18N.t(key);
+        if (val && val !== key) el.setAttribute(attr, val);
+      });
+    });
+
     if (currentLangEl) currentLangEl.textContent = LANG_LABELS[lang] || lang.toUpperCase();
-    // 3. Active state на пунктах dropdown
+
     document.querySelectorAll('.lang-item').forEach(function (i) {
       i.classList.toggle('is-active', i.dataset.lang === lang);
     });
-    // 4. Перерендерить динамические секции (rooms, venues, services, facilities, contacts)
+
     if (typeof renderDynamic === 'function') renderDynamic();
-    // 5. Сохранить выбор
+
     try { localStorage.setItem('medeu_lang', lang); } catch (e) {}
   }
-  // Делаем доступной снаружи на случай если понадобится
+
   window.applyLang = applyLang;
 
   langWrap.addEventListener('mouseenter', function () { langWrap.classList.add('is-open'); });
@@ -208,12 +191,10 @@
     });
   });
 
-  // ===== КАРУСЕЛЬ (универсальная) =====
   function initCarousel(containerId, slides, dotsId, interval) {
     const container = document.getElementById(containerId);
     if (!container) return;
 
-    // Создать слайды
     slides.forEach(function (src, i) {
       const slide = document.createElement('div');
       slide.className = 'carousel-slide' + (i === 0 ? ' is-active' : '');
@@ -221,7 +202,6 @@
       container.insertBefore(slide, container.firstChild);
     });
 
-    // Создать точки
     const dotsWrap = document.getElementById(dotsId);
     slides.forEach(function (_, i) {
       const dot = document.createElement('button');
@@ -248,28 +228,40 @@
     }, interval || 6000);
   }
 
-  // Запуск каруселей
   initCarousel('hero-carousel', DATA.heroSlides, 'hero-dots', 6000);
   initCarousel('banquet-carousel', DATA.banquetSlides, 'banquet-dots', 6000);
 
+  if (DATA.heroVideo) {
+    const heroVideo = document.getElementById('hero-video');
+    const heroCarousel = document.getElementById('hero-carousel');
+    if (heroVideo && heroCarousel) {
+      heroVideo.src = DATA.heroVideo;
+      heroVideo.style.display = '';
+      heroCarousel.classList.add('hero-carousel--has-video');
+      const playPromise = heroVideo.play();
+      if (playPromise && playPromise.catch) {
+        playPromise.catch(function () {});
+      }
+    }
+  }
+
   function renderDynamic() {
-  // ===== РЕНДЕР: 4 категории на главной =====
+
   const facilityGrid = document.getElementById('facility-grid');
   facilityGrid.innerHTML = DATA.facilities.map(function (f) {
     return ''
       + '<a href="#' + f.id + '" data-nav="' + f.id + '" class="facility-card">'
-      +   '<div class="facility-card__image lazy-bg img-skeleton" data-bg="' + f.img + '"></div>'
+      +   '<div class="facility-card__image" style="background-image: url(' + f.img + ');"></div>'
       +   '<div class="facility-card__overlay"></div>'
       +   '<div class="facility-card__content">'
-      +     '<div class="hero-overline" style="margin-bottom: 12px; font-size: 10px;">Категория</div>'
-      +     '<h3 class="facility-card__title">' + f.name + '</h3>'
-      +     '<p class="facility-card__desc">' + f.desc + '</p>'
-      +     '<div class="facility-card__cta"><span>Перейти</span>' + ICONS.arrow + '</div>'
+      +     '<div class="hero-overline" style="margin-bottom: 12px; font-size: 10px;">' + (window.I18N ? I18N.t('facilities.categoryLabel') : 'Категория') + '</div>'
+      +     '<h3 class="facility-card__title">' + (window.I18N && f.nameKey ? I18N.t(f.nameKey) : f.name) + '</h3>'
+      +     '<p class="facility-card__desc">' + (window.I18N && f.descKey ? I18N.t(f.descKey) : f.desc) + '</p>'
+      +     '<div class="facility-card__cta"><span>' + (window.I18N ? I18N.t('facilities.cta') : 'Перейти') + '</span>' + ICONS.arrow + '</div>'
       +   '</div>'
       + '</a>';
   }).join('');
 
-  // ===== РЕНДЕР: НОМЕРА =====
   const roomsStack = document.getElementById('rooms-stack');
   roomsStack.innerHTML = DATA.rooms.map(function (room, idx) {
     const num = idx + 1 < 10 ? '0' + (idx + 1) : '' + (idx + 1);
@@ -303,7 +295,6 @@
       + '</div>';
   }).join('');
 
-  // ===== РЕНДЕР: РЕСТОРАН =====
   const venuesStack = document.getElementById('venues-stack');
   venuesStack.innerHTML = DATA.venues.map(function (venue, idx) {
     const num = '0' + (idx + 1);
@@ -314,11 +305,11 @@
       +     '<div class="venue-image lazy-bg img-skeleton" data-bg="' + venue.image + '"></div>'
       +     '<div class="venue-image-meta">'
       +       '<span class="venue-number">№ ' + num + '</span>'
-      +       '<span class="venue-image-subtitle">' + venue.subtitle + '</span>'
+      +       '<span class="venue-image-subtitle">' + (window.I18N && venue.subtitleKey ? I18N.t(venue.subtitleKey) : venue.subtitle) + '</span>'
       +     '</div>'
       +   '</div>'
       +   '<div class="venue-info">'
-      +     '<h3 class="display-h3">' + venue.name + '<span class="venue-subtitle">«' + venue.subtitle + '»</span></h3>'
+      +     '<h3 class="display-h3">' + (window.I18N && venue.nameKey ? I18N.t(venue.nameKey) : venue.name) + '<span class="venue-subtitle">«' + (window.I18N && venue.subtitleKey ? I18N.t(venue.subtitleKey) : venue.subtitle) + '»</span></h3>'
       +     '<div class="vignette my-6">'
       +       '<span class="vignette-line"></span>'
       +       '<svg width="28" height="10" viewBox="0 0 28 10" aria-hidden="true">'
@@ -339,17 +330,16 @@
       + '</div>';
   }).join('');
 
-  // ===== РЕНДЕР: УСЛУГИ =====
   const servicesList = document.getElementById('services-list');
   if (servicesList && DATA.services) {
     servicesList.innerHTML = DATA.services.map(function (service, idx) {
       const num = '0' + (idx + 1);
       const icon = ICONS[service.icon] || ICONS.phone;
-      const hoursLine = service.hours
+      const hoursLine = (window.I18N && service.hoursKey ? I18N.t(service.hoursKey) : service.hours)
         ? '<div class="service-meta-row"><span class="overline">' + (window.I18N ? I18N.t('services.hoursLabel') : 'Часы') + '</span> ' + (window.I18N && service.hoursKey ? I18N.t(service.hoursKey) : service.hours) + '</div>'
         : '';
       const phoneClean = service.phone.replace(/[^\d+]/g, '');
-      const waText = encodeURIComponent('Здравствуйте! Хочу узнать подробнее об услуге «' + service.name + '».');
+      const waText = encodeURIComponent((window.I18N ? I18N.t('whatsapp.serviceInquiry') : 'Здравствуйте! Хочу узнать подробнее об услуге «') + (window.I18N && service.nameKey ? I18N.t(service.nameKey) : service.name) + '».');
       return ''
         + '<div class="service-card">'
         +   '<div class="service-card-num">№ ' + num + '</div>'
@@ -369,7 +359,6 @@
     }).join('');
   }
 
-  // ===== РЕНДЕР: КОНТАКТЫ =====
   const contactsGrid = document.getElementById('contacts-grid');
   const labelMap = {
     'Ресепшн': 'contacts.reception',
@@ -377,7 +366,7 @@
     'Моб. ресепшн': 'contacts.mobReception',
     'Администратор': 'contacts.restaurantAdmin',
     'Моб. администратор': 'contacts.restaurantMob',
-    'Банкетный': 'contacts.banquetMgr',
+    'Банкетный зал': 'contacts.banquetMgr',
   };
   const phoneRowsHtml = function (rows) {
     return rows.map(function (r) {
@@ -416,7 +405,6 @@
   }
   renderDynamic();
 
-  // ===== Заполнение контактов на главной =====
   document.getElementById('addr-value').textContent = DATA.contacts.address;
   document.getElementById('phone1-value').textContent = DATA.contacts.phone1;
   document.getElementById('phone2-value').textContent = DATA.contacts.phone2;
@@ -424,25 +412,19 @@
   document.getElementById('btn-2gis').href = DATA.contacts.gis2Url;
   document.getElementById('btn-google').href = DATA.contacts.googleUrl;
 
-  // ===== Контакты в футере =====
   document.getElementById('footer-contacts').innerHTML =
     DATA.contacts.phone1 + '<br>' +
     DATA.contacts.phone2 + '<br>' +
     DATA.contacts.email;
 
-  // ===== Год в футере =====
   document.getElementById('year').textContent = new Date().getFullYear();
 
-  // ===== Конференц-зал фон =====
   const confImg = document.getElementById('conference-image');
   if (confImg) {
     confImg.classList.add('lazy-bg', 'img-skeleton');
     confImg.dataset.bg = DATA.conferenceImage;
   }
 
-  // ===== Map-visual: теперь 2GIS виджет (вставлен в HTML, фон не нужен) =====
-
-  // ===== Page-hero фоны (берутся из DATA.pageHero) =====
   document.querySelectorAll('.page-hero[data-page-hero]').forEach(function (el) {
     const pageId = el.dataset.pageHero;
     const bg = DATA.pageHero && DATA.pageHero[pageId];
@@ -453,13 +435,11 @@
     }
   });
 
-  // ===== LAZY LOADING фоновых картинок =====
-  // Грузим изображение только когда блок появляется в viewport
   function triggerLazyLoad() {
     const targets = document.querySelectorAll('.lazy-bg:not(.is-loaded)');
 
     if (!('IntersectionObserver' in window)) {
-      // Старый браузер — грузим всё сразу
+
       targets.forEach(loadBg);
       return;
     }
@@ -496,9 +476,6 @@
 
   triggerLazyLoad();
 
-  // ===== МОДАЛ БРОНИРОВАНИЯ НОМЕРА =====
-  // Открывается с любой кнопки `.booking-open` (главный hero + каждая карточка номера).
-  // Собирает данные → формирует структурированный текст → открывает WhatsApp ресепшна.
   const bookingModal = document.getElementById('booking-modal');
   const bookingForm = document.getElementById('booking-form');
   const bookingRoomSelect = document.getElementById('booking-room');
@@ -506,14 +483,14 @@
   function openBookingModal(prefRoom) {
     if (!bookingModal) return;
     if (prefRoom && bookingRoomSelect) {
-      // Предзаполняем тип номера, если открыли с конкретной карточки
+
       Array.from(bookingRoomSelect.options).forEach(function (opt) {
         if (opt.value === prefRoom) opt.selected = true;
       });
     }
     bookingModal.classList.add('modal--open');
     document.body.style.overflow = 'hidden';
-    // Дата заезда по умолчанию = сегодня; выезда = +1 день
+
     const today = new Date();
     const tomorrow = new Date(today.getTime() + 24 * 60 * 60 * 1000);
     const fmt = function (d) { return d.toISOString().slice(0, 10); };
@@ -530,7 +507,7 @@
   }
 
   if (bookingModal) {
-    // Любая кнопка/ссылка с классом .booking-open открывает модал
+
     document.addEventListener('click', function (e) {
       const trigger = e.target.closest('.booking-open');
       if (!trigger) return;
@@ -539,7 +516,6 @@
       openBookingModal(prefRoom);
     });
 
-    // Закрытие — крестик, кнопка отмены, клик по фону, Escape
     bookingModal.addEventListener('click', function (e) {
       if (e.target.closest('[data-close]') || e.target === bookingModal) {
         closeBookingModal();
@@ -551,7 +527,6 @@
       }
     });
 
-    // Сбор данных в плоский объект — нужен и для email, и для WhatsApp
     function collectBookingData() {
       const fd = new FormData(bookingForm);
       const fmtDate = function (s) {
@@ -573,7 +548,6 @@
       };
     }
 
-    // Формируем красивый текст заявки (для email и WhatsApp)
     function formatBookingMessage(d) {
       const lines = [
         'Заявка на бронирование номера с сайта medeuhotel.kz',
@@ -592,7 +566,6 @@
       return lines.join('\n');
     }
 
-    // Показ success-сообщения в модале
     function showBookingSuccess() {
       const form = bookingForm;
       const success = document.getElementById('booking-success');
@@ -611,7 +584,6 @@
       }
     }
 
-    // Главный submit — отправка на email (Formspree → mailto: fallback)
     if (bookingForm) {
       bookingForm.addEventListener('submit', function (e) {
         e.preventDefault();
@@ -622,7 +594,7 @@
         const formspreeUrl = (DATA.contacts.formspreeUrl || '').trim();
 
         if (formspreeUrl) {
-          // Отправка через Formspree
+
           const submitBtn = bookingForm.querySelector('[type="submit"]');
           if (submitBtn) submitBtn.disabled = true;
 
@@ -650,7 +622,7 @@
             if (submitBtn) submitBtn.disabled = false;
           });
         } else {
-          // Formspree не подключён — открываем почтовый клиент пользователя
+
           fallbackMailto();
         }
 
@@ -660,17 +632,16 @@
             '?subject=' + encodeURIComponent(subject) +
             '&body=' + encodeURIComponent(message);
           window.location.href = href;
-          // Через секунду закрываем модал — большинство email-клиентов уже откроется
+
           setTimeout(function () { showBookingSuccess(); }, 500);
         }
       });
     }
 
-    // Запасная кнопка — отправка через WhatsApp
     const waBookBtn = document.getElementById('booking-wa-btn');
     if (waBookBtn) {
       waBookBtn.addEventListener('click', function () {
-        // Полная проверка обязательных полей — браузер сам подсветит первое незаполненное
+
         if (!bookingForm.checkValidity()) {
           bookingForm.reportValidity();
           return;
@@ -683,7 +654,6 @@
       });
     }
 
-    // При закрытии модала — сбросить форму обратно в исходное состояние
     bookingModal.addEventListener('click', function (e) {
       if (e.target.closest('[data-close]') || e.target === bookingModal) {
         setTimeout(resetBookingForm, 300);
@@ -691,11 +661,9 @@
     });
   }
 
-  // ===== Стартовая навигация (по hash из URL) =====
   const initialPage = window.location.hash.slice(1) || 'home';
   navigate(initialPage);
 
-  // ===== Применить сохранённый язык при загрузке =====
   var savedLang = null;
   try { savedLang = localStorage.getItem('medeu_lang'); } catch (e) {}
   if (savedLang && window.I18N && I18N[savedLang]) {

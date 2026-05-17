@@ -9,7 +9,6 @@
 
   <link rel="canonical" href="https://aleksey1854.github.io/medeu-site/">
 
-  <!-- Open Graph (Facebook, WhatsApp, Telegram) -->
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="MEDEU Hotel">
   <meta property="og:title" content="MEDEU · Гостиничный комплекс в Костанае">
@@ -20,19 +19,16 @@
   <meta property="og:image:height" content="630">
   <meta property="og:locale" content="ru_RU">
 
-  <!-- Twitter cards -->
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="MEDEU · Гостиничный комплекс в Костанае">
   <meta name="twitter:description" content="Четырёхзвёздная гостиница в сердце Костаная.">
   <meta name="twitter:image" content="https://aleksey1854.github.io/medeu-site/assets/og-image.jpg">
 
-  <title>MEDEU · Гостиничный комплекс в Костанае</title>
+  <title data-i18n="meta.title">MEDEU · Гостиничный комплекс в Костанае</title>
 
-  <!-- Favicons -->
   <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
   <link rel="apple-touch-icon" sizes="180x180" href="assets/apple-touch-icon.png">
 
-  <!-- Schema.org Hotel — для Google Maps и поисковиков -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -74,6 +70,11 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
+  <link rel="preload" as="image" href="assets/photos/rooms/apartments-1.webp">
+  <link rel="preload" as="image" href="assets/photos/restaurant/veranda-11.webp">
+  <link rel="preload" as="image" href="assets/photos/banquet/main-7.webp">
+  <link rel="preload" as="image" href="assets/photos/restaurant/billiard-4.webp">
+
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@300;400;500&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
 
   <link rel="stylesheet" href="styles.css">
@@ -81,21 +82,20 @@
 
 <body>
 
-  <!-- ==================== HEADER ==================== -->
   <div class="header-gradient"></div>
 
   <header class="header header--on-hero" id="header">
     <div class="header-inner">
       <div class="header-bar">
 
-        <button class="menu-btn" id="menu-btn" aria-label="Меню">
+        <button class="menu-btn" id="menu-btn" aria-label="Меню" data-i18n-aria-label="aria.menu">
           <span class="menu-lines">
             <span class="menu-line"></span>
             <span class="menu-line"></span>
             <span class="menu-line"></span>
           </span>
           <span class="menu-mobile-icon" id="menu-mobile-icon" aria-hidden="true">
-            <!-- иконка вставляется JS-ом -->
+
           </span>
           <span class="menu-label" data-i18n="nav.menu">Меню</span>
         </button>
@@ -105,8 +105,8 @@
         </a>
 
         <div class="header-right">
-          <button class="theme-toggle" id="theme-toggle" aria-label="Переключить тему">
-            <!-- иконка вставляется JS-ом -->
+          <button class="theme-toggle" id="theme-toggle" aria-label="Переключить тему" data-i18n-aria-label="aria.theme">
+
           </button>
 
           <div class="lang-wrap" id="lang-wrap">
@@ -149,31 +149,29 @@
     <div class="mobile-menu" id="mobile-menu">
       <div class="mobile-menu-inner">
         <a href="#home" class="mobile-link" data-nav="home" data-i18n="nav.home">Главная</a>
-        <a href="#rooms" class="mobile-link" data-nav="rooms" data-i18n="nav.rooms" data-i18n="pageHero.rooms_title">Номера</a>
-        <a href="#restaurant" class="mobile-link" data-nav="restaurant" data-i18n="nav.gastronomy" data-i18n="pageHero.restaurant_title">Гастрономия</a>
-        <a href="#banquet" class="mobile-link" data-nav="banquet" data-i18n="nav.banquet" data-i18n="pageHero.banquet_title">Банкетный зал</a>
-        <a href="#services" class="mobile-link" data-nav="services" data-i18n="nav.services" data-i18n="pageHero.services_title">Услуги</a>
-        <a href="#contacts" class="mobile-link" data-nav="contacts" data-i18n="nav.contacts" data-i18n="contacts.title" data-i18n="footer.contactsHeader">Контакты</a>
+        <a href="#rooms" class="mobile-link" data-nav="rooms" data-i18n="nav.rooms">Номера</a>
+        <a href="#restaurant" class="mobile-link" data-nav="restaurant" data-i18n="nav.gastronomy">Гастрономия</a>
+        <a href="#banquet" class="mobile-link" data-nav="banquet" data-i18n="nav.banquet">Банкетный зал</a>
+        <a href="#services" class="mobile-link" data-nav="services" data-i18n="nav.services">Услуги</a>
+        <a href="#contacts" class="mobile-link" data-nav="contacts" data-i18n="nav.contacts">Контакты</a>
       </div>
     </div>
   </header>
 
-  <!-- ==================== WHATSAPP FLOAT ==================== -->
-  <a href="#" class="wa-float" id="wa-float" target="_blank" rel="noopener noreferrer" aria-label="Написать в WhatsApp">
+  <a href="#" class="wa-float" id="wa-float" target="_blank" rel="noopener noreferrer" aria-label="Написать в WhatsApp" data-i18n-aria-label="aria.wa">
     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
   </a>
 
-  <!-- ==================== MAIN ==================== -->
   <main id="app">
 
-    <!-- ===== ГЛАВНАЯ ===== -->
     <section class="page page--active" id="page-home">
 
       <div class="carousel hero-carousel" id="hero-carousel">
+        <video class="hero-video" id="hero-video" muted loop playsinline preload="metadata" style="display:none;"></video>
         <div class="carousel-overlay"></div>
 
         <div class="hero-content">
-          <div class="hero-overline">— Гостиничный комплекс · Костанай —</div>
+          <div class="hero-overline" data-i18n="hero.overline">— Гостиничный комплекс · Костанай —</div>
           <h1 class="hero-title">MEDEU</h1>
           <div class="hero-tagline-wrap">
             <div class="vignette vignette--on-image mb-6">
@@ -246,7 +244,7 @@
           </div>
 
           <div class="map-visual map-visual--wide" id="map-visual">
-            <!-- Google Maps embed: отель Medeu, Костанай -->
+
             <iframe
               src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2389.0268420643847!2d63.62989167661875!3d53.217367072252216!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x43cc8a6880243bc3%3A0xb5b5f1a737bf79fa!2sMedeu%20Hotel!5e0!3m2!1sru!2skz!4v1778926223061!5m2!1sru!2skz"
               width="100%"
@@ -272,30 +270,29 @@
 
           <div class="map-info-row">
             <div class="map-info-item">
-              <div class="overline">Адрес</div>
+              <div class="overline" data-i18n="map.addressLabel">Адрес</div>
               <div class="contact-value" id="addr-value"></div>
             </div>
             <div class="map-info-item">
-              <div class="overline">Телефон</div>
+              <div class="overline" data-i18n="map.phoneLabel">Телефон</div>
               <div class="contact-value" id="phone1-value"></div>
               <div class="contact-value" id="phone2-value"></div>
             </div>
             <div class="map-info-item">
-              <div class="overline">Почта</div>
+              <div class="overline" data-i18n="map.emailLabel">Почта</div>
               <div class="contact-value" id="email-value"></div>
             </div>
           </div>
         </div>
       </section>
 
-    </section><!-- /page-home -->
+    </section>
 
-    <!-- ===== НОМЕРА ===== -->
     <section class="page" id="page-rooms">
       <div class="page-hero" data-page-hero="rooms">
         <div class="ctnr-xl page-hero-content">
-          <div class="hero-overline" style="margin-bottom: 24px;">— Размещение —</div>
-          <h1 class="page-hero-title">Номера</h1>
+          <div class="hero-overline" style="margin-bottom: 24px;" data-i18n="pageHero.rooms_overline">— Размещение —</div>
+          <h1 class="page-hero-title" data-i18n="pageHero.rooms_title">Номера</h1>
           <p class="page-hero-tagline" data-i18n="pageHero.rooms_tagline">Шесть категорий номеров, оборудованных в соответствии с высочайшими стандартами индустрии гостеприимства</p>
         </div>
       </div>
@@ -305,14 +302,13 @@
           <div class="rooms-stack" id="rooms-stack"></div>
         </div>
       </section>
-    </section><!-- /page-rooms -->
+    </section>
 
-    <!-- ===== РЕСТОРАН ===== -->
     <section class="page" id="page-restaurant">
       <div class="page-hero" data-page-hero="restaurant">
         <div class="ctnr-xl page-hero-content">
           <div class="hero-overline" style="margin-bottom: 24px;" data-i18n="pageHero.restaurant_overline">— Кухня и атмосфера —</div>
-          <h1 class="page-hero-title">Гастрономия</h1>
+          <h1 class="page-hero-title" data-i18n="pageHero.restaurant_title">Гастрономия</h1>
           <p class="page-hero-tagline" data-i18n="pageHero.restaurant_tagline">Четыре пространства, объединённых одной философией гостеприимства</p>
         </div>
       </div>
@@ -322,14 +318,13 @@
           <div class="venues-stack" id="venues-stack"></div>
         </div>
       </section>
-    </section><!-- /page-restaurant -->
+    </section>
 
-    <!-- ===== БАНКЕТНЫЙ ЗАЛ ===== -->
     <section class="page" id="page-banquet">
       <div class="page-hero" data-page-hero="banquet">
         <div class="ctnr-xl page-hero-content">
           <div class="hero-overline" style="margin-bottom: 24px;" data-i18n="pageHero.banquet_overline">— Особые события —</div>
-          <h1 class="page-hero-title">Банкетный зал</h1>
+          <h1 class="page-hero-title" data-i18n="pageHero.banquet_title">Банкетный зал</h1>
           <p class="page-hero-tagline" data-i18n="pageHero.banquet_tagline">Пространство для торжеств, корпоративных и деловых событий</p>
         </div>
       </div>
@@ -341,7 +336,7 @@
             <div class="carousel-overlay"></div>
             <div class="banquet-hero-caption">
               <div class="hero-overline">— Medeu —</div>
-              <h2 class="banquet-hero-title">Банкетный зал «Medeu»</h2>
+              <h2 class="banquet-hero-title" data-i18n="banquet.heroTitle">Банкетный зал «Medeu»</h2>
             </div>
             <div class="carousel-dots" id="banquet-dots"></div>
           </div>
@@ -360,14 +355,14 @@
                 </svg>
                 <span class="vignette-line"></span>
               </div>
-              <p class="body-prose">
-                Элегантный банкетный зал в самом центре города, объединяющий масштаб, современное техническое оснащение и атмосферу безупречного сервиса для мероприятий любого формата. Светлый, просторный зал оснащён профессиональным музыкальным и световым оборудованием, тремя LED-экранами. Профессиональная команда менеджеров возьмёт на себя все организационные вопросы.
-              </p>
+              <p class="body-prose" data-i18n="banquet.description">
+              Элегантный банкетный зал в самом центре города, объединяющий масштаб, современное техническое оснащение и атмосферу безупречного сервиса для мероприятий любого формата. Светлый, просторный зал оснащён профессиональным музыкальным и световым оборудованием, тремя LED-экранами. Профессиональная команда менеджеров возьмёт на себя все организационные вопросы.
+            </p>
               <div class="capacity-stack">
                 <div class="capacity-row">
                   <div class="capacity-number" data-i18n="banquet.capacity">до 230</div>
                   <div>
-                    <div class="overline">Гостей</div>
+                    <div class="overline" data-i18n="banquet.capacityLabel">Гостей</div>
                     <div class="capacity-label" data-i18n="banquet.capacityCaption">Вместимость зала</div>
                   </div>
                 </div>
@@ -382,7 +377,7 @@
 
             <div class="restoplace-card">
               <div class="overline" style="margin-bottom: 24px;" data-i18n="banquet.includedTitle">— Что включено —</div>
-              <h3 class="restoplace-title">Полный комплекс<br>для торжества</h3>
+              <h3 class="restoplace-title" data-i18n="banquet.includedHeading">Полный комплекс<br>для торжества</h3>
               <ul class="banquet-features">
                 <li data-i18n="banquet.features.0">Профессиональное звуковое и световое оборудование</li>
                 <li data-i18n="banquet.features.1">Три LED-экрана для презентаций и оформления</li>
@@ -403,7 +398,7 @@
               <a href="https://wa.me/77755215706?text=Здравствуйте! Хочу уточнить детали по банкетному залу." target="_blank" rel="noopener noreferrer" class="manager-card manager-card--link">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" style="color: var(--c-gold); flex-shrink: 0;" aria-hidden="true"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
                 <div>
-                  <div class="overline">Банкетный менеджер</div>
+                  <div class="overline" data-i18n="banquet.managerLabel">Банкетный менеджер</div>
                   <div class="manager-value">+7 (775) 521-57-06 · WhatsApp</div>
                 </div>
               </a>
@@ -415,8 +410,8 @@
       <section class="section section--lg" style="border-top: 1px solid var(--c-divider);">
         <div class="ctnr-lg conference-grid">
           <div class="conference-text">
-            <div class="overline" style="margin-bottom: 12px;">— Деловой формат —</div>
-            <h3 class="display-h3">Конференц-зал</h3>
+            <div class="overline" style="margin-bottom: 12px;" data-i18n="banquet.conferenceOverline">— Деловой формат —</div>
+            <h3 class="display-h3" data-i18n="banquet.conferenceTitle">Конференц-зал</h3>
             <div class="vignette my-6">
               <span class="vignette-line"></span>
               <svg width="28" height="10" viewBox="0 0 28 10" aria-hidden="true">
@@ -430,9 +425,9 @@
             </p>
             <div class="capacity-stack">
               <div class="capacity-row">
-                <div class="capacity-number">до 30</div>
+                <div class="capacity-number" data-i18n="banquet.conferenceCapacity">до 30</div>
                 <div>
-                  <div class="overline">Человек</div>
+                  <div class="overline" data-i18n="banquet.conferenceCapacityLabel">Человек</div>
                   <div class="capacity-label">Вместимость зала</div>
                 </div>
               </div>
@@ -449,14 +444,13 @@
           </div>
         </div>
       </section>
-    </section><!-- /page-banquet -->
+    </section>
 
-    <!-- ===== УСЛУГИ ===== -->
     <section class="page" id="page-services">
       <div class="page-hero" data-page-hero="services">
         <div class="ctnr-xl page-hero-content">
           <div class="hero-overline" style="margin-bottom: 24px;" data-i18n="pageHero.services_overline">— Дополнительные услуги —</div>
-          <h1 class="page-hero-title">Услуги</h1>
+          <h1 class="page-hero-title" data-i18n="pageHero.services_title">Услуги</h1>
           <p class="page-hero-tagline" data-i18n="pageHero.services_tagline">Всё для комфортного пребывания и торжественных событий</p>
         </div>
       </div>
@@ -477,19 +471,18 @@
             </p>
           </div>
           <div class="services-grid" id="services-list">
-            <!-- Карточки услуг рендерятся из data.js через script.js -->
+
           </div>
         </div>
       </section>
-    </section><!-- /page-services -->
+    </section>
 
-    <!-- ===== КОНТАКТЫ ===== -->
     <section class="page" id="page-contacts">
       <div class="contacts-page">
         <div class="ctnr-md">
           <div style="text-align: center; margin-bottom: 64px;">
             <div class="overline" data-i18n="contacts.overline">— Связаться с нами —</div>
-            <h2 class="display-h2">Контакты</h2>
+            <h2 class="display-h2" data-i18n="contacts.title">Контакты</h2>
           </div>
           <div class="vignette mb-12">
             <span class="vignette-line"></span>
@@ -502,11 +495,10 @@
           <div class="contacts-grid" id="contacts-grid"></div>
         </div>
       </div>
-    </section><!-- /page-contacts -->
+    </section>
 
   </main>
 
-  <!-- ==================== FOOTER ==================== -->
   <footer class="footer">
     <div class="ctnr-xl">
       <div class="footer-grid">
@@ -533,15 +525,15 @@
           <a href="#services" class="footer-link" data-nav="services" data-i18n="nav.services">Услуги</a>
         </div>
         <div>
-          <div class="overline overline--gold" style="margin-bottom: 16px;">Контакты</div>
+          <div class="overline overline--gold" style="margin-bottom: 16px;" data-i18n="footer.contactsHeader">Контакты</div>
           <div class="footer-info" id="footer-contacts"></div>
         </div>
         <div>
           <div class="overline overline--gold" style="margin-bottom: 16px;" data-i18n="footer.hoursHeader">Часы работы</div>
           <div class="footer-info">
-            Заселение: 14:00<br>
-            Выезд: 12:00<br>
-            Ресепшен: 24/7
+            <span data-i18n="footer.checkin">Заселение: 14:00</span><br>
+            <span data-i18n="footer.checkout">Выезд: 12:00</span><br>
+            <span data-i18n="footer.reception24">Ресепшен: 24/7</span>
           </div>
         </div>
       </div>
@@ -554,17 +546,16 @@
         <span class="vignette-line"></span>
       </div>
       <div class="footer-bottom">
-        <div class="footer-copy">© <span id="year"></span> Гостиничный комплекс «Медеу»</div>
-        <div class="overline">v1.0 · Тестовая версия</div>
+        <div class="footer-copy">© <span id="year"></span> <span data-i18n="footer.copy">Гостиничный комплекс «Медеу»</span></div>
+
       </div>
     </div>
   </footer>
 
-  <!-- ================== МОДАЛ БРОНИРОВАНИЯ НОМЕРА ================== -->
   <div class="modal" id="booking-modal" role="dialog" aria-modal="true" aria-labelledby="booking-modal-title">
     <div class="modal-overlay" data-close></div>
     <div class="modal-window">
-      <button type="button" class="modal-close" data-close aria-label="Закрыть">
+      <button type="button" class="modal-close" data-close aria-label="Закрыть" data-i18n-aria-label="aria.close">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
       </button>
 
@@ -612,13 +603,13 @@
           <label class="form-field form-field--full">
             <span class="form-label" data-i18n="modal.roomType">Тип номера *</span>
             <select name="roomType" id="booking-room" required>
-              <option value="">Выберите категорию</option>
-              <option value="Стандарт">Стандарт · 28 000 ₸</option>
-              <option value="Полулюкс">Полулюкс · 34 000 ₸</option>
-              <option value="Двухместный полулюкс">Двухместный полулюкс · 45 000 ₸</option>
-              <option value="Семейный">Семейный · 55 000 ₸</option>
-              <option value="Люкс">Люкс · 44 000 ₸</option>
-              <option value="Апартамент">Апартамент · 100 000 ₸</option>
+              <option value="" data-i18n="modal.roomPlaceholder">Выберите категорию</option>
+              <option value="Стандарт" data-i18n="modal.opt_standard">Стандарт · 28 000 ₸</option>
+              <option value="Полулюкс" data-i18n="modal.opt_polulux">Полулюкс · 34 000 ₸</option>
+              <option value="Двухместный полулюкс" data-i18n="modal.opt_polulux_twin">Двухместный полулюкс · 45 000 ₸</option>
+              <option value="Семейный" data-i18n="modal.opt_family">Семейный · 55 000 ₸</option>
+              <option value="Люкс" data-i18n="modal.opt_lux">Люкс · 44 000 ₸</option>
+              <option value="Апартамент" data-i18n="modal.opt_apartments">Апартамент · 100 000 ₸</option>
             </select>
           </label>
         </div>
@@ -636,7 +627,7 @@
 
         <label class="form-field form-field--full">
           <span class="form-label" data-i18n="modal.note">Примечание (необязательно)</span>
-          <textarea name="note" rows="3" placeholder="Особые пожелания, трансфер, время раннего заезда…"></textarea>
+          <textarea name="note" rows="3" placeholder="Особые пожелания, трансфер, время раннего заезда…" data-i18n-placeholder="modal.notePlaceholder"></textarea>
         </label>
 
         <div class="form-actions form-actions--booking">
@@ -653,7 +644,6 @@
         <p class="form-disclaimer" data-i18n="modal.disclaimer">Менеджер свяжется с вами для подтверждения брони. Поля «Заезд» / «Выезд» — обязательны.</p>
       </form>
 
-      <!-- Success state — показывается после успешной отправки -->
       <div id="booking-success" class="booking-success" style="display:none;">
         <div class="booking-success-icon">
           <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
@@ -669,7 +659,6 @@
   <script src="i18n.js"></script>
   <script src="script.js" defer></script>
 
-  <!-- Restoplace widget — онлайн-бронирование для ресторана и банкетного зала -->
   <script src="https://app.restoplace.cc/widget.js?h=57d0bcbf4b55ea8a0b4f" async></script>
 </body>
 </html>

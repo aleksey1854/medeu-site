@@ -1,16 +1,8 @@
-// ============================================================
-// i18n.js — переводы интерфейса (RU / KZ / EN)
-//
-// Применение в HTML: <element data-i18n="nav.home">текст fallback</element>
-// Применение из JS:  I18N.t('nav.home')
-//
-// Чтобы добавить новый ключ — добавь его во все три блока (ru/kz/en).
-// ============================================================
+
 
 window.I18N = {
   current: 'ru',
 
-  // ---------- РУССКИЙ (база) ----------
   ru: {
     nav: {
       menu: 'Меню',
@@ -37,6 +29,8 @@ window.I18N = {
       contacts_name: 'Контакты',
       contacts_desc: 'В сердце Костаная',
       cta: 'Узнать больше',
+
+      categoryLabel: 'Категория',
     },
     about: {
       overline: '— О гостинице —',
@@ -53,9 +47,13 @@ window.I18N = {
       addressLabel: 'Адрес',
       phoneLabel: 'Телефон',
       emailLabel: 'Почта',
+
+      addressLabel: 'Адрес',
+      phoneLabel: 'Телефон',
+      emailLabel: 'Почта',
     },
     pageHero: {
-      rooms_overline: '— Категории —',
+      rooms_overline: '— Размещение —',
       rooms_title: 'Номера',
       rooms_tagline: 'Шесть категорий — от стандарта до апартаментов с джакузи',
       restaurant_overline: '— Кухня и атмосфера —',
@@ -108,12 +106,12 @@ window.I18N = {
       overline: '— Главный зал —',
       title: 'Эффектный двухуровневый зал',
       capacity: 'до 230',
-      capacityLabel: 'гостей',
+      capacityLabel: 'Гостей',
       capacityCaption: 'Вместимость зала',
       description: 'Элегантный банкетный зал в самом центре города, объединяющий масштаб, современное техническое оснащение и атмосферу безупречного сервиса для мероприятий любого формата. Светлый, просторный зал оснащён профессиональным музыкальным и световым оборудованием, тремя LED-экранами. Профессиональная команда менеджеров возьмёт на себя все организационные вопросы.',
       bookDate: 'Забронировать дату',
       includedTitle: '— Что включено —',
-      includedHeading: 'Полный комплекс для торжества',
+      includedHeading: 'Полный комплекс<br>для торжества',
       features: [
         'Профессиональное звуковое и световое оборудование',
         'Три LED-экрана для презентаций и оформления',
@@ -122,10 +120,14 @@ window.I18N = {
         'Кофе-брейки и фуршеты по запросу',
       ],
       managerLabel: 'Банкетный менеджер',
-      conferenceOverline: '— Конференц-зал —',
+      conferenceOverline: '— Деловой формат —',
       conferenceTitle: 'Для деловых событий',
       conferenceDesc: 'Конференц-зал на 30 человек, оснащённый флип-чартом, мультимедийным оборудованием и зоной для кофе-брейков. Подходит для презентаций, тренингов и деловых встреч.',
       conferenceCta: 'Уточнить свободные даты',
+
+      heroTitle: 'Банкетный зал «Medeu»',
+      conferenceCapacity: 'до 30',
+      conferenceCapacityLabel: 'Человек',
     },
     services: {
       intro: 'В дополнение к проживанию и гастрономии мы предлагаем гостям и партнёрам комплекс сервисов — от тайского СПА до организации трансферов и оформления праздничных столов.',
@@ -185,6 +187,13 @@ window.I18N = {
       successTitle: 'Заявка отправлена',
       successText: 'Спасибо! Менеджер ресепшна свяжется с вами в ближайшее время для подтверждения брони.',
       closeBtn: 'Закрыть',
+
+      opt_standard: 'Стандарт · 28 000 ₸',
+      opt_polulux: 'Полулюкс · 34 000 ₸',
+      opt_polulux_twin: 'Двухместный полулюкс · 45 000 ₸',
+      opt_family: 'Семейный · 55 000 ₸',
+      opt_lux: 'Люкс · 44 000 ₸',
+      opt_apartments: 'Апартамент · 100 000 ₸',
     },
     footer: {
       tagline: 'Гостиничный комплекс в центре Костаная',
@@ -218,9 +227,12 @@ window.I18N = {
       text: 'Возможно, страница была перемещена или удалена.<br>Вернитесь на главную, чтобы продолжить знакомство с гостиничным комплексом «Медеу».',
       btn: 'На главную',
     },
+    meta: { title: 'MEDEU · Гостиничный комплекс в Костанае' },
+    aria: { menu: 'Меню', close: 'Закрыть', theme: 'Переключить тему', wa: 'Написать в WhatsApp' },
+    carousel: { slide: 'Слайд' },
+    whatsapp: { serviceInquiry: 'Здравствуйте! Хочу узнать подробнее об услуге «' },
   },
 
-  // ---------- ҚАЗАҚША ----------
   kz: {
     nav: {
       menu: 'Мәзір',
@@ -247,6 +259,8 @@ window.I18N = {
       contacts_name: 'Байланыс',
       contacts_desc: 'Қостанайдың жүрегінде',
       cta: 'Толығырақ',
+
+      categoryLabel: 'Санат',
     },
     about: {
       overline: '— Қонақ үй жайында —',
@@ -263,9 +277,13 @@ window.I18N = {
       addressLabel: 'Мекенжай',
       phoneLabel: 'Телефон',
       emailLabel: 'Пошта',
+
+      addressLabel: 'Мекенжай',
+      phoneLabel: 'Телефон',
+      emailLabel: 'Пошта',
     },
     pageHero: {
-      rooms_overline: '— Санаттар —',
+      rooms_overline: '— Орналастыру —',
       rooms_title: 'Нөмірлер',
       rooms_tagline: 'Алты санат — стандарттан джакузиі бар апартаментке дейін',
       restaurant_overline: '— Тағам және атмосфера —',
@@ -318,12 +336,12 @@ window.I18N = {
       overline: '— Басты зал —',
       title: 'Әсем екі деңгейлі зал',
       capacity: '230-ға дейін',
-      capacityLabel: 'қонақ',
+      capacityLabel: 'Қонақ',
       capacityCaption: 'Залдың сыйымдылығы',
       description: 'Қаланың дәл орталығындағы талғампаз банкет залы — масштабты, заманауи техникалық жабдықтауды және кез келген формат іс-шараларға арналған мінсіз қызмет атмосферасын біріктіреді. Жарық, кең зал кәсіби музыкалық және жарықтық жабдықпен, үш LED-экранмен жабдықталған. Кәсіби менеджерлер тобы барлық ұйымдастыру мәселелерін мойнына алады.',
       bookDate: 'Күн брондау',
       includedTitle: '— Кіретіндер —',
-      includedHeading: 'Мерекеге арналған толық кешен',
+      includedHeading: 'Мерекеге арналған<br>толық кешен',
       features: [
         'Кәсіби дыбыс және жарық жабдығы',
         'Презентациялар мен әрлеуге арналған үш LED-экран',
@@ -332,10 +350,14 @@ window.I18N = {
         'Тапсырыс бойынша кофе-брейк және фуршеттер',
       ],
       managerLabel: 'Банкет менеджері',
-      conferenceOverline: '— Конференц-зал —',
+      conferenceOverline: '— Іскерлік формат —',
       conferenceTitle: 'Іскерлік іс-шараларға',
       conferenceDesc: '30 адамдық конференц-зал, флип-чартпен, мультимедиялық жабдықпен және кофе-брейк аймағымен қамтамасыз етілген. Презентацияларға, тренингтерге және іскерлік кездесулерге сай.',
       conferenceCta: 'Бос күндерді нақтылау',
+
+      heroTitle: '«Medeu» банкет залы',
+      conferenceCapacity: '30-ға дейін',
+      conferenceCapacityLabel: 'Адам',
     },
     services: {
       intro: 'Тұру мен гастрономияға қосымша біз қонақтар мен серіктестерге кешенді қызметтер ұсынамыз — тай SPA-дан трансфер ұйымдастыруға және мерекелік үстелді безендіруге дейін.',
@@ -395,6 +417,13 @@ window.I18N = {
       successTitle: 'Өтінім жіберілді',
       successText: 'Рахмет! Ресепшн менеджері брондауды растау үшін жақын арада сізбен хабарласады.',
       closeBtn: 'Жабу',
+
+      opt_standard: 'Стандарт · 28 000 ₸',
+      opt_polulux: 'Жартылай люкс · 34 000 ₸',
+      opt_polulux_twin: 'Екі кісілік жартылай люкс · 45 000 ₸',
+      opt_family: 'Отбасылық · 55 000 ₸',
+      opt_lux: 'Люкс · 44 000 ₸',
+      opt_apartments: 'Апартамент · 100 000 ₸',
     },
     footer: {
       tagline: 'Қостанай орталығындағы қонақ үй кешені',
@@ -428,9 +457,12 @@ window.I18N = {
       text: 'Бет жылжытылған немесе жойылған болуы мүмкін.<br>«Медеу» қонақ үй кешенімен танысуды жалғастыру үшін басты бетке оралыңыз.',
       btn: 'Басты бетке',
     },
+    meta: { title: 'MEDEU · Қостанайдағы қонақ үй кешені' },
+    aria: { menu: 'Мәзір', close: 'Жабу', theme: 'Тақырыпты ауыстыру', wa: 'WhatsApp-қа жазу' },
+    carousel: { slide: 'Слайд' },
+    whatsapp: { serviceInquiry: 'Сәлеметсіз бе! Қызмет туралы толығырақ білгім келеді: «' },
   },
 
-  // ---------- ENGLISH ----------
   en: {
     nav: {
       menu: 'Menu',
@@ -457,6 +489,8 @@ window.I18N = {
       contacts_name: 'Contacts',
       contacts_desc: 'In the heart of Kostanay',
       cta: 'Learn more',
+
+      categoryLabel: 'Category',
     },
     about: {
       overline: '— About the Hotel —',
@@ -473,9 +507,13 @@ window.I18N = {
       addressLabel: 'Address',
       phoneLabel: 'Phone',
       emailLabel: 'Email',
+
+      addressLabel: 'Address',
+      phoneLabel: 'Phone',
+      emailLabel: 'Email',
     },
     pageHero: {
-      rooms_overline: '— Categories —',
+      rooms_overline: '— Accommodation —',
       rooms_title: 'Rooms',
       rooms_tagline: 'Six categories — from Standard to Apartment with jacuzzi',
       restaurant_overline: '— Cuisine and atmosphere —',
@@ -528,12 +566,12 @@ window.I18N = {
       overline: '— Main Hall —',
       title: 'An impressive two-level hall',
       capacity: 'up to 230',
-      capacityLabel: 'guests',
+      capacityLabel: 'Гостей',
       capacityCaption: 'Hall capacity',
       description: 'An elegant banquet hall in the very heart of the city, combining scale, modern technical equipment and an atmosphere of impeccable service for events of any format. The bright, spacious hall is equipped with professional sound and lighting equipment and three LED screens. Our professional team of managers will handle all the organisational details.',
       bookDate: 'Book a Date',
       includedTitle: '— What\'s Included —',
-      includedHeading: 'Complete celebration package',
+      includedHeading: 'Complete celebration<br>package',
       features: [
         'Professional sound and lighting equipment',
         'Three LED screens for presentations and decoration',
@@ -542,10 +580,14 @@ window.I18N = {
         'Coffee breaks and buffets on request',
       ],
       managerLabel: 'Banquet Manager',
-      conferenceOverline: '— Conference Room —',
+      conferenceOverline: '— Business format —',
       conferenceTitle: 'For business events',
       conferenceDesc: 'A 30-person conference room equipped with a flipchart, multimedia equipment and a coffee-break area. Suitable for presentations, training and business meetings.',
       conferenceCta: 'Check available dates',
+
+      heroTitle: 'Medeu Banquet Hall',
+      conferenceCapacity: 'up to 30',
+      conferenceCapacityLabel: 'People',
     },
     services: {
       intro: 'In addition to accommodation and gastronomy, we offer guests and partners a range of services — from Thai SPA to transfer arrangements and festive table decoration.',
@@ -605,6 +647,13 @@ window.I18N = {
       successTitle: 'Request Sent',
       successText: 'Thank you! The reception manager will contact you shortly to confirm your booking.',
       closeBtn: 'Close',
+
+      opt_standard: 'Standard · 28 000 ₸',
+      opt_polulux: 'Junior Suite · 34 000 ₸',
+      opt_polulux_twin: 'Junior Suite Twin · 45 000 ₸',
+      opt_family: 'Family Suite · 55 000 ₸',
+      opt_lux: 'Suite · 44 000 ₸',
+      opt_apartments: 'Apartment · 100 000 ₸',
     },
     footer: {
       tagline: 'Hotel complex in the centre of Kostanay',
@@ -638,9 +687,12 @@ window.I18N = {
       text: 'This page may have been moved or removed.<br>Return to the home page to continue exploring Medeu Hotel Complex.',
       btn: 'Back to Home',
     },
+    meta: { title: 'MEDEU · Hotel Complex in Kostanay' },
+    aria: { menu: 'Menu', close: 'Close', theme: 'Toggle theme', wa: 'Write on WhatsApp' },
+    carousel: { slide: 'Slide' },
+    whatsapp: { serviceInquiry: 'Hello! I would like to learn more about the service: «' },
   },
 
-  // ----- Утилита для получения перевода по dot-path -----
   t: function (path) {
     const parts = path.split('.');
     let obj = this[this.current];

@@ -1,21 +1,4 @@
-/* ============================================================
-   MEDEU HOTEL — STYLES
-   ============================================================
-   Структура:
-   1. Темы (CSS variables)
-   2. Базовые стили
-   3. Контейнеры
-   4. Типографика
-   5. Винетки, кнопки
-   6. Header
-   7. WhatsApp float
-   8. Карусель + Hero
-   9. Секции (Home, Rooms, Restaurant, Banquet, Contacts)
-   10. Footer
-   11. Анимации / переходы между страницами
-   ============================================================ */
 
-/* ===== 1. ТЕМЫ ===== */
 
 .theme-light {
   --c-bg: #FAF7F0;
@@ -55,8 +38,6 @@
   --f-body: 'Jost', system-ui, sans-serif;
 }
 
-/* ===== 2. БАЗА ===== */
-
 * { box-sizing: border-box; }
 
 html { scroll-behavior: smooth; }
@@ -89,8 +70,6 @@ img { display: block; max-width: 100%; height: auto; }
 
 ::selection { background: var(--c-gold); color: var(--c-bg); }
 
-/* ===== 3. КОНТЕЙНЕРЫ ===== */
-
 .ctnr-xl { max-width: 1600px; margin: 0 auto; padding: 0 24px; }
 .ctnr-lg { max-width: 1280px; margin: 0 auto; padding: 0 24px; }
 .ctnr-md { max-width: 1024px; margin: 0 auto; padding: 0 24px; }
@@ -98,8 +77,6 @@ img { display: block; max-width: 100%; height: auto; }
 @media (min-width: 768px) {
   .ctnr-xl, .ctnr-lg, .ctnr-md { padding: 0 48px; }
 }
-
-/* ===== 4. ТИПОГРАФИКА ===== */
 
 .overline {
   font-family: var(--f-body);
@@ -162,8 +139,6 @@ img { display: block; max-width: 100%; height: auto; }
   margin-top: 6px;
 }
 
-/* ===== 5. ВИНЕТКА + КНОПКИ ===== */
-
 .vignette {
   display: flex;
   align-items: center;
@@ -224,7 +199,6 @@ img { display: block; max-width: 100%; height: auto; }
 }
 .gold-btn:hover .gold-btn__label { color: var(--c-bg); }
 
-/* На hero overlay — кнопка светлая всегда */
 .hero-content .gold-btn,
 .page-hero .gold-btn {
   color: #E8E4DA;
@@ -234,8 +208,6 @@ img { display: block; max-width: 100%; height: auto; }
 .page-hero .gold-btn__bg { background: #B89968; }
 .hero-content .gold-btn:hover .gold-btn__label,
 .page-hero .gold-btn:hover .gold-btn__label { color: #0A0908; }
-
-/* ===== 6. HEADER ===== */
 
 .header-gradient {
   position: fixed;
@@ -275,7 +247,6 @@ img { display: block; max-width: 100%; height: auto; }
   height: 88px;
 }
 
-/* Цвет элементов хедера: на hero всегда светлые, на scrolled — по теме */
 .header--on-hero .menu-line { background: #E8E4DA; }
 .header--on-hero .menu-btn,
 .header--on-hero .menu-label,
@@ -480,12 +451,10 @@ img { display: block; max-width: 100%; height: auto; }
 }
 .mobile-link.is-active { color: var(--c-gold); }
 
-/* ===== 7. WHATSAPP FLOAT ===== */
-
 .wa-float {
   position: fixed;
   bottom: 28px;
-  right: 28px; /* справа снизу — стандартное место, плавающая кнопка Restoplace скрыта */
+  right: 28px;
   z-index: 50;
   display: inline-flex;
   align-items: center;
@@ -516,20 +485,37 @@ img { display: block; max-width: 100%; height: auto; }
   }
 }
 
-/* Скрываем плавающую кнопку Restoplace — наши «Забронировать» открывают тот же виджет
-   через класс restoplace-click-open (по официальной инструкции Restoplace) */
 #restoplace-wrapper-btn { display: none !important; }
-
-/* ===== 8. КАРУСЕЛЬ + HERO ===== */
 
 .carousel {
   position: relative;
   width: 100%;
   overflow: hidden;
-  background: #0A0908; /* запасной чёрный пока картинки грузятся */
+  background: #0A0908;
 }
 
 .hero-carousel { height: 100vh; }
+
+.hero-video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.hero-carousel--has-video .carousel-slide,
+.hero-carousel--has-video .carousel-dots { display: none; }
+.hero-carousel--has-video .carousel-overlay { z-index: 2; }
+.hero-carousel--has-video .hero-content { z-index: 3; position: relative; }
+
+@media (max-width: 768px) {
+  .hero-video { display: none !important; }
+  .hero-carousel--has-video .carousel-slide,
+  .hero-carousel--has-video .carousel-dots { display: block; }
+}
 
 .carousel-slide {
   position: absolute;
@@ -648,8 +634,6 @@ img { display: block; max-width: 100%; height: auto; }
   animation: scrollHint 2.4s ease-in-out infinite;
 }
 
-/* ===== 9. СЕКЦИИ ===== */
-
 .section {
   padding: 80px 0;
   background: var(--c-bg);
@@ -668,8 +652,6 @@ img { display: block; max-width: 100%; height: auto; }
   .two-col { grid-template-columns: 1fr 1fr; gap: 80px; }
 }
 .prose-stack > * + * { margin-top: 24px; }
-
-/* --- 4 категории на главной --- */
 
 .facility-grid {
   display: grid;
@@ -747,8 +729,6 @@ img { display: block; max-width: 100%; height: auto; }
   align-self: flex-start;
 }
 
-/* --- Map section --- */
-
 .map-section-wrap {
   background: var(--c-bg);
   padding: 96px 0;
@@ -799,7 +779,6 @@ img { display: block; max-width: 100%; height: auto; }
   margin-top: 32px;
 }
 
-/* Информация под картой — в строку на десктопе, столбец на мобильном */
 .map-info-row {
   display: grid;
   grid-template-columns: 1fr;
@@ -823,7 +802,6 @@ img { display: block; max-width: 100%; height: auto; }
 }
 @media (min-width: 768px) { .map-visual { min-height: 600px; } }
 
-/* Широкая версия — full-width внутри map-stack */
 .map-visual--wide {
   width: 100%;
   min-height: 420px;
@@ -833,7 +811,6 @@ img { display: block; max-width: 100%; height: auto; }
   .map-visual--wide { min-height: 500px; }
 }
 
-/* Google Maps iframe — занимает весь контейнер */
 .map-visual iframe {
   display: block;
   width: 100%;
@@ -868,8 +845,6 @@ img { display: block; max-width: 100%; height: auto; }
   border: 1px solid rgba(184,153,104,0.35);
 }
 
-/* --- Page hero (для не-главных страниц) --- */
-
 .page-hero {
   position: relative;
   height: 60vh;
@@ -901,8 +876,6 @@ img { display: block; max-width: 100%; height: auto; }
   max-width: 580px;
   margin: 24px 0 0;
 }
-
-/* --- Rooms --- */
 
 .rooms-stack {
   display: flex;
@@ -958,8 +931,6 @@ img { display: block; max-width: 100%; height: auto; }
   gap: 24px;
   flex-wrap: wrap;
 }
-
-/* --- Restaurant venues --- */
 
 .venues-stack {
   display: flex;
@@ -1035,8 +1006,6 @@ img { display: block; max-width: 100%; height: auto; }
   margin: 0 0 20px;
 }
 
-/* --- Banquet --- */
-
 .banquet-carousel { height: 70vh; }
 
 .banquet-hero-caption {
@@ -1107,7 +1076,6 @@ img { display: block; max-width: 100%; height: auto; }
   line-height: 1.2;
 }
 
-/* Список особенностей банкета */
 .banquet-features {
   list-style: none;
   padding: 0;
@@ -1184,8 +1152,6 @@ img { display: block; max-width: 100%; height: auto; }
   background-position: center;
 }
 
-/* --- Contacts --- */
-
 .contacts-page {
   padding: 160px 0 96px;
   min-height: 100vh;
@@ -1204,7 +1170,6 @@ img { display: block; max-width: 100%; height: auto; }
   .contacts-grid { grid-template-columns: repeat(4, 1fr); gap: 32px; }
 }
 
-/* О гостинице — одна центрированная колонка */
 .about-prose {
   max-width: 720px;
   margin: 0 auto;
@@ -1233,7 +1198,6 @@ img { display: block; max-width: 100%; height: auto; }
   border-bottom-color: var(--c-gold);
 }
 
-/* Карточка-список (несколько телефонов внутри одной карточки) */
 .contact-card--list { text-align: center; }
 .contact-row {
   display: flex;
@@ -1259,7 +1223,6 @@ img { display: block; max-width: 100%; height: auto; }
 }
 .contact-row-value:hover { color: var(--c-gold); }
 
-/* ===== УСЛУГИ ===== */
 .services-intro {
   text-align: center;
   max-width: 720px;
@@ -1413,8 +1376,6 @@ img { display: block; max-width: 100%; height: auto; }
   color: var(--c-bg);
 }
 
-/* ===== 10. FOOTER ===== */
-
 .footer {
   padding: 80px 0;
   background: var(--c-bg-2);
@@ -1496,7 +1457,6 @@ img { display: block; max-width: 100%; height: auto; }
   font-weight: 300;
 }
 
-/* ===== МОДАЛ БРОНИРОВАНИЯ ===== */
 .modal {
   position: fixed;
   inset: 0;
@@ -1612,8 +1572,6 @@ img { display: block; max-width: 100%; height: auto; }
   background: rgba(184, 153, 104, 0.04);
 }
 
-/* Подсветка невалидных полей — только после попытки ввода (user-invalid)
-   и fallback :invalid:not(:placeholder-shown) для старых браузеров */
 .form-field input:user-invalid,
 .form-field select:user-invalid,
 .form-field textarea:user-invalid,
@@ -1645,7 +1603,6 @@ img { display: block; max-width: 100%; height: auto; }
   flex-wrap: wrap;
 }
 
-/* В модале бронирования — две основные кнопки рядом */
 .form-actions--booking {
   display: grid;
   grid-template-columns: 1fr;
@@ -1657,7 +1614,6 @@ img { display: block; max-width: 100%; height: auto; }
 }
 .form-actions--booking .gold-btn { width: 100%; }
 
-/* Кнопка WhatsApp в модале — серая обводка, не золото (визуально отделить от основной) */
 .wa-btn {
   display: inline-flex;
   align-items: center;
@@ -1681,7 +1637,6 @@ img { display: block; max-width: 100%; height: auto; }
   background: rgba(184, 153, 104, 0.05);
 }
 
-/* Success-блок после отправки */
 .booking-success {
   text-align: center;
   padding: 24px 0;
@@ -1743,8 +1698,6 @@ img { display: block; max-width: 100%; height: auto; }
   to   { opacity: 1; transform: translateY(0); }
 }
 
-/* ===== 11. SPA-ПЕРЕХОДЫ + АНИМАЦИИ ===== */
-
 @keyframes fadeUp {
   from { opacity: 0; transform: translateY(20px); }
   to { opacity: 1; transform: translateY(0); }
@@ -1758,7 +1711,6 @@ img { display: block; max-width: 100%; height: auto; }
   animation: fadeUp 0.8s ease-out;
 }
 
-/* Скелетон-плейсхолдер для изображений на время загрузки */
 .img-skeleton {
   background: linear-gradient(90deg, rgba(184,153,104,0.05), rgba(184,153,104,0.15), rgba(184,153,104,0.05));
   background-size: 200% 100%;
@@ -1769,7 +1721,6 @@ img { display: block; max-width: 100%; height: auto; }
   50% { background-position: -200% 0; }
 }
 
-/* Уважение к prefers-reduced-motion */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: 0.01ms !important;

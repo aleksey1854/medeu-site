@@ -1,23 +1,16 @@
-/* ============================================================
-   MEDEU HOTEL — ДАННЫЕ САЙТА
-   ============================================================
-   ВСЕ ФОТО, ЦЕНЫ И ТЕКСТЫ В ОДНОМ МЕСТЕ.
-   Чтобы заменить — меняйте только этот файл.
-   ============================================================ */
 
-const DATA = {
 
-  // ============================================================
-  // ГЛАВНАЯ — карусель hero
-  // ============================================================
+window.DATA = {
+
+  heroVideo: '',
+
   heroSlides: [
-    'assets/photos/home/home-4.webp',         // Главная 4 — фасад вечером
-    'assets/photos/banquet/main-10.webp',          // Банкет 10 — белый зал с люстрами
-    'assets/photos/restaurant/billiard-1.webp',         // Бильярд 1 — камин
-    'assets/photos/restaurant/veranda-7.webp',         // Летняя веранда 7
+    'assets/photos/home/home-4.webp',
+    'assets/photos/banquet/main-10.webp',
+    'assets/photos/restaurant/billiard-1.webp',
+    'assets/photos/restaurant/veranda-7.webp',
   ],
 
-  // 4 категории на главной
   facilities: [
     {
       id: 'rooms',
@@ -25,7 +18,7 @@ const DATA = {
       nameKey: 'facilities.rooms_name',
       desc: 'Шесть категорий — от стандарта до апартаментов',
       descKey: 'facilities.rooms_desc',
-      img: 'assets/photos/rooms/apartments-1.webp',  // Апартаменты 1
+      img: 'assets/photos/rooms/apartments-1.webp',
     },
     {
       id: 'restaurant',
@@ -33,7 +26,7 @@ const DATA = {
       nameKey: 'facilities.restaurant_name',
       desc: 'Пространство сдержанной элегантности',
       descKey: 'facilities.restaurant_desc',
-      img: 'assets/photos/restaurant/veranda-11.webp', // Летняя веранда 11
+      img: 'assets/photos/restaurant/veranda-11.webp',
     },
     {
       id: 'banquet',
@@ -41,7 +34,7 @@ const DATA = {
       nameKey: 'facilities.banquet_name',
       desc: 'Для торжеств и деловых событий',
       descKey: 'facilities.banquet_desc',
-      img: 'assets/photos/banquet/main-7.webp',   // Банкет 7
+      img: 'assets/photos/banquet/main-7.webp',
     },
     {
       id: 'contacts',
@@ -49,13 +42,10 @@ const DATA = {
       nameKey: 'facilities.contacts_name',
       desc: 'Связь и расположение',
       descKey: 'facilities.contacts_desc',
-      img: 'assets/photos/restaurant/billiard-4.webp',    // Бильярд 4
+      img: 'assets/photos/restaurant/billiard-4.webp',
     },
   ],
 
-  // ============================================================
-  // НОМЕРА — фотографии по выбору заказчика
-  // ============================================================
   rooms: [
     {
       name: 'Стандарт',
@@ -64,7 +54,7 @@ const DATA = {
       price: '28 000 ₸',
       description: 'Одноместный номер с полуторной кроватью (140×200). Мини-бар, кондиционер, кабельное ТВ, беспроводной интернет, телефон с междугородним подключением, сейф. Завтрак включён в стоимость.',
       descKey: 'rooms.standard_desc',
-      image: 'assets/photos/rooms/standard-2.webp', // Стандарт 2 — спальня
+      image: 'assets/photos/rooms/standard-2.webp',
     },
     {
       name: 'Полулюкс',
@@ -73,7 +63,7 @@ const DATA = {
       price: '34 000 ₸',
       description: 'Просторный номер с двуспальной кроватью 180×200. Возможно двухместное размещение с доплатой. Полный набор удобств: мини-бар, кондиционер, кабельное ТВ, интернет, сейф. Завтрак включён.',
       descKey: 'rooms.polulux_desc',
-      image: 'assets/photos/rooms/polulux-1.webp', // Полулюкс 1
+      image: 'assets/photos/rooms/polulux-1.webp',
     },
     {
       name: 'Двухместный полулюкс',
@@ -82,7 +72,7 @@ const DATA = {
       price: '45 000 ₸',
       description: 'Две раздельные кровати 120×200 — идеально для двух гостей. Мини-бар, кондиционер, кабельное ТВ, интернет, сейф. Завтрак включён.',
       descKey: 'rooms.polulux_twin_desc',
-      image: 'assets/photos/rooms/polulux-twin-2.webp', // Полулюкс с раздельными 2 ← по выбору заказчика
+      image: 'assets/photos/rooms/polulux-twin-2.webp',
     },
     {
       name: 'Семейный',
@@ -91,7 +81,7 @@ const DATA = {
       price: '55 000 ₸',
       description: 'Три комнаты: две спальни и гостиная. Трёхместное или четырёхместное размещение. Полный набор удобств. Завтрак включён в стоимость номера.',
       descKey: 'rooms.family_desc',
-      image: 'assets/photos/rooms/family-1.webp', // Семейный 1 ← по выбору заказчика
+      image: 'assets/photos/rooms/family-1.webp',
     },
     {
       name: 'Люкс',
@@ -100,7 +90,7 @@ const DATA = {
       price: '44 000 ₸',
       description: 'Две комнаты: спальня и гостиная. Двуспальная кровать 180×200. Мини-бар, кондиционер, кабельное ТВ, интернет, сейф. Завтрак включён.',
       descKey: 'rooms.lux_desc',
-      image: 'assets/photos/rooms/lux-1.webp', // Люкс 1 ← по выбору заказчика
+      image: 'assets/photos/rooms/lux-1.webp',
     },
     {
       name: 'Апартамент',
@@ -109,13 +99,10 @@ const DATA = {
       price: '100 000 ₸',
       description: 'Высшая категория. Три комнаты: спальня, гостиная с обеденной и мягкой зонами, отдельный кабинет. Душевая кабина и джакузи, двуспальная кровать 180×200. Полный набор удобств, комплимент от гостиницы — свежие фрукты по приезду.',
       descKey: 'rooms.apartments_desc',
-      image: 'assets/photos/rooms/apartments-4.webp', // Апартаменты 4 ← по выбору заказчика
+      image: 'assets/photos/rooms/apartments-4.webp',
     },
   ],
 
-  // ============================================================
-  // РЕСТОРАН — 4 пространства, тексты от заказчика
-  // ============================================================
   venues: [
     {
       name: 'Летняя веранда',
@@ -137,7 +124,7 @@ const DATA = {
       taglineKey: 'venues.medeu_tagline',
       description: 'Эффектное двухуровневое пространство с комфортной посадкой и атмосферой lounge-ресторана. Создано для гастрономических встреч и деловых ужинов. Работаем ежедневно с 07:30 до 01:00. Шведский стол — 07:30–10:30 (5 000 ₸/чел). Бизнес-ланчи по будням 12:00–15:00.',
       descKey: 'venues.medeu_desc',
-      image: 'assets/photos/restaurant/medeu-6.webp', // Ресторан Medeu 6 — горизонтальный кадр от заказчика
+      image: 'assets/photos/restaurant/medeu-6.webp',
     },
     {
       name: 'Lounge-пространство с караоке',
@@ -159,13 +146,10 @@ const DATA = {
       taglineKey: 'venues.billiard_tagline',
       description: 'Элегантное пространство с атмосферой уединённого комфорта, идеально подходящее для частных встреч, семейных торжеств и закрытых мероприятий. Современный европейский интерьер с акцентом на комфорт и приватность.',
       descKey: 'venues.billiard_desc',
-      image: 'assets/photos/restaurant/billiard-3.webp', // Бильярд 3 — гостиная с камином (выбор заказчика)
+      image: 'assets/photos/restaurant/billiard-3.webp',
     },
   ],
 
-  // ============================================================
-  // БАНКЕТНЫЙ ЗАЛ — только подготовленные интерьеры
-  // ============================================================
   banquetSlides: [
     'assets/photos/banquet/main-7.webp',
     'assets/photos/banquet/main-10.webp',
@@ -173,9 +157,6 @@ const DATA = {
   ],
   conferenceImage: 'assets/photos/banquet/conference-1.webp',
 
-  // ============================================================
-  // УСЛУГИ — отдельная страница (#services)
-  // ============================================================
   services: [
     {
       name: 'Thai SPA',
@@ -236,22 +217,15 @@ const DATA = {
     },
   ],
 
-  // Restoplace widget ID (из ТЗ)
   restoplaceId: '57d0bcbf4b55ea8a0b4f',
 
-  // ============================================================
-  // PAGE-HERO фоны для подстраниц
-  // ============================================================
   pageHero: {
     rooms:      'assets/photos/rooms/lux-1.webp',
     restaurant: 'assets/photos/restaurant/veranda-7.webp',
     banquet:    'assets/photos/banquet/main-10.webp',
-    services:   'assets/photos/restaurant/billiard-4.webp', // Бильярд 4 — элегантный интерьер
+    services:   'assets/photos/restaurant/billiard-4.webp',
   },
 
-  // ============================================================
-  // КОНТАКТЫ
-  // ============================================================
   contacts: {
     address: 'Республика Казахстан, г. Костанай, ул. Баймагамбетова 166а',
 
@@ -278,22 +252,12 @@ const DATA = {
     waRestaurant: '77073291635',
     waBanquet:    '77755215706',
 
-    // ============================================================
-    // FORMSPREE — endpoint для отправки заявок на email
-    // ============================================================
-    // 1. Зарегистрируйся на https://formspree.io (5 минут)
-    // 2. Создай форму, укажи email менеджера (например info@medeuhotel.kz)
-    // 3. Скопируй URL формы вида https://formspree.io/f/xxxxxxx
-    // 4. Подставь ниже — и форма реально начнёт слать на почту
-    //
-    // Пока строка пустая — форма открывает почтовый клиент пользователя (mailto:)
-    formspreeUrl: '',
+    formspreeUrl: 'https://formspree.io/f/xjgzbqoo',
     bookingEmail: 'info@medeuhotel.kz',
 
     instagram: 'https://www.instagram.com/hotel_medeu_kostanay/',
     facebook:  '',
 
-    // Карты — прямые ссылки на отель
     gis2Url:   'https://go.2gis.com/M2V07',
     googleUrl: 'https://maps.app.goo.gl/ndN3XnVWUE4iur318',
   },
