@@ -165,22 +165,46 @@
   const langWrap = document.getElementById('lang-wrap');
   const currentLangEl = document.getElementById('current-lang');
 
-  langWrap.addEventListener('mouseenter', function () {
-    langWrap.classList.add('is-open');
-  });
-  langWrap.addEventListener('mouseleave', function () {
-    langWrap.classList.remove('is-open');
-  });
+  const LANG_LABELS = { ru: 'РУ', kz: 'ҚЗ', en: 'EN' };
+
+  // Применить выбранный язык ко всему сайту
+  function applyLang(lang) {
+    if (!window.I18N || !I18N[lang]) return;
+    I18N.current = lang;
+    // <html lang="..">
+    document.documentElement.lang = lang;
+    // 1. Все элементы с data-i18n
+    document.querySelectorAll('[data-i18n]').forEach(function (el) {
+      const key = el.dataset.i18n;
+      const val = I18N.t(key);
+      if (val && val !== key) {
+        // Если в значении есть HTML (например <br>) — пишем innerHTML, иначе textContent
+        if (/<[a-z]+/i.test(val)) el.innerHTML = val;
+        else el.textContent = val;
+      }
+    });
+    // 2. Селектор языка — обновить «текущий»
+    if (currentLangEl) currentLangEl.textContent = LANG_LABELS[lang] || lang.toUpperCase();
+    // 3. Active state на пунктах dropdown
+    document.querySelectorAll('.lang-item').forEach(function (i) {
+      i.classList.toggle('is-active', i.dataset.lang === lang);
+    });
+    // 4. Перерендерить динамические секции (rooms, venues, services, facilities, contacts)
+    if (typeof renderDynamic === 'function') renderDynamic();
+    // 5. Сохранить выбор
+    try { localStorage.setItem('medeu_lang', lang); } catch (e) {}
+  }
+  // Делаем доступной снаружи на случай если понадобится
+  window.applyLang = applyLang;
+
+  langWrap.addEventListener('mouseenter', function () { langWrap.classList.add('is-open'); });
+  langWrap.addEventListener('mouseleave', function () { langWrap.classList.remove('is-open'); });
 
   document.querySelectorAll('.lang-item').forEach(function (item) {
     item.addEventListener('click', function () {
-      document.querySelectorAll('.lang-item').forEach(function (i) {
-        i.classList.remove('is-active');
-      });
-      item.classList.add('is-active');
-      currentLangEl.textContent = item.dataset.lang;
+      const lang = item.dataset.lang;
+      applyLang(lang);
       langWrap.classList.remove('is-open');
-      // Реальное переключение языков пока не реализовано (только RU в v1)
     });
   });
 
@@ -228,6 +252,7 @@
   initCarousel('hero-carousel', DATA.heroSlides, 'hero-dots', 6000);
   initCarousel('banquet-carousel', DATA.banquetSlides, 'banquet-dots', 6000);
 
+  function renderDynamic() {
   // ===== РЕНДЕР: 4 категории на главной =====
   const facilityGrid = document.getElementById('facility-grid');
   facilityGrid.innerHTML = DATA.facilities.map(function (f) {
@@ -256,8 +281,8 @@
       +     '<div class="room-number">' + num + '</div>'
       +   '</div>'
       +   '<div class="room-info">'
-      +     '<div class="overline" style="margin-bottom: 12px;">Категория · ' + room.area + '</div>'
-      +     '<h3 class="display-h3">' + room.name + '</h3>'
+      +     '<div class="overline" style="margin-bottom: 12px;">' + room.area + ' ' + (window.I18N ? I18N.t('rooms.area') : 'м²') + '</div>'
+      +     '<h3 class="display-h3">' + (window.I18N && room.nameKey ? I18N.t(room.nameKey) : room.name) + '</h3>'
       +     '<div class="vignette my-6">'
       +       '<span class="vignette-line"></span>'
       +       '<svg width="28" height="10" viewBox="0 0 28 10" aria-hidden="true">'
@@ -266,12 +291,12 @@
       +       '</svg>'
       +       '<span class="vignette-line"></span>'
       +     '</div>'
-      +     '<p class="body-prose">' + room.description + '</p>'
+      +     '<p class="body-prose">' + (window.I18N && room.descKey ? I18N.t(room.descKey) : room.description) + '</p>'
       +     '<div class="room-bottom">'
-      +       '<div><div class="overline">Цена за сутки</div><div class="price">' + room.price + '</div></div>'
+      +       '<div><div class="overline">' + (window.I18N ? I18N.t('rooms.pricePerNight') : 'Цена за сутки') + '</div><div class="price">' + room.price + '</div></div>'
       +       '<a href="javascript:void(0)" class="gold-btn gold-btn--sm booking-open" data-room="' + room.name + '">'
       +         '<span class="gold-btn__bg"></span>'
-      +         '<span class="gold-btn__label">Забронировать</span>'
+      +         '<span class="gold-btn__label">' + (window.I18N ? I18N.t('venues.book') : 'Забронировать') + '</span>'
       +       '</a>'
       +     '</div>'
       +   '</div>'
@@ -302,12 +327,12 @@
       +       '</svg>'
       +       '<span class="vignette-line"></span>'
       +     '</div>'
-      +     '<p class="venue-tagline">' + venue.tagline + '</p>'
-      +     '<p class="body-prose">' + venue.description + '</p>'
+      +     '<p class="venue-tagline">' + (window.I18N && venue.taglineKey ? I18N.t(venue.taglineKey) : venue.tagline) + '</p>'
+      +     '<p class="body-prose">' + (window.I18N && venue.descKey ? I18N.t(venue.descKey) : venue.description) + '</p>'
       +     '<div style="margin-top: 32px;">'
       +       '<a href="javascript:void(0)" class="gold-btn gold-btn--sm restoplace-click-open">'
       +         '<span class="gold-btn__bg"></span>'
-      +         '<span class="gold-btn__label">Забронировать</span>'
+      +         '<span class="gold-btn__label">' + (window.I18N ? I18N.t('venues.book') : 'Забронировать') + '</span>'
       +       '</a>'
       +     '</div>'
       +   '</div>'
@@ -321,7 +346,7 @@
       const num = '0' + (idx + 1);
       const icon = ICONS[service.icon] || ICONS.phone;
       const hoursLine = service.hours
-        ? '<div class="service-meta-row"><span class="overline">Часы</span> ' + service.hours + '</div>'
+        ? '<div class="service-meta-row"><span class="overline">' + (window.I18N ? I18N.t('services.hoursLabel') : 'Часы') + '</span> ' + (window.I18N && service.hoursKey ? I18N.t(service.hoursKey) : service.hours) + '</div>'
         : '';
       const phoneClean = service.phone.replace(/[^\d+]/g, '');
       const waText = encodeURIComponent('Здравствуйте! Хочу узнать подробнее об услуге «' + service.name + '».');
@@ -329,10 +354,10 @@
         + '<div class="service-card">'
         +   '<div class="service-card-num">№ ' + num + '</div>'
         +   '<div class="service-icon">' + icon + '</div>'
-        +   '<h3 class="service-name">' + service.name + '</h3>'
-        +   '<p class="service-subtitle">' + service.subtitle + '</p>'
+        +   '<h3 class="service-name">' + (window.I18N && service.nameKey ? I18N.t(service.nameKey) : service.name) + '</h3>'
+        +   '<p class="service-subtitle">' + (window.I18N && service.subtitleKey ? I18N.t(service.subtitleKey) : service.subtitle) + '</p>'
         +   '<div class="service-divider"></div>'
-        +   '<p class="service-desc">' + service.description + '</p>'
+        +   '<p class="service-desc">' + (window.I18N && service.descKey ? I18N.t(service.descKey) : service.description) + '</p>'
         +   hoursLine
         +   '<div class="service-actions">'
         +     '<a href="tel:' + phoneClean + '" class="service-phone">' + service.phone + '</a>'
@@ -346,11 +371,20 @@
 
   // ===== РЕНДЕР: КОНТАКТЫ =====
   const contactsGrid = document.getElementById('contacts-grid');
+  const labelMap = {
+    'Ресепшн': 'contacts.reception',
+    'Факс': 'contacts.fax',
+    'Моб. ресепшн': 'contacts.mobReception',
+    'Администратор': 'contacts.restaurantAdmin',
+    'Моб. администратор': 'contacts.restaurantMob',
+    'Банкетный': 'contacts.banquetMgr',
+  };
   const phoneRowsHtml = function (rows) {
     return rows.map(function (r) {
       const clean = r.number.replace(/[^0-9+]/g, '');
+      const labelText = (window.I18N && labelMap[r.label]) ? I18N.t(labelMap[r.label]) : r.label;
       return '<div class="contact-row">'
-        + '<span class="contact-row-label">' + r.label + '</span>'
+        + '<span class="contact-row-label">' + labelText + '</span>'
         + '<a href="tel:' + clean + '" class="contact-row-value">' + r.number + '</a>'
         + '</div>';
     }).join('');
@@ -358,26 +392,29 @@
   contactsGrid.innerHTML = ''
     + '<div class="contact-card contact-card--list">'
     +   '<div style="color: var(--c-gold); margin: 0 auto 20px;">' + ICONS.phone + '</div>'
-    +   '<div class="overline" style="margin-bottom: 16px;">Гостиница</div>'
+    +   '<div class="overline" style="margin-bottom: 16px;">' + (window.I18N ? I18N.t('contacts.hotelTitle') : 'Гостиница') + '</div>'
     +   phoneRowsHtml(DATA.contacts.hotelPhones)
     + '</div>'
     + '<div class="contact-card contact-card--list">'
     +   '<div style="color: var(--c-gold); margin: 0 auto 20px;">' + ICONS.phone + '</div>'
-    +   '<div class="overline" style="margin-bottom: 16px;">Ресторан и банкет</div>'
+    +   '<div class="overline" style="margin-bottom: 16px;">' + (window.I18N ? I18N.t('contacts.restaurantTitle') : 'Ресторан и банкет') + '</div>'
     +   phoneRowsHtml(DATA.contacts.restaurantPhones)
     + '</div>'
     + '<div class="contact-card">'
     +   '<div style="color: var(--c-gold); margin: 0 auto 24px;">' + ICONS.pin + '</div>'
-    +   '<div class="overline" style="margin-bottom: 12px;">Адрес</div>'
+    +   '<div class="overline" style="margin-bottom: 12px;">' + (window.I18N ? I18N.t('contacts.addressTitle') : 'Адрес') + '</div>'
     +   '<div class="contact-value">' + DATA.contacts.address + '</div>'
-    +   '<div class="contact-secondary">центр города</div>'
+    +   '<div class="contact-secondary">' + (window.I18N ? I18N.t('contacts.addressCenter') : 'центр города') + '</div>'
     + '</div>'
     + '<div class="contact-card">'
     +   '<div style="color: var(--c-gold); margin: 0 auto 24px;">' + ICONS.mail + '</div>'
-    +   '<div class="overline" style="margin-bottom: 12px;">Почта</div>'
+    +   '<div class="overline" style="margin-bottom: 12px;">' + (window.I18N ? I18N.t('contacts.emailTitle') : 'Почта') + '</div>'
     +   '<a href="mailto:' + DATA.contacts.email + '" class="contact-value contact-value--link">' + DATA.contacts.email + '</a>'
-    +   '<div class="contact-secondary">круглосуточно</div>'
+    +   '<div class="contact-secondary">' + (window.I18N ? I18N.t('contacts.emailCaption') : 'круглосуточно') + '</div>'
     + '</div>';
+
+  }
+  renderDynamic();
 
   // ===== Заполнение контактов на главной =====
   document.getElementById('addr-value').textContent = DATA.contacts.address;
@@ -458,69 +495,6 @@
   }
 
   triggerLazyLoad();
-
-  // ===== СКРОЛЛ-ЛОК ДЛЯ RESTOPLACE =====
-  // Виджет сбрасывает скролл при открытии. Полностью блокируем body через
-  // position:fixed на время работы виджета, восстанавливаем после закрытия.
-  // Открытие/закрытие отслеживаем через MutationObserver (виджет вставляет
-  // свой overlay-div в body, при закрытии удаляет).
-  let rpSavedY = null;
-
-  function rpLockBody() {
-    if (rpSavedY !== null) return;
-    rpSavedY = window.scrollY;
-    document.body.style.position = 'fixed';
-    document.body.style.top = '-' + rpSavedY + 'px';
-    document.body.style.left = '0';
-    document.body.style.right = '0';
-    document.body.style.width = '100%';
-  }
-
-  function rpUnlockBody() {
-    if (rpSavedY === null) return;
-    const y = rpSavedY;
-    rpSavedY = null;
-    document.body.style.position = '';
-    document.body.style.top = '';
-    document.body.style.left = '';
-    document.body.style.right = '';
-    document.body.style.width = '';
-    window.scrollTo(0, y);
-  }
-
-  document.addEventListener('click', function (e) {
-    const btn = e.target.closest('.restoplace-click-open');
-    if (!btn) return;
-
-    // Зафиксировать какие дети были у body ДО клика
-    const initialChildren = new Set(Array.from(document.body.children));
-    rpLockBody();
-
-    let widgetNode = null;
-    const obs = new MutationObserver(function (mutations) {
-      mutations.forEach(function (m) {
-        m.addedNodes.forEach(function (n) {
-          // первый новый прямой ребёнок body — это и есть модал виджета
-          if (n.nodeType === 1 && !initialChildren.has(n) && !widgetNode) {
-            widgetNode = n;
-          }
-        });
-        m.removedNodes.forEach(function (n) {
-          if (n === widgetNode) {
-            obs.disconnect();
-            rpUnlockBody();
-          }
-        });
-      });
-    });
-    obs.observe(document.body, { childList: true });
-
-    // Safety: отключить наблюдатель через 10 минут максимум
-    setTimeout(function () {
-      obs.disconnect();
-      if (rpSavedY !== null) rpUnlockBody();
-    }, 10 * 60 * 1000);
-  });
 
   // ===== МОДАЛ БРОНИРОВАНИЯ НОМЕРА =====
   // Открывается с любой кнопки `.booking-open` (главный hero + каждая карточка номера).
@@ -696,13 +670,9 @@
     const waBookBtn = document.getElementById('booking-wa-btn');
     if (waBookBtn) {
       waBookBtn.addEventListener('click', function () {
-        // Базовая валидация — нужны хотя бы ФИО и телефон
-        if (!bookingForm.querySelector('[name="name"]').value.trim()) {
-          alert('Пожалуйста, укажите ФИО');
-          return;
-        }
-        if (!bookingForm.querySelector('[name="phone"]').value.trim()) {
-          alert('Пожалуйста, укажите телефон');
+        // Полная проверка обязательных полей — браузер сам подсветит первое незаполненное
+        if (!bookingForm.checkValidity()) {
+          bookingForm.reportValidity();
           return;
         }
         const data = collectBookingData();
@@ -724,5 +694,12 @@
   // ===== Стартовая навигация (по hash из URL) =====
   const initialPage = window.location.hash.slice(1) || 'home';
   navigate(initialPage);
+
+  // ===== Применить сохранённый язык при загрузке =====
+  var savedLang = null;
+  try { savedLang = localStorage.getItem('medeu_lang'); } catch (e) {}
+  if (savedLang && window.I18N && I18N[savedLang]) {
+    applyLang(savedLang);
+  }
 
 })();

@@ -1611,6 +1611,22 @@ img { display: block; max-width: 100%; height: auto; }
   border-color: var(--c-gold);
   background: rgba(184, 153, 104, 0.04);
 }
+
+/* Подсветка невалидных полей — только после попытки ввода (user-invalid)
+   и fallback :invalid:not(:placeholder-shown) для старых браузеров */
+.form-field input:user-invalid,
+.form-field select:user-invalid,
+.form-field textarea:user-invalid,
+.form-field input:invalid:not(:placeholder-shown),
+.form-field textarea:invalid:not(:placeholder-shown) {
+  border-color: #c94f3c;
+  background: rgba(201, 79, 60, 0.04);
+}
+.form-field input:user-invalid:focus,
+.form-field select:user-invalid:focus,
+.form-field textarea:user-invalid:focus {
+  border-color: #c94f3c;
+}
 .form-field textarea { resize: vertical; min-height: 80px; font-family: var(--f-body); }
 .form-field select {
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%239A7E50' stroke-width='1.5'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
