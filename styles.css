@@ -1594,6 +1594,13 @@ img { display: block; max-width: 100%; height: auto; }
   padding-right: 36px;
 }
 
+.form-field select option {
+  color: #1a1612;
+  background: #ffffff;
+  font-weight: 400;
+  padding: 8px;
+}
+
 .form-actions {
   display: flex;
   justify-content: space-between;
