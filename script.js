@@ -537,6 +537,7 @@
       return {
         name:     fd.get('name') || '—',
         phone:    fd.get('phone') || '—',
+        email:    fd.get('email') || '',
         roomType: fd.get('roomType') || '—',
         dateIn:   fmtDate(fd.get('dateIn')),
         timeIn:   fd.get('timeIn') || '—',
@@ -544,6 +545,7 @@
         timeOut:  fd.get('timeOut') || '—',
         adults:   fd.get('adults') || '1',
         children: fd.get('children') || '0',
+        payment:  fd.get('payment') || 'Кредитная карта',
         note:     fd.get('note') || '',
       };
     }
@@ -552,17 +554,21 @@
       const lines = [
         'Заявка на бронирование номера с сайта medeuhotel.kz',
         '',
-        'ФИО: ' + d.name,
+        'Имя: ' + d.name,
         'Телефон: ' + d.phone,
-        'Тип номера: ' + d.roomType,
-        'Заезд: ' + d.dateIn + ', ' + d.timeIn,
-        'Выезд: ' + d.dateOut + ', ' + d.timeOut,
-        'Гостей: ' + d.adults + ' взр.' + (parseInt(d.children, 10) > 0 ? ' + ' + d.children + ' дет.' : ''),
       ];
-      if (d.note) {
-        lines.push('');
-        lines.push('Примечание: ' + d.note);
-      }
+      if (d.email) lines.push('E-mail: ' + d.email);
+      lines.push(
+        'Кол-во взрослых: ' + d.adults,
+        'Кол-во детей: ' + d.children,
+        'Дата прибытия: ' + d.dateIn + ' - ' + d.timeIn,
+        'Дата убытия: ' + d.dateOut + ' - ' + d.timeOut,
+        'Тип номера: ' + d.roomType,
+        'Способ оплаты: ' + d.payment,
+        '',
+        'Примечание:',
+        d.note || '—'
+      );
       return lines.join('\n');
     }
 
@@ -603,14 +609,8 @@
             headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
             body: JSON.stringify({
               _subject: subject,
+              _replyto: data.email || undefined,
               message: message,
-              name: data.name,
-              phone: data.phone,
-              roomType: data.roomType,
-              dateIn: data.dateIn + ' ' + data.timeIn,
-              dateOut: data.dateOut + ' ' + data.timeOut,
-              guests: data.adults + ' взр. + ' + data.children + ' дет.',
-              note: data.note,
             }),
           })
           .then(function (res) {

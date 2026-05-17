@@ -578,6 +578,13 @@
         </div>
 
         <div class="form-row">
+          <label class="form-field form-field--full">
+            <span class="form-label" data-i18n="modal.email">E-mail</span>
+            <input type="email" name="email" placeholder="example@mail.com" autocomplete="email">
+          </label>
+        </div>
+
+        <div class="form-row">
           <label class="form-field">
             <span class="form-label" data-i18n="modal.dateIn">Дата заезда *</span>
             <input type="date" name="dateIn" id="booking-date-in" required>
@@ -622,6 +629,16 @@
           <label class="form-field">
             <span class="form-label" data-i18n="modal.children">Детей</span>
             <input type="number" name="children" min="0" max="10" value="0">
+          </label>
+        </div>
+
+        <div class="form-row">
+          <label class="form-field form-field--full">
+            <span class="form-label" data-i18n="modal.payment">Способ оплаты</span>
+            <select name="payment">
+              <option value="Кредитная карта" data-i18n="modal.pay_card">Кредитная карта</option>
+              <option value="Наличный расчёт" data-i18n="modal.pay_cash">Наличный расчёт</option>
+            </select>
           </label>
         </div>
 

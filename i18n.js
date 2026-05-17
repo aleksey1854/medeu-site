@@ -194,6 +194,11 @@ window.I18N = {
       opt_family: 'Семейный · 55 000 ₸',
       opt_lux: 'Люкс · 44 000 ₸',
       opt_apartments: 'Апартамент · 100 000 ₸',
+
+      email: 'E-mail',
+      payment: 'Способ оплаты',
+      pay_card: 'Кредитная карта',
+      pay_cash: 'Наличный расчёт',
     },
     footer: {
       tagline: 'Гостиничный комплекс в центре Костаная',
@@ -424,6 +429,11 @@ window.I18N = {
       opt_family: 'Отбасылық · 55 000 ₸',
       opt_lux: 'Люкс · 44 000 ₸',
       opt_apartments: 'Апартамент · 100 000 ₸',
+
+      email: 'E-mail',
+      payment: 'Төлем тәсілі',
+      pay_card: 'Несие картасы',
+      pay_cash: 'Қолма-қол есеп',
     },
     footer: {
       tagline: 'Қостанай орталығындағы қонақ үй кешені',
@@ -654,6 +664,11 @@ window.I18N = {
       opt_family: 'Family Suite · 55 000 ₸',
       opt_lux: 'Suite · 44 000 ₸',
       opt_apartments: 'Apartment · 100 000 ₸',
+
+      email: 'E-mail',
+      payment: 'Payment method',
+      pay_card: 'Credit card',
+      pay_cash: 'Cash',
     },
     footer: {
       tagline: 'Hotel complex in the centre of Kostanay',
