@@ -578,13 +578,6 @@
         </div>
 
         <div class="form-row">
-          <label class="form-field form-field--full">
-            <span class="form-label" data-i18n="modal.email">E-mail</span>
-            <input type="email" name="email" placeholder="example@mail.com" autocomplete="email">
-          </label>
-        </div>
-
-        <div class="form-row">
           <label class="form-field">
             <span class="form-label" data-i18n="modal.dateIn">Дата заезда *</span>
             <input type="date" name="dateIn" id="booking-date-in" required>
@@ -638,7 +631,43 @@
             <select name="payment">
               <option value="Кредитная карта" data-i18n="modal.pay_card">Кредитная карта</option>
               <option value="Наличный расчёт" data-i18n="modal.pay_cash">Наличный расчёт</option>
+              <option value="Безналичный расчёт" data-i18n="modal.pay_bank">Безналичный расчёт</option>
             </select>
+          </label>
+        </div>
+
+        <label class="form-field form-field--full form-checkbox">
+          <input type="checkbox" name="transfer" id="booking-transfer">
+          <span class="form-checkbox-box"></span>
+          <span class="form-checkbox-label" data-i18n="modal.transfer">Услуги трансфера</span>
+        </label>
+
+        <div class="form-transfer-block" id="booking-transfer-block" style="display:none;">
+          <div class="form-row">
+            <label class="form-field">
+              <span class="form-label" data-i18n="modal.transferLocation">Место прибытия</span>
+              <select name="transferLocation">
+                <option value="" data-i18n="modal.tr_select">— выберите —</option>
+                <option value="Ж/д вокзал" data-i18n="modal.tr_station">Ж/д вокзал</option>
+                <option value="Автовокзал" data-i18n="modal.tr_busstation">Автовокзал</option>
+                <option value="Аэропорт" data-i18n="modal.tr_airport">Аэропорт</option>
+              </select>
+            </label>
+            <label class="form-field">
+              <span class="form-label" data-i18n="modal.transferTime">Время прибытия</span>
+              <input type="time" name="transferTime">
+            </label>
+          </div>
+          <label class="form-field form-field--full">
+            <span class="form-label" data-i18n="modal.transferNumber">Номер рейса / поезда / автобуса</span>
+            <input type="text" name="transferNumber" placeholder="—">
+          </label>
+        </div>
+
+        <div class="form-row">
+          <label class="form-field form-field--full">
+            <span class="form-label" data-i18n="modal.email">E-mail</span>
+            <input type="email" name="email" placeholder="example@mail.com" autocomplete="email">
           </label>
         </div>
 

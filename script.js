@@ -508,6 +508,14 @@
 
   if (bookingModal) {
 
+    const transferCheckbox = document.getElementById('booking-transfer');
+    const transferBlock = document.getElementById('booking-transfer-block');
+    if (transferCheckbox && transferBlock) {
+      transferCheckbox.addEventListener('change', function () {
+        transferBlock.style.display = transferCheckbox.checked ? '' : 'none';
+      });
+    }
+
     document.addEventListener('click', function (e) {
       const trigger = e.target.closest('.booking-open');
       if (!trigger) return;
@@ -546,6 +554,10 @@
         adults:   fd.get('adults') || '1',
         children: fd.get('children') || '0',
         payment:  fd.get('payment') || 'Кредитная карта',
+        transfer: !!fd.get('transfer'),
+        transferLocation: fd.get('transferLocation') || '',
+        transferNumber:   fd.get('transferNumber') || '',
+        transferTime:     fd.get('transferTime') || '',
         note:     fd.get('note') || '',
       };
     }
@@ -564,11 +576,16 @@
         'Дата прибытия: ' + d.dateIn + ' - ' + d.timeIn,
         'Дата убытия: ' + d.dateOut + ' - ' + d.timeOut,
         'Тип номера: ' + d.roomType,
-        'Способ оплаты: ' + d.payment,
-        '',
-        'Примечание:',
-        d.note || '—'
+        'Способ оплаты: ' + d.payment
       );
+      if (d.transfer) {
+        lines.push('');
+        lines.push('Услуги трансфера: ДА');
+        if (d.transferLocation) lines.push('Место прибытия: ' + d.transferLocation);
+        if (d.transferNumber)   lines.push('Номер рейса/поезда/автобуса: ' + d.transferNumber);
+        if (d.transferTime)     lines.push('Время прибытия: ' + d.transferTime);
+      }
+      lines.push('', 'Примечание:', d.note || '—');
       return lines.join('\n');
     }
 
@@ -587,6 +604,8 @@
         form.style.display = '';
         success.style.display = 'none';
         form.reset();
+        const tb = document.getElementById('booking-transfer-block');
+        if (tb) tb.style.display = 'none';
       }
     }
 
