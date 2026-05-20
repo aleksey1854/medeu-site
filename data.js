@@ -5,10 +5,10 @@ window.DATA = {
   heroVideo: '',
 
   heroSlides: [
+    'assets/photos/home/home-1.webp',
+    'assets/photos/home/home-2.webp',
+    'assets/photos/home/home-3.webp',
     'assets/photos/home/home-4.webp',
-    'assets/photos/banquet/main-10.webp',
-    'assets/photos/restaurant/billiard-1.webp',
-    'assets/photos/restaurant/veranda-7.webp',
   ],
 
   facilities: [
@@ -55,6 +55,11 @@ window.DATA = {
       description: 'Одноместный номер с полуторной кроватью (140×200). Мини-бар, кондиционер, кабельное ТВ, беспроводной интернет, телефон с междугородним подключением, сейф. Завтрак включён в стоимость.',
       descKey: 'rooms.standard_desc',
       image: 'assets/photos/rooms/standard-2.webp',
+      images: [
+        'assets/photos/rooms/standard-2.webp',
+        'assets/photos/rooms/standard-1.webp',
+        'assets/photos/rooms/standard-3.webp',
+      ],
     },
     {
       name: 'Полулюкс',
@@ -64,6 +69,11 @@ window.DATA = {
       description: 'Просторный номер с двуспальной кроватью 180×200. Возможно двухместное размещение с доплатой. Полный набор удобств: мини-бар, кондиционер, кабельное ТВ, интернет, сейф. Завтрак включён.',
       descKey: 'rooms.polulux_desc',
       image: 'assets/photos/rooms/polulux-1.webp',
+      images: [
+        'assets/photos/rooms/polulux-1.webp',
+        'assets/photos/rooms/polulux-2.webp',
+        'assets/photos/rooms/polulux-3.webp',
+      ],
     },
     {
       name: 'Двухместный полулюкс',
@@ -73,6 +83,11 @@ window.DATA = {
       description: 'Две раздельные кровати 120×200 — идеально для двух гостей. Мини-бар, кондиционер, кабельное ТВ, интернет, сейф. Завтрак включён.',
       descKey: 'rooms.polulux_twin_desc',
       image: 'assets/photos/rooms/polulux-twin-2.webp',
+      images: [
+        'assets/photos/rooms/polulux-twin-2.webp',
+        'assets/photos/rooms/polulux-twin-1.webp',
+        'assets/photos/rooms/polulux-twin-3.webp',
+      ],
     },
     {
       name: 'Семейный',
@@ -82,6 +97,12 @@ window.DATA = {
       description: 'Три комнаты: две спальни и гостиная. Трёхместное или четырёхместное размещение. Полный набор удобств. Завтрак включён в стоимость номера.',
       descKey: 'rooms.family_desc',
       image: 'assets/photos/rooms/family-1.webp',
+      images: [
+        'assets/photos/rooms/family-1.webp',
+        'assets/photos/rooms/family-2.webp',
+        'assets/photos/rooms/family-3.webp',
+        'assets/photos/rooms/family-4.webp',
+      ],
     },
     {
       name: 'Люкс',
@@ -91,6 +112,11 @@ window.DATA = {
       description: 'Две комнаты: спальня и гостиная. Двуспальная кровать 180×200. Мини-бар, кондиционер, кабельное ТВ, интернет, сейф. Завтрак включён.',
       descKey: 'rooms.lux_desc',
       image: 'assets/photos/rooms/lux-1.webp',
+      images: [
+        'assets/photos/rooms/lux-1.webp',
+        'assets/photos/rooms/lux-2.webp',
+        'assets/photos/rooms/lux-3.webp',
+      ],
     },
     {
       name: 'Апартамент',
@@ -100,6 +126,15 @@ window.DATA = {
       description: 'Высшая категория. Три комнаты: спальня, гостиная с обеденной и мягкой зонами, отдельный кабинет. Душевая кабина и джакузи, двуспальная кровать 180×200. Полный набор удобств, комплимент от гостиницы — свежие фрукты по приезду.',
       descKey: 'rooms.apartments_desc',
       image: 'assets/photos/rooms/apartments-4.webp',
+      images: [
+        'assets/photos/rooms/apartments-4.webp',
+        'assets/photos/rooms/apartments-1.webp',
+        'assets/photos/rooms/apartments-2.webp',
+        'assets/photos/rooms/apartments-3.webp',
+        'assets/photos/rooms/apartments-5.webp',
+        'assets/photos/rooms/apartments-6.webp',
+        'assets/photos/rooms/apartments-7.webp',
+      ],
     },
   ],
 
@@ -114,6 +149,21 @@ window.DATA = {
       description: 'Первый этаж расположен в тени деревьев. Комфортные мягкие зоны готовы принять самых искушённых гостей. Отлично подходит для семейного отдыха — есть прекрасная детская зона с батутом, где маленьким гостям не будет скучно.',
       descKey: 'venues.veranda_desc',
       image: 'assets/photos/restaurant/veranda-7.webp',
+      images: [
+        'assets/photos/restaurant/veranda-7.webp',
+        'assets/photos/restaurant/veranda-1.webp',
+        'assets/photos/restaurant/veranda-2.webp',
+        'assets/photos/restaurant/veranda-3.webp',
+        'assets/photos/restaurant/veranda-4.webp',
+        'assets/photos/restaurant/veranda-5.webp',
+        'assets/photos/restaurant/veranda-6.webp',
+        'assets/photos/restaurant/veranda-8.webp',
+        'assets/photos/restaurant/veranda-9.webp',
+        'assets/photos/restaurant/veranda-10.webp',
+        'assets/photos/restaurant/veranda-11.webp',
+        'assets/photos/restaurant/veranda-12.webp',
+        'assets/photos/restaurant/veranda-13.webp',
+      ],
     },
     {
       name: 'Lounge-ресторан',
@@ -122,9 +172,17 @@ window.DATA = {
       subtitleKey: 'venues.medeu_subtitle',
       tagline: 'Пространство с атмосферой сдержанной элегантности',
       taglineKey: 'venues.medeu_tagline',
-      description: 'Эффектное двухуровневое пространство с комфортной посадкой и атмосферой lounge-ресторана. Создано для гастрономических встреч и деловых ужинов. Работаем ежедневно с 07:30 до 01:00. Шведский стол — 07:30–10:30 (5 000 ₸/чел). Бизнес-ланчи по будням 12:00–15:00.',
+      description: 'Эффектное двухуровневое пространство с комфортной посадкой и атмосферой lounge-ресторана. Создано для гастрономических встреч и деловых ужинов. Работаем ежедневно с\u00A007:30 до\u00A001:00. Шведский стол — 07:30–10:30 (5\u00A0000\u00A0₸/чел). Бизнес-ланчи по будням 12:00–15:00.',
       descKey: 'venues.medeu_desc',
       image: 'assets/photos/restaurant/medeu-6.webp',
+      images: [
+        'assets/photos/restaurant/medeu-6.webp',
+        'assets/photos/restaurant/medeu-0.webp',
+        'assets/photos/restaurant/medeu-1.webp',
+        'assets/photos/restaurant/medeu-2.webp',
+        'assets/photos/restaurant/medeu-3.webp',
+        'assets/photos/restaurant/medeu-4.webp',
+      ],
     },
     {
       name: 'Lounge-пространство с караоке',
@@ -133,9 +191,15 @@ window.DATA = {
       subtitleKey: 'venues.karaoke_subtitle',
       tagline: 'В атмосфере паназиатской эстетики',
       taglineKey: 'venues.karaoke_tagline',
-      description: 'Уютное приватное пространство, сочетающее современный интерьер, атмосферу паназиатского стиля и комфортный формат отдыха для небольших компаний и закрытых мероприятий. Аренда — 6 000 ₸/час, после 24:00 — 10 000 ₸/час.',
+      description: 'Уютное приватное пространство, сочетающее современный интерьер, атмосферу паназиатского стиля и комфортный формат отдыха для небольших компаний и закрытых мероприятий. Аренда — 6\u00A0000\u00A0₸/час, после 24:00 — 10\u00A0000\u00A0₸/час.',
       descKey: 'venues.karaoke_desc',
       image: 'assets/photos/restaurant/karaoke-1.webp',
+      images: [
+        'assets/photos/restaurant/karaoke-1.webp',
+        'assets/photos/restaurant/karaoke-2.webp',
+        'assets/photos/restaurant/karaoke-3.webp',
+        'assets/photos/restaurant/karaoke-4.webp',
+      ],
     },
     {
       name: 'Камерный зал',
@@ -147,6 +211,14 @@ window.DATA = {
       description: 'Элегантное пространство с атмосферой уединённого комфорта, идеально подходящее для частных встреч, семейных торжеств и закрытых мероприятий. Современный европейский интерьер с акцентом на комфорт и приватность.',
       descKey: 'venues.billiard_desc',
       image: 'assets/photos/restaurant/billiard-3.webp',
+      images: [
+        'assets/photos/restaurant/billiard-3.webp',
+        'assets/photos/restaurant/billiard-1.webp',
+        'assets/photos/restaurant/billiard-2.webp',
+        'assets/photos/restaurant/billiard-4.webp',
+        'assets/photos/restaurant/billiard-5.webp',
+        'assets/photos/restaurant/billiard-6.webp',
+      ],
     },
   ],
 
@@ -155,7 +227,11 @@ window.DATA = {
     'assets/photos/banquet/main-10.webp',
     'assets/photos/banquet/main-9.webp',
   ],
-  conferenceImage: 'assets/photos/banquet/conference-1.webp',
+  conferenceImage: 'assets/photos/banquet/conference-2.webp',
+  conferenceImages: [
+    'assets/photos/banquet/conference-2.webp',
+    'assets/photos/banquet/conference-1.webp',
+  ],
 
   services: [
     {
@@ -221,9 +297,22 @@ window.DATA = {
 
   pageHero: {
     rooms:      'assets/photos/rooms/lux-1.webp',
-    restaurant: 'assets/photos/restaurant/veranda-7.webp',
+    restaurant: 'assets/photos/restaurant/gastronomy-hero-1.webp',
     banquet:    'assets/photos/banquet/main-10.webp',
     services:   'assets/photos/restaurant/billiard-4.webp',
+  },
+
+  /* Слайды для hero-карусели на внутренних страницах.
+     Если массив есть — page-hero превращается в карусель.
+     Если нет — используется одна картинка из pageHero[id]. */
+  pageHeroSlides: {
+    restaurant: [
+      'assets/photos/restaurant/gastronomy-hero-1.webp',
+      'assets/photos/restaurant/gastronomy-hero-2.webp',
+      'assets/photos/restaurant/gastronomy-hero-3.webp',
+      'assets/photos/restaurant/gastronomy-hero-4.webp',
+      'assets/photos/restaurant/gastronomy-hero-5.webp',
+    ],
   },
 
   contacts: {
