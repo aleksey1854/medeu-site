@@ -1226,10 +1226,10 @@ img { display: block; max-width: 100%; height: auto; }
 .services-intro {
   text-align: center;
   max-width: 720px;
-  margin: 0 auto 80px;
+  margin: 0 auto 48px;
 }
 @media (min-width: 768px) {
-  .services-intro { margin-bottom: 96px; }
+  .services-intro { margin-bottom: 56px; }
 }
 
 .services-grid {
@@ -1797,4 +1797,418 @@ img { display: block; max-width: 100%; height: auto; }
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
+}
+
+/* ============================================================
+   ПРАВКИ ОТ ЗАКАЗЧИКА (19.05.2026)
+   ============================================================ */
+
+/* --- Hero overline: ярче, жирнее, чуть приподнят (Правка 7) --- */
+.hero-overline--prominent {
+  font-weight: 600;
+  letter-spacing: 0.5em;
+  /* компенсация трекинга для оптической центровки */
+  padding-left: 0.5em;
+  color: #F0D9A8;
+  text-shadow: 0 1px 12px rgba(0, 0, 0, 0.55), 0 0 2px rgba(0, 0, 0, 0.4);
+  transform: translateY(-12px);
+}
+@media (min-width: 768px) {
+  .hero-overline--prominent { transform: translateY(-20px); }
+}
+.hero-content .hero-overline--prominent { margin-bottom: 24px; }
+
+/* --- Компенсация трекинга для центрированных оверлайнов --- */
+.overline--centered {
+  display: inline-block;
+  padding-left: 0.45em; /* компенсация trailing letter-spacing */
+}
+
+/* --- Уменьшенный верхний отступ для секций сразу после hero (Правка 4, 6) --- */
+.section--tight-top {
+  padding-top: 64px;
+}
+@media (min-width: 768px) {
+  .section--tight-top { padding-top: 80px; }
+}
+.section--tight-bottom {
+  padding-bottom: 64px;
+}
+@media (min-width: 768px) {
+  .section--tight-bottom { padding-bottom: 80px; }
+}
+
+/* --- Карта: убрать большой нижний отступ перед футером (Правка 1) --- */
+.map-section-wrap--tight {
+  padding-bottom: 56px;
+}
+@media (max-width: 768px) {
+  .map-section-wrap--tight { padding-bottom: 40px; }
+}
+
+/* --- Центрирование описаний в карточках номеров и заведений (Правка 3) --- */
+.room-info,
+.venue-info {
+  text-align: center;
+}
+.room-info .vignette,
+.venue-info .vignette {
+  justify-content: center;
+}
+.room-info .room-bottom {
+  justify-content: center;
+  align-items: center;
+}
+.venue-info .venue-tagline,
+.venue-info .body-prose {
+  text-align: center;
+}
+@media (min-width: 768px) {
+  /* На десктопе можно оставить overline и кнопку как-есть, но текст центрируем */
+  .room-info .body-prose,
+  .venue-info .body-prose {
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 560px;
+  }
+}
+
+/* --- Конференц-зал: текст по центру (Правка 2) --- */
+.conference-text--centered {
+  text-align: center;
+}
+.conference-text--centered .vignette {
+  justify-content: center;
+}
+.capacity-stack--centered {
+  align-items: center;
+}
+.capacity-stack--centered .capacity-row {
+  justify-content: center;
+}
+
+/* ============================================================
+   КАРУСЕЛЬ НОМЕРОВ (Правка 5 — заготовка)
+   ============================================================ */
+
+/* Контейнер сохраняет старую геометрию (aspect-ratio 4/3) */
+.room-gallery {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+.room-gallery-track {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.6s cubic-bezier(0.22, 0.61, 0.36, 1);
+  will-change: transform;
+}
+.room-gallery-slide {
+  position: relative;
+  flex: 0 0 100%;
+  height: 100%;
+  overflow: hidden;
+}
+.room-gallery-slide .room-image {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  transition: transform 2s;
+}
+.room-row:hover .room-gallery-slide.is-active .room-image {
+  transform: scale(1.04);
+}
+
+/* Точки навигации */
+.room-gallery-dots {
+  position: absolute;
+  bottom: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 8px;
+  z-index: 3;
+  padding: 6px 10px;
+  background: rgba(10, 9, 8, 0.28);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  border-radius: 999px;
+}
+.room-gallery-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.5);
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+  transition: background 0.3s, transform 0.3s;
+}
+.room-gallery-dot.is-active {
+  background: #E8C98D;
+  transform: scale(1.3);
+}
+
+/* Стрелки навигации */
+.room-gallery-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 40px;
+  height: 40px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: rgba(10, 9, 8, 0.35);
+  color: #E8E4DA;
+  border: 1px solid rgba(232, 201, 141, 0.35);
+  cursor: pointer;
+  z-index: 3;
+  opacity: 0;
+  transition: opacity 0.3s, background 0.3s;
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+.room-gallery-arrow:hover { background: rgba(184, 153, 104, 0.85); color: #1A1612; }
+.room-gallery-arrow--prev { left: 12px; }
+.room-gallery-arrow--next { right: 12px; }
+.room-image-wrap:hover .room-gallery-arrow,
+.room-gallery:hover .room-gallery-arrow,
+.room-gallery-arrow:focus-visible { opacity: 1; }
+
+/* Если фото одно — точки и стрелки скрываются (приходит при инициализации) */
+.room-gallery.is-single .room-gallery-dots,
+.room-gallery.is-single .room-gallery-arrow {
+  display: none;
+}
+
+/* Mobile: стрелки всегда видны полупрозрачно (нет hover на тапе) */
+@media (max-width: 768px) {
+  .room-gallery-arrow {
+    opacity: 0.7;
+    width: 36px;
+    height: 36px;
+  }
+  .room-gallery-arrow--prev { left: 8px; }
+  .room-gallery-arrow--next { right: 8px; }
+}
+
+/* ============================================================
+   СЕКЦИЯ ПЛАТЁЖНЫХ СИСТЕМ (Правка 1)
+   ============================================================ */
+
+.payments-section {
+  padding: 56px 0 80px;
+  background: var(--c-bg);
+  border-top: 1px solid var(--c-divider);
+  transition: background 0.5s ease, border-color 0.5s ease;
+}
+@media (max-width: 768px) {
+  .payments-section { padding: 40px 0 56px; }
+}
+
+/* Полоса оплаты внутри map-stack (без верхней границы — есть свой divider от map-info-row) */
+.map-stack .payments-strip {
+  margin-top: 40px;
+  padding-top: 40px;
+  border-top: 1px solid var(--c-divider);
+  width: 100%;
+}
+
+.payments-strip {
+  text-align: center;
+}
+.payments-strip__title {
+  font-family: var(--f-body);
+  font-size: 10px;
+  letter-spacing: 0.45em;
+  text-transform: uppercase;
+  color: var(--c-silver);
+  font-weight: 400;
+  margin-bottom: 24px;
+  display: inline-block;
+  padding-left: 0.45em;
+}
+.payments-strip__list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 20px 32px;
+}
+.payments-logo {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 32px;
+  filter: grayscale(0.05);
+  opacity: 0.95;
+  transition: opacity 0.3s, filter 0.3s, transform 0.3s;
+}
+.payments-logo--wide { height: 32px; }
+.payments-logo--square { height: 42px; }
+.payments-logo:hover {
+  opacity: 1;
+  filter: grayscale(0);
+  transform: translateY(-1px);
+}
+.payments-logo svg,
+.payments-logo img {
+  display: block;
+  height: 100%;
+  width: auto;
+  max-width: 140px;
+  object-fit: contain;
+}
+@media (max-width: 640px) {
+  .payments-logo--wide { height: 26px; }
+  .payments-logo--square { height: 34px; }
+}
+
+/* Плашка-плейсхолдер на случай, когда SVG-файл ещё не положен */
+.payments-fallback {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  padding: 0 14px;
+  border-radius: 4px;
+  color: #fff;
+  font-family: var(--f-body);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+@media (max-width: 640px) {
+  .payments-strip__list { gap: 16px 24px; }
+}
+
+/* Тёмная тема: подсветка лого, чтобы не пропадали */
+.theme-dark .payments-logo {
+  filter: grayscale(0.05) brightness(1.05);
+}
+
+/* ============================================================
+   ВТОРАЯ ИТЕРАЦИЯ ПРАВОК (20.05.2026)
+   ============================================================ */
+
+/* --- Venue-галерея: aspect-ratio 16/10, как у одиночного фото --- */
+.venue-image-wrap .room-gallery.venue-gallery {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+.venue-gallery .room-gallery-slide .venue-image {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  transition: transform 3s;
+}
+/* Hover — только активный слайд */
+.venue-row:hover .venue-gallery .room-gallery-slide.is-active .venue-image {
+  transform: scale(1.05);
+}
+/* Отменяем глобальный hover-scale на .venue-image (тот, что был для одиночного фото),
+   потому что теперь .venue-image живёт внутри слайда */
+.venue-row:hover .venue-image-wrap > .venue-image { transform: none; }
+
+/* Мета (номер + Бильярд/Medeu/...) должна быть поверх галереи */
+.venue-image-wrap .venue-image-meta {
+  z-index: 3;
+  pointer-events: none;
+}
+
+/* Аккуратнее со стрелками на venue — фон чуть темнее, т.к. фото яркие */
+.venue-gallery .room-gallery-arrow {
+  background: rgba(10, 9, 8, 0.45);
+}
+
+/* ============================================================
+   КОНФЕРЕНЦ-ЗАЛ как карусель (Правка 2-я итерация)
+   ============================================================ */
+
+.conference-image-wrap {
+  position: relative;
+  aspect-ratio: 4/3;
+  overflow: hidden;
+}
+.conference-gallery {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+.conference-gallery .room-gallery-slide .conference-image {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+}
+
+/* ============================================================
+   HERO-карусель на внутренних страницах (page-hero)
+   используется для страницы Гастрономии
+   ============================================================ */
+
+.page-hero-carousel {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  z-index: 0;
+}
+.page-hero-carousel .ph-slide {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  opacity: 0;
+  transition: opacity 1.4s ease-in-out;
+}
+.page-hero-carousel .ph-slide.is-active { opacity: 1; }
+
+/* Поверх — затемнение, как у обычного page-hero */
+.page-hero--carousel::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(10, 9, 8, 0.4), rgba(10, 9, 8, 0.85));
+  z-index: 1;
+  pointer-events: none;
+}
+.page-hero--carousel .page-hero-content {
+  position: relative;
+  z-index: 2;
+}
+
+/* Точки навигации hero-карусели — внизу по центру */
+.page-hero-carousel-dots {
+  display: none; /* по просьбе заказчика — скрыты, автопрокрутка работает */
+  position: absolute;
+  bottom: 32px;
+  left: 50%;
+  transform: translateX(-50%);
+  gap: 10px;
+  z-index: 3;
+}
+.page-hero-carousel-dots button {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: rgba(232, 228, 218, 0.4);
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+  transition: background 0.3s, transform 0.3s;
+}
+.page-hero-carousel-dots button.is-active {
+  background: #E8C98D;
+  transform: scale(1.3);
 }

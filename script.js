@@ -266,10 +266,31 @@
   roomsStack.innerHTML = DATA.rooms.map(function (room, idx) {
     const num = idx + 1 < 10 ? '0' + (idx + 1) : '' + (idx + 1);
     const reverse = idx % 2 === 1;
+    // Берём массив images, либо fallback на одиночное image
+    const imgs = (room.images && room.images.length) ? room.images : [room.image];
+    const isSingle = imgs.length <= 1;
+    const slidesHtml = imgs.map(function (src, i) {
+      return ''
+        + '<div class="room-gallery-slide' + (i === 0 ? ' is-active' : '') + '">'
+        +   '<div class="room-image lazy-bg' + (i === 0 ? ' img-skeleton' : '') + '" data-bg="' + src + '"></div>'
+        + '</div>';
+    }).join('');
+    const dotsHtml = imgs.map(function (_, i) {
+      return '<button class="room-gallery-dot' + (i === 0 ? ' is-active' : '') + '" aria-label="Слайд ' + (i + 1) + '" data-idx="' + i + '"></button>';
+    }).join('');
     return ''
       + '<div class="room-row' + (reverse ? ' room-row--reverse' : '') + '">'
       +   '<div class="room-image-wrap">'
-      +     '<div class="room-image lazy-bg img-skeleton" data-bg="' + room.image + '"></div>'
+      +     '<div class="room-gallery' + (isSingle ? ' is-single' : '') + '" data-gallery="room-' + idx + '">'
+      +       '<div class="room-gallery-track">' + slidesHtml + '</div>'
+      +       '<button class="room-gallery-arrow room-gallery-arrow--prev" aria-label="Назад" data-dir="-1">'
+      +         '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>'
+      +       '</button>'
+      +       '<button class="room-gallery-arrow room-gallery-arrow--next" aria-label="Вперёд" data-dir="1">'
+      +         '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>'
+      +       '</button>'
+      +       '<div class="room-gallery-dots">' + dotsHtml + '</div>'
+      +     '</div>'
       +     '<div class="room-number">' + num + '</div>'
       +   '</div>'
       +   '<div class="room-info">'
@@ -295,14 +316,36 @@
       + '</div>';
   }).join('');
 
+  /* Инициализация всех галерей выполнена ниже, после рендера venues */
+
   const venuesStack = document.getElementById('venues-stack');
   venuesStack.innerHTML = DATA.venues.map(function (venue, idx) {
     const num = '0' + (idx + 1);
     const reverse = idx % 2 === 1;
+    const imgs = (venue.images && venue.images.length) ? venue.images : [venue.image];
+    const isSingle = imgs.length <= 1;
+    const slidesHtml = imgs.map(function (src, i) {
+      return ''
+        + '<div class="room-gallery-slide' + (i === 0 ? ' is-active' : '') + '">'
+        +   '<div class="venue-image lazy-bg' + (i === 0 ? ' img-skeleton' : '') + '" data-bg="' + src + '"></div>'
+        + '</div>';
+    }).join('');
+    const dotsHtml = imgs.map(function (_, i) {
+      return '<button class="room-gallery-dot' + (i === 0 ? ' is-active' : '') + '" aria-label="Слайд ' + (i + 1) + '" data-idx="' + i + '"></button>';
+    }).join('');
     return ''
       + '<div class="venue-row' + (reverse ? ' venue-row--reverse' : '') + '">'
       +   '<div class="venue-image-wrap">'
-      +     '<div class="venue-image lazy-bg img-skeleton" data-bg="' + venue.image + '"></div>'
+      +     '<div class="room-gallery venue-gallery' + (isSingle ? ' is-single' : '') + '" data-gallery="venue-' + idx + '">'
+      +       '<div class="room-gallery-track">' + slidesHtml + '</div>'
+      +       '<button class="room-gallery-arrow room-gallery-arrow--prev" aria-label="Назад" data-dir="-1">'
+      +         '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>'
+      +       '</button>'
+      +       '<button class="room-gallery-arrow room-gallery-arrow--next" aria-label="Вперёд" data-dir="1">'
+      +         '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>'
+      +       '</button>'
+      +       '<div class="room-gallery-dots">' + dotsHtml + '</div>'
+      +     '</div>'
       +     '<div class="venue-image-meta">'
       +       '<span class="venue-number">№ ' + num + '</span>'
       +       '<span class="venue-image-subtitle">' + (window.I18N && venue.subtitleKey ? I18N.t(venue.subtitleKey) : venue.subtitle) + '</span>'
@@ -329,6 +372,74 @@
       +   '</div>'
       + '</div>';
   }).join('');
+
+  /* === Универсальная инициализация всех галерей (.room-gallery)
+        — работает и для номеров, и для венусов === */
+  function initGallery(gallery) {
+    if (gallery.classList.contains('is-single')) return;
+    if (gallery.dataset.initialized === '1') return;
+    gallery.dataset.initialized = '1';
+
+    const track = gallery.querySelector('.room-gallery-track');
+    const slides = gallery.querySelectorAll('.room-gallery-slide');
+    const dots = gallery.querySelectorAll('.room-gallery-dot');
+    const arrows = gallery.querySelectorAll('.room-gallery-arrow');
+    let active = 0;
+
+    function loadSlideBg(i) {
+      const slide = slides[i];
+      if (!slide) return;
+      const img = slide.querySelector('[data-bg]');
+      if (!img || img.classList.contains('is-loaded')) return;
+      const url = img.dataset.bg;
+      const tmp = new Image();
+      tmp.onload = function () {
+        img.style.backgroundImage = 'url(' + url + ')';
+        img.classList.add('is-loaded');
+        img.classList.remove('img-skeleton');
+      };
+      tmp.src = url;
+    }
+
+    function go(i) {
+      const total = slides.length;
+      const next = (i + total) % total;
+      slides[active].classList.remove('is-active');
+      if (dots[active]) dots[active].classList.remove('is-active');
+      active = next;
+      slides[active].classList.add('is-active');
+      if (dots[active]) dots[active].classList.add('is-active');
+      track.style.transform = 'translateX(-' + (active * 100) + '%)';
+      loadSlideBg(active);
+      loadSlideBg((active + 1) % slides.length);
+      loadSlideBg((active - 1 + slides.length) % slides.length);
+    }
+
+    dots.forEach(function (dot, i) {
+      dot.addEventListener('click', function () { go(i); });
+    });
+    arrows.forEach(function (arr) {
+      arr.addEventListener('click', function () {
+        const dir = parseInt(arr.dataset.dir, 10) || 1;
+        go(active + dir);
+      });
+    });
+
+    /* Свайп */
+    let touchStartX = null;
+    track.addEventListener('touchstart', function (e) {
+      touchStartX = e.touches[0].clientX;
+    }, { passive: true });
+    track.addEventListener('touchend', function (e) {
+      if (touchStartX === null) return;
+      const dx = e.changedTouches[0].clientX - touchStartX;
+      if (Math.abs(dx) > 40) go(active + (dx < 0 ? 1 : -1));
+      touchStartX = null;
+    });
+  }
+  window.initGallery = initGallery;
+
+  document.querySelectorAll('.room-gallery').forEach(initGallery);
 
   const servicesList = document.getElementById('services-list');
   if (servicesList && DATA.services) {
@@ -405,6 +516,68 @@
   }
   renderDynamic();
 
+  /* ============================================================
+     ПЛАТЁЖНЫЕ СИСТЕМЫ
+     Логотипы подгружаются из assets/payments/{key}.svg
+     Если файл не загрузился — показывается нейтральная плашка
+     с названием в фирменном цвете.
+     ============================================================ */
+  function renderPayments() {
+    const wraps = document.querySelectorAll('.payments-strip');
+    if (!wraps.length) return;
+
+    const title = (window.I18N ? I18N.t('payments.title') : '— Способы оплаты —');
+
+    const methods = [
+      { key: 'visa',         name: 'Visa',             color: '#1A1F71', aspect: 'wide' },
+      { key: 'mastercard',   name: 'Mastercard',       color: '#EB001B', aspect: 'square' },
+      { key: 'amex',         name: 'American Express', color: '#006FCF', aspect: 'square' },
+      { key: 'mir',          name: 'МИР',              color: '#0F754E', aspect: 'wide' },
+      { key: 'kaspi',        name: 'Kaspi QR',         color: '#F14635', aspect: 'square' },
+      { key: 'wechat-pay',   name: 'WeChat Pay',       color: '#1AAD19', aspect: 'wide' },
+    ];
+
+    const html = ''
+      + '<div class="payments-strip__title">' + title + '</div>'
+      + '<div class="payments-strip__list">'
+      +   methods.map(function (m) {
+            return ''
+              + '<span class="payments-logo payments-logo--' + m.aspect + '" '
+              +   'data-fallback-name="' + m.name + '" '
+              +   'data-fallback-color="' + m.color + '" '
+              +   'title="' + m.name + '">'
+              +   '<img src="assets/payments/' + m.key + '.svg" alt="' + m.name + '">'
+              + '</span>';
+          }).join('')
+      + '</div>';
+
+    wraps.forEach(function (w) {
+      w.innerHTML = html;
+      /* Навешиваем fallback на каждое <img>. Срабатывает только если
+         SVG-файл по какой-то причине не загрузится. */
+      w.querySelectorAll('.payments-logo img').forEach(function (img) {
+        img.addEventListener('error', function () {
+          const parent = img.parentNode;
+          if (!parent) return;
+          const span = document.createElement('span');
+          span.className = 'payments-fallback';
+          span.style.background = parent.dataset.fallbackColor || '#888';
+          span.textContent = parent.dataset.fallbackName || '';
+          img.replaceWith(span);
+        });
+      });
+    });
+  }
+  renderPayments();
+  /* Перерендер при смене языка — оборачиваем существующий applyLang */
+  if (typeof window.applyLang === 'function') {
+    const originalApply = window.applyLang;
+    window.applyLang = function (lang) {
+      originalApply(lang);
+      renderPayments();
+    };
+  }
+
   document.getElementById('addr-value').textContent = DATA.contacts.address;
   document.getElementById('phone1-value').textContent = DATA.contacts.phone1;
   document.getElementById('phone2-value').textContent = DATA.contacts.phone2;
@@ -419,19 +592,115 @@
 
   document.getElementById('year').textContent = new Date().getFullYear();
 
-  const confImg = document.getElementById('conference-image');
-  if (confImg) {
-    confImg.classList.add('lazy-bg', 'img-skeleton');
-    confImg.dataset.bg = DATA.conferenceImage;
+  /* === Конференц-зал: одиночное фото или галерея === */
+  const confImgWrap = document.getElementById('conference-image');
+  if (confImgWrap) {
+    const confImgs = (DATA.conferenceImages && DATA.conferenceImages.length)
+      ? DATA.conferenceImages
+      : (DATA.conferenceImage ? [DATA.conferenceImage] : []);
+    if (confImgs.length > 1) {
+      // Превращаем элемент в галерею в стиле .room-gallery
+      const parent = confImgWrap.parentElement;
+      parent.removeChild(confImgWrap);
+      const isSingle = confImgs.length <= 1;
+      const slidesHtml = confImgs.map(function (src, i) {
+        return ''
+          + '<div class="room-gallery-slide' + (i === 0 ? ' is-active' : '') + '">'
+          +   '<div class="conference-image lazy-bg' + (i === 0 ? ' img-skeleton' : '') + '" data-bg="' + src + '"></div>'
+          + '</div>';
+      }).join('');
+      const dotsHtml = confImgs.map(function (_, i) {
+        return '<button class="room-gallery-dot' + (i === 0 ? ' is-active' : '') + '" aria-label="Слайд ' + (i + 1) + '" data-idx="' + i + '"></button>';
+      }).join('');
+      parent.innerHTML = ''
+        + '<div class="room-gallery conference-gallery' + (isSingle ? ' is-single' : '') + '">'
+        +   '<div class="room-gallery-track">' + slidesHtml + '</div>'
+        +   '<button class="room-gallery-arrow room-gallery-arrow--prev" aria-label="Назад" data-dir="-1">'
+        +     '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>'
+        +   '</button>'
+        +   '<button class="room-gallery-arrow room-gallery-arrow--next" aria-label="Вперёд" data-dir="1">'
+        +     '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>'
+        +   '</button>'
+        +   '<div class="room-gallery-dots">' + dotsHtml + '</div>'
+        + '</div>';
+      const newGallery = parent.querySelector('.conference-gallery');
+      if (newGallery && window.initGallery) window.initGallery(newGallery);
+    } else if (confImgs.length === 1) {
+      confImgWrap.classList.add('lazy-bg', 'img-skeleton');
+      confImgWrap.dataset.bg = confImgs[0];
+    }
   }
 
+  /* === page-hero: одиночное фото ИЛИ карусель,
+        если DATA.pageHeroSlides[id] задан === */
   document.querySelectorAll('.page-hero[data-page-hero]').forEach(function (el) {
     const pageId = el.dataset.pageHero;
-    const bg = DATA.pageHero && DATA.pageHero[pageId];
-    if (bg) {
-      el.dataset.bg = bg;
-      el.dataset.bgOverlay = 'linear-gradient(180deg, rgba(10,9,8,0.4), rgba(10,9,8,0.85))';
-      el.classList.add('lazy-bg');
+    const slides = DATA.pageHeroSlides && DATA.pageHeroSlides[pageId];
+    if (slides && slides.length > 1) {
+      // Карусель: вставляем слайды как абсолютные оверлеи внутри page-hero
+      const carousel = document.createElement('div');
+      carousel.className = 'page-hero-carousel';
+      slides.forEach(function (src, i) {
+        const s = document.createElement('div');
+        s.className = 'ph-slide' + (i === 0 ? ' is-active' : '');
+        if (i === 0) {
+          s.style.backgroundImage = 'url(' + src + ')';
+        } else {
+          s.dataset.bgSrc = src;
+        }
+        carousel.appendChild(s);
+      });
+      // Точки навигации
+      const dots = document.createElement('div');
+      dots.className = 'page-hero-carousel-dots';
+      slides.forEach(function (_, i) {
+        const b = document.createElement('button');
+        b.className = (i === 0 ? 'is-active' : '');
+        b.setAttribute('aria-label', 'Слайд ' + (i + 1));
+        dots.appendChild(b);
+      });
+      el.insertBefore(carousel, el.firstChild);
+      el.appendChild(dots);
+      el.classList.add('page-hero--carousel');
+
+      const slideEls = carousel.querySelectorAll('.ph-slide');
+      const dotEls = dots.querySelectorAll('button');
+      let active = 0;
+      function go(i) {
+        const next = (i + slideEls.length) % slideEls.length;
+        slideEls[active].classList.remove('is-active');
+        dotEls[active].classList.remove('is-active');
+        active = next;
+        slideEls[active].classList.add('is-active');
+        dotEls[active].classList.add('is-active');
+        // ленивая подгрузка
+        const target = slideEls[active];
+        if (target.dataset.bgSrc) {
+          const url = target.dataset.bgSrc;
+          const tmp = new Image();
+          tmp.onload = function () {
+            target.style.backgroundImage = 'url(' + url + ')';
+            delete target.dataset.bgSrc;
+          };
+          tmp.src = url;
+        }
+      }
+      dotEls.forEach(function (d, i) {
+        d.addEventListener('click', function () { go(i); });
+      });
+      const interval = setInterval(function () { go(active + 1); }, 6000);
+      // Останавливаем автопрокрутку, если страница не активна
+      document.addEventListener('visibilitychange', function () {
+        if (document.hidden) clearInterval(interval);
+      });
+    } else {
+      // Старое поведение — одиночное фото
+      const bg = DATA.pageHero && DATA.pageHero[pageId];
+      if (bg) {
+        el.dataset.bg = bg;
+        el.dataset.bgOverlay = 'linear-gradient(180deg, rgba(10,9,8,0.4), rgba(10,9,8,0.85))';
+        el.classList.add('lazy-bg');
+      }
     }
   });
 
