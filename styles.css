@@ -1799,15 +1799,10 @@ img { display: block; max-width: 100%; height: auto; }
   }
 }
 
-/* ============================================================
-   ПРАВКИ ОТ ЗАКАЗЧИКА (19.05.2026)
-   ============================================================ */
-
-/* --- Hero overline: ярче, жирнее, чуть приподнят (Правка 7) --- */
 .hero-overline--prominent {
   font-weight: 600;
   letter-spacing: 0.5em;
-  /* компенсация трекинга для оптической центровки */
+
   padding-left: 0.5em;
   color: #F0D9A8;
   text-shadow: 0 1px 12px rgba(0, 0, 0, 0.55), 0 0 2px rgba(0, 0, 0, 0.4);
@@ -1818,16 +1813,10 @@ img { display: block; max-width: 100%; height: auto; }
 }
 .hero-content .hero-overline--prominent { margin-bottom: 24px; }
 
-/* --- Компенсация трекинга для центрированных оверлайнов --- */
-/* --- Центрированный оверлайн.
-   Раньше тут была padding-left компенсация для трейлинг letter-spacing,
-   но современные браузеры (по CSS Text 3) сами обрезают её при центрировании,
-   и компенсация только толкала текст вправо. --- */
 .overline--centered {
   display: inline-block;
 }
 
-/* --- Уменьшенный верхний отступ для секций сразу после hero (Правка 4, 6) --- */
 .section--tight-top {
   padding-top: 64px;
 }
@@ -1841,7 +1830,6 @@ img { display: block; max-width: 100%; height: auto; }
   .section--tight-bottom { padding-bottom: 64px; }
 }
 
-/* --- Карта: убрать большой нижний отступ перед футером (Правка 1) --- */
 .map-section-wrap--tight {
   padding-bottom: 56px;
 }
@@ -1855,7 +1843,6 @@ img { display: block; max-width: 100%; height: auto; }
   .map-section-wrap--tight-top { padding-top: 32px; }
 }
 
-/* --- Центрирование описаний в карточках номеров и заведений (Правка 3) --- */
 .room-info,
 .venue-info {
   text-align: center;
@@ -1873,7 +1860,7 @@ img { display: block; max-width: 100%; height: auto; }
   text-align: center;
 }
 @media (min-width: 768px) {
-  /* На десктопе можно оставить overline и кнопку как-есть, но текст центрируем */
+
   .room-info .body-prose,
   .venue-info .body-prose {
     margin-left: auto;
@@ -1882,7 +1869,6 @@ img { display: block; max-width: 100%; height: auto; }
   }
 }
 
-/* --- Конференц-зал: текст по центру (Правка 2) --- */
 .conference-text--centered {
   text-align: center;
 }
@@ -1896,11 +1882,6 @@ img { display: block; max-width: 100%; height: auto; }
   justify-content: center;
 }
 
-/* ============================================================
-   КАРУСЕЛЬ НОМЕРОВ (Правка 5 — заготовка)
-   ============================================================ */
-
-/* Контейнер сохраняет старую геометрию (aspect-ratio 4/3) */
 .room-gallery {
   position: relative;
   width: 100%;
@@ -1933,7 +1914,6 @@ img { display: block; max-width: 100%; height: auto; }
   transform: scale(1.04);
 }
 
-/* Точки навигации */
 .room-gallery-dots {
   position: absolute;
   bottom: 16px;
@@ -1963,7 +1943,6 @@ img { display: block; max-width: 100%; height: auto; }
   transform: scale(1.3);
 }
 
-/* Стрелки навигации */
 .room-gallery-arrow {
   position: absolute;
   top: 50%;
@@ -1991,13 +1970,11 @@ img { display: block; max-width: 100%; height: auto; }
 .room-gallery:hover .room-gallery-arrow,
 .room-gallery-arrow:focus-visible { opacity: 1; }
 
-/* Если фото одно — точки и стрелки скрываются (приходит при инициализации) */
 .room-gallery.is-single .room-gallery-dots,
 .room-gallery.is-single .room-gallery-arrow {
   display: none;
 }
 
-/* Mobile: стрелки всегда видны полупрозрачно (нет hover на тапе) */
 @media (max-width: 768px) {
   .room-gallery-arrow {
     opacity: 0.7;
@@ -2007,10 +1984,6 @@ img { display: block; max-width: 100%; height: auto; }
   .room-gallery-arrow--prev { left: 8px; }
   .room-gallery-arrow--next { right: 8px; }
 }
-
-/* ============================================================
-   СЕКЦИЯ ПЛАТЁЖНЫХ СИСТЕМ (Правка 1)
-   ============================================================ */
 
 .payments-section {
   padding: 56px 0 80px;
@@ -2022,7 +1995,6 @@ img { display: block; max-width: 100%; height: auto; }
   .payments-section { padding: 40px 0 56px; }
 }
 
-/* Полоса оплаты внутри map-stack (без верхней границы — есть свой divider от map-info-row) */
 .map-stack .payments-strip {
   margin-top: 40px;
   padding-top: 40px;
@@ -2080,7 +2052,6 @@ img { display: block; max-width: 100%; height: auto; }
   .payments-logo--square { height: 34px; }
 }
 
-/* Плашка-плейсхолдер на случай, когда SVG-файл ещё не положен */
 .payments-fallback {
   display: inline-flex;
   align-items: center;
@@ -2100,12 +2071,10 @@ img { display: block; max-width: 100%; height: auto; }
   .payments-strip__list { gap: 16px 24px; }
 }
 
-/* Тёмная тема: подсветка лого, чтобы не пропадали */
 .theme-dark .payments-logo {
   filter: grayscale(0.05) brightness(1.05);
 }
 
-/* --- Мини-вариант платёжной полосы внутри карточки номера --- */
 .payments-strip--mini {
   margin-top: 40px;
   padding-top: 0;
@@ -2126,14 +2095,8 @@ img { display: block; max-width: 100%; height: auto; }
   .payments-strip--mini .payments-strip__list { gap: 10px 16px; }
 }
 
-/* --- Меньше воздуха между концом контента и футером (Правка) --- */
 .footer { padding-top: 40px; }
 
-/* ============================================================
-   ВТОРАЯ ИТЕРАЦИЯ ПРАВОК (20.05.2026)
-   ============================================================ */
-
-/* --- Venue-галерея: aspect-ratio 16/10, как у одиночного фото --- */
 .venue-image-wrap .room-gallery.venue-gallery {
   width: 100%;
   height: 100%;
@@ -2146,28 +2109,21 @@ img { display: block; max-width: 100%; height: auto; }
   background-position: center;
   transition: transform 3s;
 }
-/* Hover — только активный слайд */
+
 .venue-row:hover .venue-gallery .room-gallery-slide.is-active .venue-image {
   transform: scale(1.05);
 }
-/* Отменяем глобальный hover-scale на .venue-image (тот, что был для одиночного фото),
-   потому что теперь .venue-image живёт внутри слайда */
+
 .venue-row:hover .venue-image-wrap > .venue-image { transform: none; }
 
-/* Мета (номер + Бильярд/Medeu/...) должна быть поверх галереи */
 .venue-image-wrap .venue-image-meta {
   z-index: 3;
   pointer-events: none;
 }
 
-/* Аккуратнее со стрелками на venue — фон чуть темнее, т.к. фото яркие */
 .venue-gallery .room-gallery-arrow {
   background: rgba(10, 9, 8, 0.45);
 }
-
-/* ============================================================
-   КОНФЕРЕНЦ-ЗАЛ как карусель (Правка 2-я итерация)
-   ============================================================ */
 
 .conference-image-wrap {
   position: relative;
@@ -2186,11 +2142,6 @@ img { display: block; max-width: 100%; height: auto; }
   background-position: center;
 }
 
-/* ============================================================
-   HERO-карусель на внутренних страницах (page-hero)
-   используется для страницы Гастрономии
-   ============================================================ */
-
 .page-hero-carousel {
   position: absolute;
   inset: 0;
@@ -2207,7 +2158,6 @@ img { display: block; max-width: 100%; height: auto; }
 }
 .page-hero-carousel .ph-slide.is-active { opacity: 1; }
 
-/* Поверх — затемнение, как у обычного page-hero */
 .page-hero--carousel::before {
   content: "";
   position: absolute;
@@ -2221,9 +2171,8 @@ img { display: block; max-width: 100%; height: auto; }
   z-index: 2;
 }
 
-/* Точки навигации hero-карусели — внизу по центру */
 .page-hero-carousel-dots {
-  display: none; /* по просьбе заказчика — скрыты, автопрокрутка работает */
+  display: none;
   position: absolute;
   bottom: 32px;
   left: 50%;

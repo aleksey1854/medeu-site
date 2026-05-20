@@ -1,8 +1,5 @@
-
-
 window.I18N = {
   current: 'ru',
-
   ru: {
     nav: {
       menu: 'Меню',
@@ -11,13 +8,13 @@ window.I18N = {
       gastronomy: 'Гастрономия',
       banquet: 'Банкетный зал',
       services: 'Услуги',
-      contacts: 'Контакты',
+      contacts: 'Контакты'
     },
     hero: {
       overline: '— Гостиничный комплекс · Костанай —',
       tagline: 'Европейская утончённость и восточное гостеприимство в сердце Костаная',
       ctaBookRoom: 'Забронировать номер',
-      scrollHint: 'Прокрутите',
+      scrollHint: 'Прокрутите'
     },
     facilities: {
       rooms_name: 'Номера',
@@ -29,8 +26,7 @@ window.I18N = {
       contacts_name: 'Контакты',
       contacts_desc: 'В сердце Костаная',
       cta: 'Узнать больше',
-
-      categoryLabel: 'Категория',
+      categoryLabel: 'Категория'
     },
     about: {
       overline: '— О гостинице —',
@@ -38,7 +34,7 @@ window.I18N = {
       p1: 'Гостиничный комплекс «Medeu» — четырёхзвёздная гостиница из 58 номеров шести категорий, идеально расположенная в самом центре Костаная. Мы рады вновь приветствовать Вас в нашем комплексе.',
       p2: 'Все номера оборудованы в соответствии с самыми высокими стандартами индустрии гостеприимства и готовы принять самых взыскательных гостей. В непосредственной близости находятся все деловые, культурные и административные центры города.',
       p3: 'Безопасность гостей обеспечивается службой охраны, видеонаблюдением, системами пожарной сигнализации и электронными замками. Квалифицированный персонал со знанием казахского, русского и английского языков сделает Ваше пребывание максимально комфортным.',
-      p4: 'Шведский стол на завтрак включён в стоимость номера. Гибкая система тарифов предусматривает значительные скидки постоянным и корпоративным клиентам.',
+      p4: 'Шведский стол на завтрак включён в стоимость номера. Гибкая система тарифов предусматривает значительные скидки постоянным и корпоративным клиентам.'
     },
     map: {
       overline: '— Расположение —',
@@ -47,13 +43,12 @@ window.I18N = {
       addressLabel: 'Адрес',
       phoneLabel: 'Телефон',
       emailLabel: 'Почта',
-
       addressLabel: 'Адрес',
       phoneLabel: 'Телефон',
-      emailLabel: 'Почта',
+      emailLabel: 'Почта'
     },
     payments: {
-      title: '— Способы оплаты —',
+      title: '— Способы оплаты —'
     },
     pageHero: {
       rooms_overline: '— Размещение —',
@@ -67,7 +62,7 @@ window.I18N = {
       banquet_tagline: 'Пространство для торжеств, корпоративных и деловых событий',
       services_overline: '— Дополнительные услуги —',
       services_title: 'Услуги',
-      services_tagline: 'Всё для комфортного пребывания и торжественных событий',
+      services_tagline: 'Всё для комфортного пребывания и торжественных событий'
     },
     rooms: {
       area: 'м²',
@@ -84,7 +79,7 @@ window.I18N = {
       polulux_twin_desc: 'Двухместный полулюкс 27 м² с двумя раздельными кроватями. Подходит для коллег, родственников или друзей путешествующих вместе.',
       family_desc: 'Семейный номер 65 м² из трёх комнат — гостиная, спальня для родителей и детская. Просторно и комфортно для всей семьи.',
       lux_desc: 'Двухкомнатный люкс 65 м² с элегантной гостиной и отдельной спальней. Премиальное оснащение, особая атмосфера.',
-      apartments_desc: 'Апартаменты 130 м² с джакузи, гостиной и отдельной спальней. Самое просторное и роскошное предложение комплекса.',
+      apartments_desc: 'Апартаменты 130 м² с джакузи, гостиной и отдельной спальней. Самое просторное и роскошное предложение комплекса.'
     },
     venues: {
       veranda_name: 'Летняя веранда',
@@ -94,7 +89,7 @@ window.I18N = {
       medeu_name: 'Lounge-ресторан',
       medeu_subtitle: 'Medeu',
       medeu_tagline: 'Пространство с атмосферой сдержанной элегантности',
-      medeu_desc: 'Эффектное двухуровневое пространство с комфортной посадкой и атмосферой lounge-ресторана. Создано для гастрономических встреч и деловых ужинов. Работаем ежедневно с\u00A007:30 до\u00A001:00. Шведский стол — 07:30–10:30 (5\u00A0000\u00A0₸/чел). Бизнес-ланчи по будням 12:00–15:00.',
+      medeu_desc: 'Эффектное двухуровневое пространство с комфортной посадкой и атмосферой lounge-ресторана. Создано для гастрономических встреч и деловых ужинов. Работаем ежедневно с 07:30 до 01:00. Шведский стол — 07:30–10:30 (5 000 ₸/чел). Бизнес-ланчи по будням 12:00–15:00.',
       karaoke_name: 'Lounge-пространство с караоке',
       karaoke_subtitle: 'kazakhka',
       karaoke_tagline: 'Атмосферное пространство для отдыха в компании',
@@ -103,7 +98,7 @@ window.I18N = {
       billiard_subtitle: 'Бильярд',
       billiard_tagline: 'Приватная атмосфера для деловых встреч',
       billiard_desc: 'Камерный зал европейской классики с камином и приватной атмосферой. Подходит для деловых переговоров, важных встреч и небольших торжеств в узком кругу.',
-      book: 'Забронировать',
+      book: 'Забронировать'
     },
     banquet: {
       overline: '— Главный зал —',
@@ -115,22 +110,15 @@ window.I18N = {
       bookDate: 'Забронировать дату',
       includedTitle: '— Что включено —',
       includedHeading: 'Полный комплекс<br>для торжества',
-      features: [
-        'Профессиональное звуковое и световое оборудование',
-        'Три LED-экрана для презентаций и оформления',
-        'Сопровождение опытной команды менеджеров',
-        'Подбор меню под формат мероприятия',
-        'Кофе-брейки и фуршеты по запросу',
-      ],
+      features: [ 'Профессиональное звуковое и световое оборудование', 'Три LED-экрана для презентаций и оформления', 'Сопровождение опытной команды менеджеров', 'Подбор меню под формат мероприятия', 'Кофе-брейки и фуршеты по запросу' ],
       managerLabel: 'Банкетный менеджер',
       conferenceOverline: '— Деловой формат —',
       conferenceTitle: 'Для деловых событий',
       conferenceDesc: 'Конференц-зал на 30 человек, оснащённый флип-чартом, мультимедийным оборудованием и зоной для кофе-брейков. Подходит для презентаций, тренингов и деловых встреч.',
       conferenceCta: 'Уточнить свободные даты',
-
       heroTitle: 'Банкетный зал «Medeu»',
       conferenceCapacity: 'до 30',
-      conferenceCapacityLabel: 'Человек',
+      conferenceCapacityLabel: 'Человек'
     },
     services: {
       intro: 'В дополнение к проживанию и гастрономии мы предлагаем гостям и партнёрам комплекс сервисов — от тайского СПА до организации трансферов и оформления праздничных столов.',
@@ -150,7 +138,7 @@ window.I18N = {
       bike_desc: 'Прокат велосипедов для прогулок по Костанаю. Удобный способ познакомиться с городом в тёплое время года.',
       decor_name: 'Оформление праздничного стола',
       decor_subtitle: 'Декор для торжеств',
-      decor_desc: 'Оформление праздничного стола цветами и декором для дней рождения, юбилеев, корпоративов в нашем ресторане или банкетном зале.',
+      decor_desc: 'Оформление праздничного стола цветами и декором для дней рождения, юбилеев, корпоративов в нашем ресторане или банкетном зале.'
     },
     contacts: {
       overline: '— Связаться с нами —',
@@ -166,7 +154,7 @@ window.I18N = {
       mobReception: 'Моб. ресепшн',
       restaurantAdmin: 'Администратор',
       restaurantMob: 'Моб. администратор',
-      banquetMgr: 'Банкетный',
+      banquetMgr: 'Банкетный'
     },
     modal: {
       overline: '— Бронирование —',
@@ -190,14 +178,12 @@ window.I18N = {
       successTitle: 'Заявка отправлена',
       successText: 'Спасибо! Менеджер ресепшна свяжется с вами в ближайшее время для подтверждения брони.',
       closeBtn: 'Закрыть',
-
       opt_standard: 'Стандарт · 28 000 ₸',
       opt_polulux: 'Полулюкс · 34 000 ₸',
       opt_polulux_twin: 'Двухместный полулюкс · 45 000 ₸',
       opt_family: 'Семейный · 55 000 ₸',
       opt_lux: 'Люкс · 44 000 ₸',
       opt_apartments: 'Апартамент · 100 000 ₸',
-
       email: 'E-mail',
       payment: 'Способ оплаты',
       pay_card: 'Кредитная карта',
@@ -210,7 +196,7 @@ window.I18N = {
       tr_select: '— выберите —',
       tr_station: 'Ж/д вокзал',
       tr_busstation: 'Автовокзал',
-      tr_airport: 'Аэропорт',
+      tr_airport: 'Аэропорт'
     },
     footer: {
       tagline: 'Гостиничный комплекс в центре Костаная',
@@ -221,7 +207,7 @@ window.I18N = {
       checkout: 'Выезд: 12:00',
       reception24: 'Ресепшн: 24/7',
       copy: 'Гостиничный комплекс «Medeu»',
-      rights: 'Все права защищены',
+      rights: 'Все права защищены'
     },
     sectionTitles: {
       ourRooms_overline: '— Категории —',
@@ -231,25 +217,35 @@ window.I18N = {
       ourVenues_title: 'Четыре пространства',
       ourVenues_tagline: 'Объединённых одной философией гостеприимства',
       ourSlides_overline: '— Атмосфера зала —',
-      ourSlides_title: 'Главный банкетный зал',
+      ourSlides_title: 'Главный банкетный зал'
     },
     common: {
       learnMore: 'Узнать больше',
       readMore: 'Читать далее',
       cancel: 'Отмена',
-      submit: 'Отправить',
+      submit: 'Отправить'
     },
     notFound: {
       title: 'Страница не найдена',
       text: 'Возможно, страница была перемещена или удалена.<br>Вернитесь на главную, чтобы продолжить знакомство с гостиничным комплексом «Medeu».',
-      btn: 'На главную',
+      btn: 'На главную'
     },
-    meta: { title: 'MEDEU · Гостиничный комплекс в Костанае' },
-    aria: { menu: 'Меню', close: 'Закрыть', theme: 'Переключить тему', wa: 'Написать в WhatsApp' },
-    carousel: { slide: 'Слайд' },
-    whatsapp: { serviceInquiry: 'Здравствуйте! Хочу узнать подробнее об услуге «' },
+    meta: {
+      title: 'MEDEU · Гостиничный комплекс в Костанае'
+    },
+    aria: {
+      menu: 'Меню',
+      close: 'Закрыть',
+      theme: 'Переключить тему',
+      wa: 'Написать в WhatsApp'
+    },
+    carousel: {
+      slide: 'Слайд'
+    },
+    whatsapp: {
+      serviceInquiry: 'Здравствуйте! Хочу узнать подробнее об услуге «'
+    }
   },
-
   kz: {
     nav: {
       menu: 'Мәзір',
@@ -258,13 +254,13 @@ window.I18N = {
       gastronomy: 'Гастрономия',
       banquet: 'Банкет залы',
       services: 'Қызметтер',
-      contacts: 'Байланыс',
+      contacts: 'Байланыс'
     },
     hero: {
       overline: '— Қонақ үй кешені · Қостанай —',
       tagline: 'Қостанайдың жүрегіндегі еуропалық талғам мен шығыс қонақжайлылығы',
       ctaBookRoom: 'Нөмір брондау',
-      scrollHint: 'Төмен қараңыз',
+      scrollHint: 'Төмен қараңыз'
     },
     facilities: {
       rooms_name: 'Нөмірлер',
@@ -276,8 +272,7 @@ window.I18N = {
       contacts_name: 'Байланыс',
       contacts_desc: 'Қостанайдың жүрегінде',
       cta: 'Толығырақ',
-
-      categoryLabel: 'Санат',
+      categoryLabel: 'Санат'
     },
     about: {
       overline: '— Қонақ үй жайында —',
@@ -285,7 +280,7 @@ window.I18N = {
       p1: '«Medeu» қонақ үй кешені — алты санаттағы 58 нөмірден тұратын төрт жұлдызды қонақ үй, Қостанайдың дәл орталығында орналасқан. Сіздерді кешенімізде қайтадан қарсы алуға қуаныштымыз.',
       p2: 'Барлық нөмірлер қонақжайлылық индустриясының ең жоғары стандарттарына сәйкес жабдықталған және ең талғампаз қонақтарды қабылдауға дайын. Дәл жанымызда қаланың барлық іскерлік, мәдени және әкімшілік орталықтары орналасқан.',
       p3: 'Қонақтардың қауіпсіздігі күзет қызметімен, бейнебақылаумен, өрт сигнализациясы жүйелерімен және электронды құлыптармен қамтамасыз етіледі. Қазақ, орыс және ағылшын тілдерін меңгерген білікті қызметкерлер сіздердің демалысыңызды барынша жайлы етуге тырысады.',
-      p4: 'Швед үстелі таңғы ас нөмір құнына кіреді. Икемді тариф жүйесі тұрақты және корпоративтік клиенттерге айтарлықтай жеңілдіктер ұсынады.',
+      p4: 'Швед үстелі таңғы ас нөмір құнына кіреді. Икемді тариф жүйесі тұрақты және корпоративтік клиенттерге айтарлықтай жеңілдіктер ұсынады.'
     },
     map: {
       overline: '— Орналасу —',
@@ -294,13 +289,12 @@ window.I18N = {
       addressLabel: 'Мекенжай',
       phoneLabel: 'Телефон',
       emailLabel: 'Пошта',
-
       addressLabel: 'Мекенжай',
       phoneLabel: 'Телефон',
-      emailLabel: 'Пошта',
+      emailLabel: 'Пошта'
     },
     payments: {
-      title: '— Төлем әдістері —',
+      title: '— Төлем әдістері —'
     },
     pageHero: {
       rooms_overline: '— Орналастыру —',
@@ -314,7 +308,7 @@ window.I18N = {
       banquet_tagline: 'Салтанатты, корпоративтік және іскерлік іс-шараларға арналған кеңістік',
       services_overline: '— Қосымша қызметтер —',
       services_title: 'Қызметтер',
-      services_tagline: 'Жайлы демалу мен салтанатты іс-шараларға арналған барлығы',
+      services_tagline: 'Жайлы демалу мен салтанатты іс-шараларға арналған барлығы'
     },
     rooms: {
       area: 'м²',
@@ -331,7 +325,7 @@ window.I18N = {
       polulux_twin_desc: '27 м² екі бөлек төсегі бар жартылай люкс. Бірге саяхаттайтын әріптестерге, туыстарға немесе достарға сай.',
       family_desc: '65 м² отбасылық нөмір, үш бөлмеден тұрады — қонақ бөлмесі, ата-ана үшін ұйықтайтын бөлме және балалар бөлмесі. Бүкіл отбасына кең әрі жайлы.',
       lux_desc: '65 м² екі бөлмелі люкс, талғампаз қонақ бөлмесі және бөлек ұйықтайтын бөлме. Премиум жабдықтау, ерекше атмосфера.',
-      apartments_desc: '130 м² апартамент, джакузиі, қонақ бөлмесі және бөлек ұйықтайтын бөлмесі бар. Кешеннің ең кең әрі сәнді ұсынысы.',
+      apartments_desc: '130 м² апартамент, джакузиі, қонақ бөлмесі және бөлек ұйықтайтын бөлмесі бар. Кешеннің ең кең әрі сәнді ұсынысы.'
     },
     venues: {
       veranda_name: 'Жазғы веранда',
@@ -341,7 +335,7 @@ window.I18N = {
       medeu_name: 'Lounge-мейрамхана',
       medeu_subtitle: 'Medeu',
       medeu_tagline: 'Талғампаз талғам атмосферасындағы кеңістік',
-      medeu_desc: 'Жайлы орналасуы мен lounge-мейрамхана атмосферасы бар әсем екі деңгейлі кеңістік. Гастрономиялық кездесулерге және іскерлік кештерге арналған. Күн сайын 07:30-дан 01:00-ге дейін жұмыс істейміз. Швед үстелі — 07:30–10:30 (адамға 5\u00A0000\u00A0₸). Жұмыс күндері 12:00–15:00 бизнес-ланч.',
+      medeu_desc: 'Жайлы орналасуы мен lounge-мейрамхана атмосферасы бар әсем екі деңгейлі кеңістік. Гастрономиялық кездесулерге және іскерлік кештерге арналған. Күн сайын 07:30-дан 01:00-ге дейін жұмыс істейміз. Швед үстелі — 07:30–10:30 (адамға 5 000 ₸). Жұмыс күндері 12:00–15:00 бизнес-ланч.',
       karaoke_name: 'Караокесі бар lounge-кеңістік',
       karaoke_subtitle: 'kazakhka',
       karaoke_tagline: 'Достар арасында демалуға арналған атмосфералық кеңістік',
@@ -350,7 +344,7 @@ window.I18N = {
       billiard_subtitle: 'Бильярд',
       billiard_tagline: 'Іскерлік кездесулерге арналған жеке атмосфера',
       billiard_desc: 'Каминді әрі жеке атмосферасы бар еуропалық классикадағы камералық зал. Іскерлік келіссөздерге, маңызды кездесулерге және тар шеңбердегі шағын мерекелерге сай.',
-      book: 'Брондау',
+      book: 'Брондау'
     },
     banquet: {
       overline: '— Басты зал —',
@@ -362,22 +356,15 @@ window.I18N = {
       bookDate: 'Күн брондау',
       includedTitle: '— Кіретіндер —',
       includedHeading: 'Мерекеге арналған<br>толық кешен',
-      features: [
-        'Кәсіби дыбыс және жарық жабдығы',
-        'Презентациялар мен әрлеуге арналған үш LED-экран',
-        'Тәжірибелі менеджерлер тобының сүйемелдеуі',
-        'Іс-шара форматына сай мәзірді іріктеу',
-        'Тапсырыс бойынша кофе-брейк және фуршеттер',
-      ],
+      features: [ 'Кәсіби дыбыс және жарық жабдығы', 'Презентациялар мен әрлеуге арналған үш LED-экран', 'Тәжірибелі менеджерлер тобының сүйемелдеуі', 'Іс-шара форматына сай мәзірді іріктеу', 'Тапсырыс бойынша кофе-брейк және фуршеттер' ],
       managerLabel: 'Банкет менеджері',
       conferenceOverline: '— Іскерлік формат —',
       conferenceTitle: 'Іскерлік іс-шараларға',
       conferenceDesc: '30 адамдық конференц-зал, флип-чартпен, мультимедиялық жабдықпен және кофе-брейк аймағымен қамтамасыз етілген. Презентацияларға, тренингтерге және іскерлік кездесулерге сай.',
       conferenceCta: 'Бос күндерді нақтылау',
-
       heroTitle: '«Medeu» банкет залы',
       conferenceCapacity: '30-ға дейін',
-      conferenceCapacityLabel: 'Адам',
+      conferenceCapacityLabel: 'Адам'
     },
     services: {
       intro: 'Тұру мен гастрономияға қосымша біз қонақтар мен серіктестерге кешенді қызметтер ұсынамыз — тай SPA-дан трансфер ұйымдастыруға және мерекелік үстелді безендіруге дейін.',
@@ -397,7 +384,7 @@ window.I18N = {
       bike_desc: 'Қостанай бойынша серуендеуге арналған велосипед жалға беру. Жылы мезгілде қаламен танысудың ыңғайлы тәсілі.',
       decor_name: 'Мерекелік үстелді безендіру',
       decor_subtitle: 'Салтанаттарға декор',
-      decor_desc: 'Туған күндерге, мерейтойларға, корпоративтерге арналған мерекелік үстелді гүлдермен және декормен безендіру — мейрамханамызда немесе банкет залында.',
+      decor_desc: 'Туған күндерге, мерейтойларға, корпоративтерге арналған мерекелік үстелді гүлдермен және декормен безендіру — мейрамханамызда немесе банкет залында.'
     },
     contacts: {
       overline: '— Бізбен байланысу —',
@@ -413,7 +400,7 @@ window.I18N = {
       mobReception: 'Жылжымалы ресепшн',
       restaurantAdmin: 'Әкімші',
       restaurantMob: 'Жылжымалы әкімші',
-      banquetMgr: 'Банкет',
+      banquetMgr: 'Банкет'
     },
     modal: {
       overline: '— Брондау —',
@@ -437,14 +424,12 @@ window.I18N = {
       successTitle: 'Өтінім жіберілді',
       successText: 'Рахмет! Ресепшн менеджері брондауды растау үшін жақын арада сізбен хабарласады.',
       closeBtn: 'Жабу',
-
       opt_standard: 'Стандарт · 28 000 ₸',
       opt_polulux: 'Жартылай люкс · 34 000 ₸',
       opt_polulux_twin: 'Екі кісілік жартылай люкс · 45 000 ₸',
       opt_family: 'Отбасылық · 55 000 ₸',
       opt_lux: 'Люкс · 44 000 ₸',
       opt_apartments: 'Апартамент · 100 000 ₸',
-
       email: 'E-mail',
       payment: 'Төлем тәсілі',
       pay_card: 'Несие картасы',
@@ -457,7 +442,7 @@ window.I18N = {
       tr_select: '— таңдаңыз —',
       tr_station: 'Темір жол вокзалы',
       tr_busstation: 'Автовокзал',
-      tr_airport: 'Әуежай',
+      tr_airport: 'Әуежай'
     },
     footer: {
       tagline: 'Қостанай орталығындағы қонақ үй кешені',
@@ -468,7 +453,7 @@ window.I18N = {
       checkout: 'Кету: 12:00',
       reception24: 'Ресепшн: 24/7',
       copy: '«Medeu» қонақ үй кешені',
-      rights: 'Барлық құқықтар қорғалған',
+      rights: 'Барлық құқықтар қорғалған'
     },
     sectionTitles: {
       ourRooms_overline: '— Санаттар —',
@@ -478,25 +463,35 @@ window.I18N = {
       ourVenues_title: 'Төрт кеңістік',
       ourVenues_tagline: 'Қонақжайлылықтың біртұтас философиясымен біріктірілген',
       ourSlides_overline: '— Зал атмосферасы —',
-      ourSlides_title: 'Басты банкет залы',
+      ourSlides_title: 'Басты банкет залы'
     },
     common: {
       learnMore: 'Толығырақ',
       readMore: 'Әрі қарай оқу',
       cancel: 'Болдырмау',
-      submit: 'Жіберу',
+      submit: 'Жіберу'
     },
     notFound: {
       title: 'Бет табылмады',
       text: 'Бет жылжытылған немесе жойылған болуы мүмкін.<br>«Medeu» қонақ үй кешенімен танысуды жалғастыру үшін басты бетке оралыңыз.',
-      btn: 'Басты бетке',
+      btn: 'Басты бетке'
     },
-    meta: { title: 'MEDEU · Қостанайдағы қонақ үй кешені' },
-    aria: { menu: 'Мәзір', close: 'Жабу', theme: 'Тақырыпты ауыстыру', wa: 'WhatsApp-қа жазу' },
-    carousel: { slide: 'Слайд' },
-    whatsapp: { serviceInquiry: 'Сәлеметсіз бе! Қызмет туралы толығырақ білгім келеді: «' },
+    meta: {
+      title: 'MEDEU · Қостанайдағы қонақ үй кешені'
+    },
+    aria: {
+      menu: 'Мәзір',
+      close: 'Жабу',
+      theme: 'Тақырыпты ауыстыру',
+      wa: 'WhatsApp-қа жазу'
+    },
+    carousel: {
+      slide: 'Слайд'
+    },
+    whatsapp: {
+      serviceInquiry: 'Сәлеметсіз бе! Қызмет туралы толығырақ білгім келеді: «'
+    }
   },
-
   en: {
     nav: {
       menu: 'Menu',
@@ -505,13 +500,13 @@ window.I18N = {
       gastronomy: 'Gastronomy',
       banquet: 'Banquet Hall',
       services: 'Services',
-      contacts: 'Contacts',
+      contacts: 'Contacts'
     },
     hero: {
       overline: '— Hotel Complex · Kostanay —',
       tagline: 'European refinement and Eastern hospitality in the heart of Kostanay',
       ctaBookRoom: 'Book a Room',
-      scrollHint: 'Scroll',
+      scrollHint: 'Scroll'
     },
     facilities: {
       rooms_name: 'Rooms',
@@ -523,8 +518,7 @@ window.I18N = {
       contacts_name: 'Contacts',
       contacts_desc: 'In the heart of Kostanay',
       cta: 'Learn more',
-
-      categoryLabel: 'Category',
+      categoryLabel: 'Category'
     },
     about: {
       overline: '— About the Hotel —',
@@ -532,7 +526,7 @@ window.I18N = {
       p1: 'Medeu Hotel Complex is a four-star hotel with 58 rooms across six categories, perfectly located in the very centre of Kostanay. We are delighted to welcome you back to our complex.',
       p2: 'All rooms are equipped to the highest hospitality industry standards and ready to receive the most discerning guests. All business, cultural and administrative centres of the city are within walking distance.',
       p3: 'Guest safety is ensured by a security service, video surveillance, fire alarm systems and electronic locks. Qualified staff fluent in Kazakh, Russian and English will make your stay as comfortable as possible.',
-      p4: 'A buffet breakfast is included in the room rate. A flexible tariff system offers significant discounts to regular and corporate clients.',
+      p4: 'A buffet breakfast is included in the room rate. A flexible tariff system offers significant discounts to regular and corporate clients.'
     },
     map: {
       overline: '— Location —',
@@ -541,13 +535,12 @@ window.I18N = {
       addressLabel: 'Address',
       phoneLabel: 'Phone',
       emailLabel: 'Email',
-
       addressLabel: 'Address',
       phoneLabel: 'Phone',
-      emailLabel: 'Email',
+      emailLabel: 'Email'
     },
     payments: {
-      title: '— Payment Methods —',
+      title: '— Payment Methods —'
     },
     pageHero: {
       rooms_overline: '— Accommodation —',
@@ -561,7 +554,7 @@ window.I18N = {
       banquet_tagline: 'A space for celebrations, corporate and business events',
       services_overline: '— Additional Services —',
       services_title: 'Services',
-      services_tagline: 'Everything for a comfortable stay and memorable events',
+      services_tagline: 'Everything for a comfortable stay and memorable events'
     },
     rooms: {
       area: 'm²',
@@ -578,7 +571,7 @@ window.I18N = {
       polulux_twin_desc: 'A 27 m² Junior Suite with two separate beds. Suitable for colleagues, relatives or friends travelling together.',
       family_desc: 'A 65 m² Family Suite with three rooms — a living room, a master bedroom and a children\'s room. Spacious and comfortable for the whole family.',
       lux_desc: 'A two-room 65 m² Suite with an elegant living room and a separate bedroom. Premium furnishings and a special atmosphere.',
-      apartments_desc: 'A 130 m² Apartment with a jacuzzi, living room and separate bedroom. The most spacious and luxurious offering of the complex.',
+      apartments_desc: 'A 130 m² Apartment with a jacuzzi, living room and separate bedroom. The most spacious and luxurious offering of the complex.'
     },
     venues: {
       veranda_name: 'Summer Terrace',
@@ -588,7 +581,7 @@ window.I18N = {
       medeu_name: 'Lounge-restaurant',
       medeu_subtitle: 'Medeu',
       medeu_tagline: 'A space with an atmosphere of restrained elegance',
-      medeu_desc: 'A striking two-level space with comfortable seating and a lounge-restaurant atmosphere. Designed for culinary gatherings and business dinners. Open daily from\u00A007:30 to\u00A001:00. Buffet — 07:30–10:30 (5,000\u00A0₸ per person). Business lunches on weekdays 12:00–15:00.',
+      medeu_desc: 'A striking two-level space with comfortable seating and a lounge-restaurant atmosphere. Designed for culinary gatherings and business dinners. Open daily from 07:30 to 01:00. Buffet — 07:30–10:30 (5,000 ₸ per person). Business lunches on weekdays 12:00–15:00.',
       karaoke_name: 'Karaoke Lounge',
       karaoke_subtitle: 'kazakhka',
       karaoke_tagline: 'An atmospheric space for friendly company',
@@ -597,7 +590,7 @@ window.I18N = {
       billiard_subtitle: 'Billiard',
       billiard_tagline: 'A private atmosphere for business meetings',
       billiard_desc: 'A private hall of European classics with a fireplace and an intimate atmosphere. Suitable for business negotiations, important meetings and small celebrations in a close circle.',
-      book: 'Book Now',
+      book: 'Book Now'
     },
     banquet: {
       overline: '— Main Hall —',
@@ -609,22 +602,15 @@ window.I18N = {
       bookDate: 'Book a Date',
       includedTitle: '— What\'s Included —',
       includedHeading: 'Complete celebration<br>package',
-      features: [
-        'Professional sound and lighting equipment',
-        'Three LED screens for presentations and decoration',
-        'Support by an experienced management team',
-        'Menu selection tailored to your event format',
-        'Coffee breaks and buffets on request',
-      ],
+      features: [ 'Professional sound and lighting equipment', 'Three LED screens for presentations and decoration', 'Support by an experienced management team', 'Menu selection tailored to your event format', 'Coffee breaks and buffets on request' ],
       managerLabel: 'Banquet Manager',
       conferenceOverline: '— Business format —',
       conferenceTitle: 'For business events',
       conferenceDesc: 'A 30-person conference room equipped with a flipchart, multimedia equipment and a coffee-break area. Suitable for presentations, training and business meetings.',
       conferenceCta: 'Check available dates',
-
       heroTitle: 'Medeu Banquet Hall',
       conferenceCapacity: 'up to 30',
-      conferenceCapacityLabel: 'People',
+      conferenceCapacityLabel: 'People'
     },
     services: {
       intro: 'In addition to accommodation and gastronomy, we offer guests and partners a range of services — from Thai SPA to transfer arrangements and festive table decoration.',
@@ -644,7 +630,7 @@ window.I18N = {
       bike_desc: 'Bicycle rental for sightseeing in Kostanay. A convenient way to explore the city in warm weather.',
       decor_name: 'Festive Table Decoration',
       decor_subtitle: 'Decoration for celebrations',
-      decor_desc: 'Festive table decoration with flowers and decor for birthdays, anniversaries and corporate events in our restaurant or banquet hall.',
+      decor_desc: 'Festive table decoration with flowers and decor for birthdays, anniversaries and corporate events in our restaurant or banquet hall.'
     },
     contacts: {
       overline: '— Get in Touch —',
@@ -660,7 +646,7 @@ window.I18N = {
       mobReception: 'Mobile reception',
       restaurantAdmin: 'Administrator',
       restaurantMob: 'Mobile administrator',
-      banquetMgr: 'Banquet',
+      banquetMgr: 'Banquet'
     },
     modal: {
       overline: '— Booking —',
@@ -684,14 +670,12 @@ window.I18N = {
       successTitle: 'Request Sent',
       successText: 'Thank you! The reception manager will contact you shortly to confirm your booking.',
       closeBtn: 'Close',
-
       opt_standard: 'Standard · 28 000 ₸',
       opt_polulux: 'Junior Suite · 34 000 ₸',
       opt_polulux_twin: 'Junior Suite Twin · 45 000 ₸',
       opt_family: 'Family Suite · 55 000 ₸',
       opt_lux: 'Suite · 44 000 ₸',
       opt_apartments: 'Apartment · 100 000 ₸',
-
       email: 'E-mail',
       payment: 'Payment method',
       pay_card: 'Credit card',
@@ -704,7 +688,7 @@ window.I18N = {
       tr_select: '— select —',
       tr_station: 'Train station',
       tr_busstation: 'Bus station',
-      tr_airport: 'Airport',
+      tr_airport: 'Airport'
     },
     footer: {
       tagline: 'Hotel complex in the centre of Kostanay',
@@ -715,7 +699,7 @@ window.I18N = {
       checkout: 'Check-out: 12:00',
       reception24: 'Reception: 24/7',
       copy: 'Medeu Hotel Complex',
-      rights: 'All rights reserved',
+      rights: 'All rights reserved'
     },
     sectionTitles: {
       ourRooms_overline: '— Categories —',
@@ -725,32 +709,42 @@ window.I18N = {
       ourVenues_title: 'Four Spaces',
       ourVenues_tagline: 'United by a single philosophy of hospitality',
       ourSlides_overline: '— Hall Atmosphere —',
-      ourSlides_title: 'Main Banquet Hall',
+      ourSlides_title: 'Main Banquet Hall'
     },
     common: {
       learnMore: 'Learn more',
       readMore: 'Read more',
       cancel: 'Cancel',
-      submit: 'Send',
+      submit: 'Send'
     },
     notFound: {
       title: 'Page Not Found',
       text: 'This page may have been moved or removed.<br>Return to the home page to continue exploring Medeu Hotel Complex.',
-      btn: 'Back to Home',
+      btn: 'Back to Home'
     },
-    meta: { title: 'MEDEU · Hotel Complex in Kostanay' },
-    aria: { menu: 'Menu', close: 'Close', theme: 'Toggle theme', wa: 'Write on WhatsApp' },
-    carousel: { slide: 'Slide' },
-    whatsapp: { serviceInquiry: 'Hello! I would like to learn more about the service: «' },
+    meta: {
+      title: 'MEDEU · Hotel Complex in Kostanay'
+    },
+    aria: {
+      menu: 'Menu',
+      close: 'Close',
+      theme: 'Toggle theme',
+      wa: 'Write on WhatsApp'
+    },
+    carousel: {
+      slide: 'Slide'
+    },
+    whatsapp: {
+      serviceInquiry: 'Hello! I would like to learn more about the service: «'
+    }
   },
-
-  t: function (path) {
+  t: function(path) {
     const parts = path.split('.');
     let obj = this[this.current];
     for (const p of parts) {
       if (obj == null) return path;
       obj = obj[p];
     }
-    return (obj == null) ? path : obj;
-  },
+    return obj == null ? path : obj;
+  }
 };
