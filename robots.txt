@@ -1,4 +1,0 @@
-User-agent: *
-Allow: /
-
-Sitemap: https://aleksey1854.github.io/medeu-site/sitemap.xml
