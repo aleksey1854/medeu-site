@@ -148,9 +148,8 @@ window.DATA = {
       taglineKey: 'venues.veranda_tagline',
       description: 'Первый этаж расположен в тени деревьев. Комфортные мягкие зоны готовы принять самых искушённых гостей. Отлично подходит для семейного отдыха — есть прекрасная детская зона с батутом, где маленьким гостям не будет скучно.',
       descKey: 'venues.veranda_desc',
-      image: 'assets/photos/restaurant/veranda-7.webp',
+      image: 'assets/photos/restaurant/veranda-1.webp',
       images: [
-        'assets/photos/restaurant/veranda-7.webp',
         'assets/photos/restaurant/veranda-1.webp',
         'assets/photos/restaurant/veranda-2.webp',
         'assets/photos/restaurant/veranda-3.webp',
