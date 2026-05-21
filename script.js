@@ -404,7 +404,7 @@
   document.getElementById('phone1-value').textContent = DATA.contacts.phone1;
   document.getElementById('phone2-value').textContent = DATA.contacts.phone2;
   document.getElementById('email-value').textContent = DATA.contacts.email;
-  document.getElementById('btn-2gis').href = DATA.contacts.gis2Url;
+  document.getElementById('btn-yandex').href = DATA.contacts.yandexUrl;
   document.getElementById('btn-google').href = DATA.contacts.googleUrl;
   document.getElementById('footer-contacts').innerHTML = DATA.contacts.phone1 + '<br>' + DATA.contacts.phone2 + '<br>' + DATA.contacts.email;
   document.getElementById('year').textContent = (new Date).getFullYear();

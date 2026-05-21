@@ -38,7 +38,7 @@ window.I18N = {
     },
     map: {
       overline: '— Расположение —',
-      btn2gis: 'Открыть в 2GIS',
+      btnYandex: 'Открыть в Яндекс Картах',
       btnGoogle: 'Google Maps',
       addressLabel: 'Адрес',
       phoneLabel: 'Телефон',
@@ -284,7 +284,7 @@ window.I18N = {
     },
     map: {
       overline: '— Орналасу —',
-      btn2gis: '2GIS-те ашу',
+      btnYandex: 'Яндекс Карталарында ашу',
       btnGoogle: 'Google Maps',
       addressLabel: 'Мекенжай',
       phoneLabel: 'Телефон',
@@ -530,7 +530,7 @@ window.I18N = {
     },
     map: {
       overline: '— Location —',
-      btn2gis: 'Open in 2GIS',
+      btnYandex: 'Open in Yandex Maps',
       btnGoogle: 'Google Maps',
       addressLabel: 'Address',
       phoneLabel: 'Phone',

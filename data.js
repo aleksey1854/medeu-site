@@ -232,7 +232,7 @@ window.DATA = {
     bookingEmail: 'info@medeuhotel.kz',
     instagram: 'https://www.instagram.com/hotel_medeu_kostanay/',
     facebook: '',
-    gis2Url: 'https://go.2gis.com/M2V07',
+    yandexUrl: 'https://yandex.kz/maps/ru/-/CPw4EDm0',
     googleUrl: 'https://maps.app.goo.gl/ndN3XnVWUE4iur318'
   }
 };
