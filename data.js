@@ -1,6 +1,6 @@
 window.DATA = {
   heroVideo: '',
-  heroSlides: [ 'assets/photos/home/home-1.webp', 'assets/photos/home/home-2.webp', 'assets/photos/home/home-3.webp', 'assets/photos/home/home-4.webp' ],
+  heroSlides: [ 'assets/photos/home/home-1.webp' ],
   facilities: [ {
     id: 'rooms',
     name: 'Номера',
