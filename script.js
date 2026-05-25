@@ -147,6 +147,7 @@
       i.classList.toggle('is-active', i.dataset.lang === lang);
     });
     if (typeof renderDynamic === 'function') renderDynamic();
+    if (typeof renderPayments === 'function') renderPayments();
     try {
       localStorage.setItem('medeu_lang', lang);
     } catch (e) {}
@@ -337,69 +338,68 @@
       }).join('');
     };
     contactsGrid.innerHTML = '' + '<div class="contact-card contact-card--list">' + '<div style="color: var(--c-gold); margin: 0 auto 20px;">' + ICONS.phone + '</div>' + '<div class="overline" style="margin-bottom: 16px;">' + (window.I18N ? I18N.t('contacts.hotelTitle') : 'Гостиница') + '</div>' + phoneRowsHtml(DATA.contacts.hotelPhones) + '</div>' + '<div class="contact-card contact-card--list">' + '<div style="color: var(--c-gold); margin: 0 auto 20px;">' + ICONS.phone + '</div>' + '<div class="overline" style="margin-bottom: 16px;">' + (window.I18N ? I18N.t('contacts.restaurantTitle') : 'Ресторан и банкет') + '</div>' + phoneRowsHtml(DATA.contacts.restaurantPhones) + '</div>' + '<div class="contact-card">' + '<div style="color: var(--c-gold); margin: 0 auto 24px;">' + ICONS.pin + '</div>' + '<div class="overline" style="margin-bottom: 12px;">' + (window.I18N ? I18N.t('contacts.addressTitle') : 'Адрес') + '</div>' + '<div class="contact-value">' + DATA.contacts.address + '</div>' + '<div class="contact-secondary">' + (window.I18N ? I18N.t('contacts.addressCenter') : 'центр города') + '</div>' + '</div>' + '<div class="contact-card">' + '<div style="color: var(--c-gold); margin: 0 auto 24px;">' + ICONS.mail + '</div>' + '<div class="overline" style="margin-bottom: 12px;">' + (window.I18N ? I18N.t('contacts.emailTitle') : 'Почта') + '</div>' + '<a href="mailto:' + DATA.contacts.email + '" class="contact-value contact-value--link">' + DATA.contacts.email + '</a>' + '<div class="contact-secondary">' + (window.I18N ? I18N.t('contacts.emailCaption') : 'круглосуточно') + '</div>' + '</div>';
+    triggerLazyLoad();
   }
   renderDynamic();
+  const PAYMENT_METHODS = [
+    { key: 'visa',       name: 'Visa',             color: '#1A1F71', aspect: 'wide'   },
+    { key: 'mastercard', name: 'Mastercard',       color: '#EB001B', aspect: 'square' },
+    { key: 'amex',       name: 'American Express', color: '#006FCF', aspect: 'square' },
+    { key: 'mir',        name: 'МИР',              color: '#0F754E', aspect: 'wide'   },
+    { key: 'kaspi',      name: 'Kaspi QR',         color: '#F14635', aspect: 'square' },
+    { key: 'wechat-pay', name: 'WeChat Pay',       color: '#1AAD19', aspect: 'wide'   }
+  ];
+  function fillSlotWithImg(slot, m) {
+    // Используем обычный <img>: браузер сам корректно держит пропорции SVG
+    // по его intrinsic-размерам, одинаково на file:// и https://.
+    // Чтобы не словить гонку с onerror, навешиваем обработчики ДО присвоения src,
+    // а сразу после присвоения проверяем img.complete + naturalWidth (вдруг
+    // уже всё упало из кэша).
+    const img = document.createElement('img');
+    img.alt = m.name;
+    let settled = false;
+    function onFail() {
+      if (settled) return;
+      settled = true;
+      slot.innerHTML = '<span class="payments-fallback" style="background:' +
+                       m.color + '">' + m.name + '</span>';
+    }
+    function onOk() { settled = true; }
+    img.addEventListener('error', onFail);
+    img.addEventListener('load', onOk);
+    slot.innerHTML = '';
+    slot.appendChild(img);
+    img.src = 'assets/payments/' + m.key + '.svg';
+    // Догоняем кэш-гонку
+    if (img.complete) {
+      if (img.naturalWidth === 0) onFail(); else onOk();
+    }
+  }
+
   function renderPayments() {
     const wraps = document.querySelectorAll('.payments-strip');
     if (!wraps.length) return;
     const title = window.I18N ? I18N.t('payments.title') : '— Способы оплаты —';
-    const methods = [ {
-      key: 'visa',
-      name: 'Visa',
-      color: '#1A1F71',
-      aspect: 'wide'
-    }, {
-      key: 'mastercard',
-      name: 'Mastercard',
-      color: '#EB001B',
-      aspect: 'square'
-    }, {
-      key: 'amex',
-      name: 'American Express',
-      color: '#006FCF',
-      aspect: 'square'
-    }, {
-      key: 'mir',
-      name: 'МИР',
-      color: '#0F754E',
-      aspect: 'wide'
-    }, {
-      key: 'kaspi',
-      name: 'Kaspi QR',
-      color: '#F14635',
-      aspect: 'square'
-    }, {
-      key: 'wechat-pay',
-      name: 'WeChat Pay',
-      color: '#1AAD19',
-      aspect: 'wide'
-    } ];
-    const html = '' + '<div class="payments-strip__title">' + title + '</div>' + '<div class="payments-strip__list">' + methods.map(function(m) {
-      return '' + '<span class="payments-logo payments-logo--' + m.aspect + '" ' + 'data-fallback-name="' + m.name + '" ' + 'data-fallback-color="' + m.color + '" ' + 'title="' + m.name + '">' + '<img src="assets/payments/' + m.key + '.svg" alt="' + m.name + '">' + '</span>';
-    }).join('') + '</div>';
-    wraps.forEach(function(w) {
-      w.innerHTML = html;
-      w.querySelectorAll('.payments-logo img').forEach(function(img) {
-        img.addEventListener('error', function() {
-          const parent = img.parentNode;
-          if (!parent) return;
-          const span = document.createElement('span');
-          span.className = 'payments-fallback';
-          span.style.background = parent.dataset.fallbackColor || '#888';
-          span.textContent = parent.dataset.fallbackName || '';
-          img.replaceWith(span);
-        });
-      });
+
+    const itemsHtml = PAYMENT_METHODS.map(function(m) {
+      return '<span class="payments-logo payments-logo--' + m.aspect + '" ' +
+             'data-key="' + m.key + '" ' +
+             'title="' + m.name + '" aria-label="' + m.name + '"></span>';
+    }).join('');
+
+    const html = '<div class="payments-strip__title">' + title + '</div>' +
+                 '<div class="payments-strip__list">' + itemsHtml + '</div>';
+
+    wraps.forEach(function(w) { w.innerHTML = html; });
+
+    // Всегда отрисовываем через <img> — одинаково и локально, и на сервере.
+    PAYMENT_METHODS.forEach(function(m) {
+      const slots = document.querySelectorAll('.payments-logo[data-key="' + m.key + '"]');
+      slots.forEach(function(slot) { fillSlotWithImg(slot, m); });
     });
   }
   renderPayments();
-  if (typeof window.applyLang === 'function') {
-    const originalApply = window.applyLang;
-    window.applyLang = function(lang) {
-      originalApply(lang);
-      renderPayments();
-    };
-  }
+
   document.getElementById('addr-value').textContent = DATA.contacts.address;
   document.getElementById('phone1-value').textContent = DATA.contacts.phone1;
   document.getElementById('phone2-value').textContent = DATA.contacts.phone2;
@@ -576,6 +576,40 @@
       const prefRoom = trigger.dataset.room || '';
       openBookingModal(prefRoom);
     });
+
+    // Виджет Restoplace навешивает свои обработчики на .restoplace-click-open
+    // ровно один раз при загрузке. Кнопки внутри #venues-stack и #rooms-stack
+    // пересоздаются функцией renderDynamic() при смене языка — на новых
+    // элементах обработчиков уже нет. То же самое относится к кнопке внутри
+    // промо-окна — оно рендерится после загрузки виджета. Во всех таких
+    // случаях проксируем клик на статическую кнопку из #page-banquet, у
+    // которой обработчик Restoplace жив.
+    document.addEventListener('click', function(e) {
+      const trigger = e.target.closest('.restoplace-click-open');
+      if (!trigger) return;
+      if (trigger.dataset.rpProxying === '1') return; // защита от рекурсии
+      const venues = document.getElementById('venues-stack');
+      const rooms = document.getElementById('rooms-stack');
+      const promo = document.getElementById('promo-modal');
+      const needsProxy = (venues && venues.contains(trigger)) ||
+                        (rooms && rooms.contains(trigger)) ||
+                        (promo && promo.contains(trigger));
+      if (!needsProxy) return; // на статических кнопках виджет сам сработает
+      const all = document.querySelectorAll('.restoplace-click-open');
+      for (let i = 0; i < all.length; i++) {
+        const btn = all[i];
+        if (btn === trigger) continue;
+        if (venues && venues.contains(btn)) continue;
+        if (rooms && rooms.contains(btn)) continue;
+        if (promo && promo.contains(btn)) continue;
+        e.preventDefault();
+        btn.dataset.rpProxying = '1';
+        btn.click();
+        delete btn.dataset.rpProxying;
+        return;
+      }
+    });
+
     bookingModal.addEventListener('click', function(e) {
       if (e.target.closest('[data-close]') || e.target === bookingModal) {
         closeBookingModal();
