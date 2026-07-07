@@ -51,6 +51,10 @@
     var hideDays = Number(cfg.hideAfterCloseDays);
     if (!isFinite(hideDays) || hideDays < 0) hideDays = 7;
 
+    // hideAfterCloseDays: 0 — показывать окно при каждом открытии сайта (без кулдауна).
+    // В этом случае localStorage не проверяем и не пишем.
+    if (hideDays === 0) return true;
+
     // Версионирование: меняем version в data.js — все увидят новое окно
     // даже если закрывали предыдущее. Это удобно, когда меняется акция.
     var version = String(cfg.version || '1');
@@ -68,6 +72,9 @@
   }
 
   function rememberClosed(cfg) {
+    // Если кулдаун 0 — ничего не сохраняем, окно появится снова при следующем заходе
+    var hideDays = Number(cfg.hideAfterCloseDays);
+    if (hideDays === 0) return;
     try {
       localStorage.setItem(STORAGE_KEY, JSON.stringify({
         version: String(cfg.version || '1'),
@@ -117,7 +124,7 @@
       modal.classList.add('promo-modal--image-only');
       // Если только картинка — оборачиваем в кликабельную ссылку
       if (cfg.ctaUrl) {
-        imgHtml = wrapAsLink(imgHtml, cfg.ctaUrl, loc.title || 'Promo');
+        imgHtml = wrapAsLink(imgHtml, cfg.ctaUrl, loc.title || 'Promo', cfg);
       }
     }
 
@@ -134,10 +141,21 @@
     return modal;
   }
 
+  // Собирает ссылку на WhatsApp из «человеческих» полей waNumber + waMessage.
+  // Админу не нужно возиться с кодированием — он пишет номер и текст как есть,
+  // а эта функция превращает их в корректную ссылку wa.me/...?text=...
+  function buildWaUrl(cfg) {
+    var num = String(cfg.waNumber || '').replace(/[^0-9]/g, '');
+    if (!num) return '';
+    var msg = cfg.waMessage ? ('?text=' + encodeURIComponent(cfg.waMessage)) : '';
+    return 'https://wa.me/' + num + msg;
+  }
+
   function renderCta(cfg, loc) {
     var url = cfg.ctaUrl || '';
     var isAnchorBooking = url === '#booking' || url === '#book';
     var isAnchorVenue = url === '#booking-venue' || url === '#venue';
+    var isWhatsapp = url === '#whatsapp' || url === '#wa';
     var classes = 'gold-btn promo-modal-cta';
     var attrs = '';
     if (isAnchorBooking) {
@@ -148,6 +166,10 @@
       // Откроет виджет Restoplace — script.js делегирует .restoplace-click-open
       classes += ' restoplace-click-open';
       url = 'javascript:void(0)';
+    } else if (isWhatsapp) {
+      // Соберёт ссылку на WhatsApp из waNumber + waMessage
+      url = buildWaUrl(cfg) || 'javascript:void(0)';
+      attrs = ' target="_blank" rel="noopener noreferrer"';
     } else if (/^https?:|^wa\.me|^tel:|^mailto:/.test(url)) {
       attrs = ' target="_blank" rel="noopener noreferrer"';
     } else if (!url) {
@@ -159,11 +181,8 @@
            '</a>';
   }
 
-  function wrapAsLink(html, url, alt) {
+  function wrapAsLink(html, url, alt, cfg) {
     var attrs = '';
-    if (/^https?:|^wa\.me|^tel:|^mailto:/.test(url)) {
-      attrs = ' target="_blank" rel="noopener noreferrer"';
-    }
     var cls = 'promo-modal-image-link';
     if (url === '#booking' || url === '#book') {
       cls += ' booking-open';
@@ -171,6 +190,11 @@
     } else if (url === '#booking-venue' || url === '#venue') {
       cls += ' restoplace-click-open';
       url = 'javascript:void(0)';
+    } else if (url === '#whatsapp' || url === '#wa') {
+      url = (cfg && buildWaUrl(cfg)) || 'javascript:void(0)';
+      attrs = ' target="_blank" rel="noopener noreferrer"';
+    } else if (/^https?:|^wa\.me|^tel:|^mailto:/.test(url)) {
+      attrs = ' target="_blank" rel="noopener noreferrer"';
     }
     return '<a href="' + esc(url) + '" class="' + cls + '" aria-label="' + esc(alt) + '"' + attrs + '>' + html + '</a>';
   }

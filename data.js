@@ -131,6 +131,57 @@ window.DATA = {
     images: [ 'assets/photos/restaurant/billiard-3.webp', 'assets/photos/restaurant/billiard-1.webp', 'assets/photos/restaurant/billiard-2.webp', 'assets/photos/restaurant/billiard-4.webp', 'assets/photos/restaurant/billiard-5.webp', 'assets/photos/restaurant/billiard-6.webp' ]
   } ],
   banquetSlides: [ 'assets/photos/banquet/main-7.webp', 'assets/photos/banquet/main-10.webp', 'assets/photos/banquet/main-9.webp' ],
+
+  // ─────────────────────────────────────────────────────────────────────────
+  // КОНЦЕРТЫ (фото и видео с выступлений в отеле)
+  // -------------------------------------------------------------------------
+  // Чтобы добавить концерт — скопируйте один блок { ... } и поменяйте поля.
+  // Порядок в массиве = порядок на странице (новые лучше ставить сверху).
+  //
+  //   name        : название концерта / артиста
+  //   date        : дата (текстом, как показать гостю)
+  //   description : 1–2 предложения о вечере (необязательно)
+  //   video       : ссылка на видео. Для YouTube — обычная ссылка на ролик
+  //                 (https://youtu.be/XXXX или https://www.youtube.com/watch?v=XXXX).
+  //                 Оставьте '' если видео нет — покажутся только фото.
+  //   videoType   : 'youtube' — ролик с YouTube (рекомендуется, не грузит сайт)
+  //                 'file'    — файл, лежащий в assets/videos/ (например 'assets/videos/tasso.mp4')
+  //                 ''        — без видео
+  //   videoPoster : (только для videoType 'file') путь к картинке-превью,
+  //                 которая показывается до нажатия play. Для YouTube не нужно —
+  //                 превью подтягивается с YouTube автоматически в максимальном качестве.
+  //   images      : массив фото (положите файлы в assets/photos/concerts/,
+  //                 имена латиницей без пробелов). Первое фото — обложка.
+  //
+  //   КАЧЕСТВО ФОТО (важно): фото открываются на весь экран по клику,
+  //   поэтому кладите крупные — минимум 1600px по ширине, лучше 2000–2400px.
+  //   Формат WebP или JPG, вес до ~500 КБ на фото (сжать: tinypng.com).
+  //
+  // Переводы названий/дат/описаний (kz, en) — в файле i18n.js, блок concerts.
+  // Если перевод не нужен — можно оставить только русские поля здесь.
+  // ─────────────────────────────────────────────────────────────────────────
+  concerts: [ {
+    name: 'TASSO',
+    nameKey: 'concerts.tasso_name',
+    date: '17 июня 2026',
+    dateKey: 'concerts.tasso_date',
+    description: 'Вечер живого звука на летней веранде MEDEU. Атмосферный сет, тёплый летний вечер и по-настоящему красивое звучание в самом центре города.',
+    descKey: 'concerts.tasso_desc',
+    video: 'https://youtu.be/C96NTdHquvA',
+    videoType: 'youtube',
+    images: [ 'assets/photos/concerts/tasso-1.webp', 'assets/photos/concerts/tasso-2.webp', 'assets/photos/concerts/tasso-3.webp' ]
+  }, {
+    name: 'Джазовый вечер',
+    nameKey: 'concerts.jazz_name',
+    date: '3 мая 2026',
+    dateKey: 'concerts.jazz_date',
+    description: 'Живой джаз в lounge-ресторане: саксофон, контрабас и мягкий вокал под бокал вина. Вечер сдержанной элегантности для ценителей.',
+    descKey: 'concerts.jazz_desc',
+    video: '',
+    videoType: '',
+    images: [ 'assets/photos/concerts/jazz-1.webp', 'assets/photos/concerts/jazz-2.webp' ]
+  } ],
+
   conferenceImage: 'assets/photos/banquet/conference-2.webp',
   conferenceImages: [ 'assets/photos/banquet/conference-2.webp', 'assets/photos/banquet/conference-1.webp' ],
   services: [ {
@@ -166,16 +217,6 @@ window.DATA = {
     waNumber: '77714944599',
     icon: 'transfer'
   }, {
-    name: 'Прокат велосипедов',
-    nameKey: 'services.bike_name',
-    subtitle: 'Для прогулок по городу',
-    subtitleKey: 'services.bike_subtitle',
-    description: 'Прокат велосипедов для прогулок по Костанаю. Удобный способ познакомиться с городом в тёплое время года.',
-    descKey: 'services.bike_desc',
-    phone: '+7 (7142) 545-845',
-    waNumber: '77714944599',
-    icon: 'bike'
-  }, {
     name: 'Оформление праздничного стола',
     nameKey: 'services.decor_name',
     subtitle: 'Декор для торжеств',
@@ -191,6 +232,7 @@ window.DATA = {
     rooms: 'assets/photos/rooms/lux-1.webp',
     restaurant: 'assets/photos/restaurant/gastronomy-hero-1.webp',
     banquet: 'assets/photos/banquet/main-10.webp',
+    concerts: 'assets/photos/concerts/hero.webp',
     services: 'assets/photos/restaurant/billiard-4.webp'
   },
   pageHeroSlides: {
@@ -249,10 +291,18 @@ window.DATA = {
   //   ctaUrl             : куда ведёт кнопка / клик по картинке:
   //                          '#booking'       — открыть форму брони номера
   //                          '#booking-venue' — открыть бронь зала (Restoplace)
+  //                          '#whatsapp'      — открыть WhatsApp (номер и текст
+  //                                             берутся из waNumber и waMessage ниже)
   //                          'tel:+7...'      — позвонить
-  //                          'https://wa.me/77755215706?text=...' — WhatsApp
   //                          'https://...'    — внешняя ссылка
   //                          ''               — кнопка/клик не делает ничего
+  //   waNumber           : номер WhatsApp (только если ctaUrl = '#whatsapp').
+  //                        Пишите цифрами, без + и пробелов: '77755215706'
+  //   waMessage          : текст, который подставится в WhatsApp (необязательно).
+  //                        Пишите как обычный текст. Оставьте '' — откроется
+  //                        пустой чат без готового сообщения.
+  //                        ВАЖНО: не пишите тут привязку к конкретной дате/акции,
+  //                        которую забудете поменять (см. нейтральный пример ниже).
   //
   // Для каждого языка указываются 4 поля. Если оставить все 4 пустыми —
   // окно покажет ТОЛЬКО картинку (вся карточка — кликабельный баннер).
@@ -262,12 +312,14 @@ window.DATA = {
   //   cta         : текст кнопки (необязательно)
   // ─────────────────────────────────────────────────────────────────────────
   promoModal: {
-    enabled: true,
+    enabled: false,                // ← окно скрыто. Поменяйте на true, чтобы снова показать (контент акции ниже сохранён)
     version: '2026-06-tasso',
     image: 'assets/photos/promo/tasso-17-iyunya.webp',
     showDelayMs: 1500,
-    hideAfterCloseDays: 7,
-    ctaUrl: '#booking-venue',
+    hideAfterCloseDays: 0,         // 0 — показывать при каждом открытии сайта (без кулдауна). 7 — раз в неделю.
+    ctaUrl: '#whatsapp',           // кнопка открывает WhatsApp (см. waNumber и waMessage)
+    waNumber: '77755215706',       // номер WhatsApp банкетного менеджера (цифры, без + и пробелов)
+    waMessage: 'Здравствуйте! Пишу с сайта medeuhotel.kz — хочу узнать подробнее об акции и забронировать.',
     ru: {
       overline: '— 17 июня · Летняя веранда MEDEU —',
       title: 'TASSO. Живой звук',

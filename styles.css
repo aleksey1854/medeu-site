@@ -968,6 +968,189 @@ img { display: block; max-width: 100%; height: auto; }
 }
 .venue-row:hover .venue-image { transform: scale(1.05); }
 
+/* Концерты — блок видео (фасад: превью + play, плеер грузится по клику) */
+.concert-video {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  margin-top: 28px;
+  overflow: hidden;
+  border: 1px solid var(--c-gold, #b8935a);
+  background: #0e0d0c;
+}
+.concert-video iframe,
+.concert-video video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  display: block;
+}
+.concert-video--facade { cursor: pointer; }
+.concert-video-poster {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 3s;
+}
+.concert-video-poster--dark { background: radial-gradient(ellipse at center, #262320, #0e0d0c 75%); }
+.concert-video--facade:hover .concert-video-poster { transform: scale(1.04); }
+.concert-video-scrim {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(10, 9, 8, .12), rgba(10, 9, 8, .48));
+  transition: background .5s;
+}
+.concert-video--facade:hover .concert-video-scrim { background: linear-gradient(180deg, rgba(10, 9, 8, .05), rgba(10, 9, 8, .38)); }
+.concert-play {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 76px;
+  height: 76px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #f4ead9;
+  background: rgba(14, 13, 12, .42);
+  border: 1px solid var(--c-gold, #b8935a);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  transition: background .45s, transform .45s, color .45s;
+}
+.concert-play svg { width: 30px; height: 30px; margin-left: 4px; }
+.concert-video--facade:hover .concert-play {
+  background: var(--c-gold, #b8935a);
+  color: #17140f;
+  transform: translate(-50%, -50%) scale(1.07);
+}
+.concert-video--facade:focus-visible { outline: 2px solid var(--c-gold, #b8935a); outline-offset: 3px; }
+.concert-video-hint {
+  position: absolute;
+  left: 50%;
+  bottom: 20px;
+  transform: translateX(-50%);
+  font-size: 11px;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  color: rgba(244, 234, 217, .85);
+  white-space: nowrap;
+  pointer-events: none;
+}
+.concert-video.is-playing { cursor: default; }
+
+/* Концерты — фото открываются во весь экран */
+.concert-row .room-gallery-slide { cursor: zoom-in; }
+
+/* Концерты — полноэкранный лайтбокс */
+.concert-lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 220;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(10, 9, 8, .94);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity .4s, visibility .4s;
+}
+.concert-lightbox.is-open { opacity: 1; visibility: visible; }
+.clb-stage {
+  max-width: min(1400px, 92vw);
+  max-height: 84vh;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.clb-img {
+  max-width: 100%;
+  max-height: 84vh;
+  display: block;
+  border: 1px solid rgba(184, 147, 90, .55);
+  box-shadow: 0 40px 120px -30px rgba(0, 0, 0, .8);
+  opacity: 0;
+  transform: scale(.985);
+  transition: opacity .45s, transform .45s;
+}
+.clb-img.is-loaded { opacity: 1; transform: none; }
+.clb-close {
+  position: absolute;
+  top: 22px;
+  right: 24px;
+  width: 46px;
+  height: 46px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(184, 147, 90, .5);
+  border-radius: 50%;
+  background: rgba(14, 13, 12, .5);
+  color: #e8dcc6;
+  cursor: pointer;
+  transition: background .35s, color .35s;
+}
+.clb-close:hover { background: var(--c-gold, #b8935a); color: #17140f; }
+.clb-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 52px;
+  height: 52px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(184, 147, 90, .5);
+  border-radius: 50%;
+  background: rgba(14, 13, 12, .5);
+  color: #e8dcc6;
+  cursor: pointer;
+  transition: background .35s, color .35s;
+}
+.clb-arrow--prev { left: 22px; }
+.clb-arrow--next { right: 22px; }
+.clb-arrow:hover { background: var(--c-gold, #b8935a); color: #17140f; }
+.clb-caption {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 22px;
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 18px;
+  pointer-events: none;
+}
+.clb-title {
+  font-family: var(--font-serif, Georgia, serif);
+  font-size: 16px;
+  letter-spacing: .06em;
+  color: #e8dcc6;
+}
+.clb-count {
+  font-size: 12px;
+  letter-spacing: .2em;
+  color: rgba(232, 220, 198, .6);
+}
+@media (max-width: 640px) {
+  .concert-play { width: 62px; height: 62px; }
+  .concert-play svg { width: 24px; height: 24px; }
+  .clb-arrow { width: 44px; height: 44px; }
+  .clb-arrow--prev { left: 10px; }
+  .clb-arrow--next { right: 10px; }
+  .clb-close { top: 14px; right: 14px; }
+  .clb-stage { max-width: 96vw; }
+}
+
 .venue-image-meta {
   position: absolute;
   left: 24px;
@@ -2211,23 +2394,48 @@ img { display: block; max-width: 100%; height: auto; }
    ========================================================================= */
 .promo-modal { z-index: 110; }                 /* поверх остального, но ниже бронь-окна нет смысла — оно ещё не открыто */
 .promo-modal-window {
-  max-width: 900px;
+  max-width: 960px;
   padding: 0;                                  /* картинка идёт от края до края */
   overflow: hidden;
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
   gap: 0;
   background: var(--c-bg);
+  border: 1px solid var(--c-divider-strong);
+  box-shadow:
+    0 30px 80px -20px rgba(10, 9, 8, 0.45),
+    0 0 0 1px rgba(154, 126, 80, 0.06);
+  animation: promoModalIn 0.55s cubic-bezier(0.16, 1, 0.3, 1);
+}
+@keyframes promoModalIn {
+  from { opacity: 0; transform: translateY(14px) scale(0.97); }
+  to   { opacity: 1; transform: translateY(0)    scale(1); }
 }
 .promo-modal-window > .modal-close {
-  top: 14px;
-  right: 14px;
-  background: var(--c-bg);                     /* контраст с картинкой */
+  top: 16px;
+  right: 16px;
+  width: 38px;
+  height: 38px;
+  background: rgba(250, 247, 240, 0.92);       /* кремовая подушка поверх любой картинки */
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(154, 126, 80, 0.28);
+  color: var(--c-text);
   z-index: 3;
+}
+.theme-dark .promo-modal-window > .modal-close {
+  background: rgba(19, 17, 16, 0.85);          /* тёмная подушка под крестик в тёмной теме */
+  border-color: rgba(184, 153, 104, 0.35);
+}
+.promo-modal-window > .modal-close:hover {
+  background: var(--c-gold);
+  color: var(--c-bg);
+  border-color: var(--c-gold);
 }
 .promo-modal-image-wrap {
   position: relative;
-  min-height: 320px;
+  aspect-ratio: 3 / 4;                         /* пропорции исходного постера 966×1280 */
+  min-height: 0;
   background: var(--c-bg-2);
   overflow: hidden;
 }
@@ -2235,38 +2443,70 @@ img { display: block; max-width: 100%; height: auto; }
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: center center;
   display: block;
 }
 .promo-modal-body {
-  padding: 48px 40px;
+  padding: 56px 48px 52px;
   display: flex;
   flex-direction: column;
   justify-content: center;
+  align-items: center;                         /* центрирование по горизонтали */
+  text-align: center;
+  position: relative;
+}
+/* Декоративные золотые уголки — отсылка к рамке постера, перекликается с виньетками сайта */
+.promo-modal-body::before,
+.promo-modal-body::after {
+  content: '';
+  position: absolute;
+  width: 26px;
+  height: 26px;
+  pointer-events: none;
+  opacity: 0.5;
+  transition: opacity 0.5s ease;
+}
+.promo-modal-body::before {
+  top: 22px;
+  left: 22px;
+  border-top: 1px solid var(--c-gold);
+  border-left: 1px solid var(--c-gold);
+}
+.promo-modal-body::after {
+  bottom: 22px;
+  right: 22px;
+  border-bottom: 1px solid var(--c-gold);
+  border-right: 1px solid var(--c-gold);
+}
+.promo-modal-window:hover .promo-modal-body::before,
+.promo-modal-window:hover .promo-modal-body::after {
+  opacity: 0.8;
 }
 .promo-modal-overline {
-  margin-bottom: 14px;
+  margin-bottom: 18px;
   color: var(--c-gold);
 }
 .promo-modal-title {
   font-family: var(--f-display);
-  font-size: clamp(1.6rem, 3vw, 2.25rem);
+  font-size: clamp(1.75rem, 3vw, 2.5rem);
   font-weight: 300;
   letter-spacing: 0.02em;
   color: var(--c-text);
   margin: 0 0 4px;
-  line-height: 1.15;
+  line-height: 1.1;
 }
 .promo-modal-desc {
   font-family: var(--f-display);
   font-style: italic;
   font-weight: 300;
-  font-size: 1rem;
+  font-size: 1.05rem;
   color: var(--c-text-dim);
-  margin: 0 0 28px;
-  line-height: 1.5;
+  margin: 0 0 32px;
+  max-width: 360px;                            /* короткая строка читается легче, особенно по центру */
+  line-height: 1.55;
 }
 .promo-modal-cta {
-  align-self: flex-start;
+  align-self: center;                          /* кнопка по центру колонки */
 }
 
 /* IMAGE-ONLY режим — когда задано только cfg.image без текста.
@@ -2276,6 +2516,7 @@ img { display: block; max-width: 100%; height: auto; }
   max-width: 560px;
 }
 .promo-modal.promo-modal--image-only .promo-modal-image-wrap {
+  aspect-ratio: auto;
   min-height: 0;
 }
 .promo-modal-image-link {
@@ -2293,31 +2534,47 @@ img { display: block; max-width: 100%; height: auto; }
 }
 
 /* Адаптив */
-@media (max-width: 720px) {
+@media (max-width: 760px) {
   .promo-modal-window {
     grid-template-columns: 1fr;
     max-width: 460px;
   }
   .promo-modal-image-wrap {
-    min-height: 240px;
-    max-height: 320px;
+    aspect-ratio: 4 / 5;                       /* чуть менее вытянутая картинка на мобильном */
   }
   .promo-modal-body {
-    padding: 28px 24px 32px;
+    padding: 38px 28px 36px;
+  }
+  .promo-modal-body::before,
+  .promo-modal-body::after {
+    width: 20px;
+    height: 20px;
+  }
+  .promo-modal-body::before { top: 16px; left: 16px; }
+  .promo-modal-body::after  { bottom: 16px; right: 16px; }
+  .promo-modal-cta {
+    align-self: stretch;                       /* кнопка во всю ширину — удобно тапать */
+    justify-content: center;
   }
   .promo-modal-window > .modal-close {
-    top: 10px;
-    right: 10px;
-    width: 32px;
-    height: 32px;
+    top: 12px;
+    right: 12px;
+    width: 34px;
+    height: 34px;
   }
 }
 @media (max-width: 420px) {
   .promo-modal-image-wrap {
-    min-height: 200px;
-    max-height: 260px;
+    aspect-ratio: 4 / 5;
   }
   .promo-modal-body {
-    padding: 24px 20px 28px;
+    padding: 32px 22px 32px;
+  }
+  .promo-modal-title {
+    font-size: 1.55rem;
+  }
+  .promo-modal-desc {
+    font-size: 1rem;
+    margin-bottom: 26px;
   }
 }

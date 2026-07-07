@@ -7,6 +7,7 @@ window.I18N = {
       rooms: 'Номера',
       gastronomy: 'Гастрономия',
       banquet: 'Банкетный зал',
+      concerts: 'Концерты',
       services: 'Услуги',
       contacts: 'Контакты'
     },
@@ -60,9 +61,21 @@ window.I18N = {
       banquet_overline: '— Особые события —',
       banquet_title: 'Банкетный зал',
       banquet_tagline: 'Пространство для торжеств, корпоративных и деловых событий',
+      concerts_overline: '— Живая музыка —',
+      concerts_title: 'Концерты',
+      concerts_tagline: 'Живые выступления и особые вечера в стенах комплекса',
       services_overline: '— Дополнительные услуги —',
       services_title: 'Услуги',
       services_tagline: 'Всё для комфортного пребывания и торжественных событий'
+    },
+    concerts: {
+      watch: 'Смотреть видео',
+      tasso_name: 'TASSO',
+      tasso_date: '17 июня 2026',
+      tasso_desc: 'Вечер живого звука на летней веранде MEDEU. Атмосферный сет, тёплый летний вечер и по-настоящему красивое звучание в самом центре города.',
+      jazz_name: 'Джазовый вечер',
+      jazz_date: '3 мая 2026',
+      jazz_desc: 'Живой джаз в lounge-ресторане: саксофон, контрабас и мягкий вокал под бокал вина. Вечер сдержанной элегантности для ценителей.'
     },
     rooms: {
       area: 'м²',
@@ -133,9 +146,6 @@ window.I18N = {
       transfer_name: 'Трансфер',
       transfer_subtitle: 'Аэропорт, вокзал, выезды',
       transfer_desc: 'Трансфер «гостиница ↔ аэропорт», встреча с табличкой, почасовая аренда автомобиля с водителем, выезды по области.',
-      bike_name: 'Прокат велосипедов',
-      bike_subtitle: 'Для прогулок по городу',
-      bike_desc: 'Прокат велосипедов для прогулок по Костанаю. Удобный способ познакомиться с городом в тёплое время года.',
       decor_name: 'Оформление праздничного стола',
       decor_subtitle: 'Декор для торжеств',
       decor_desc: 'Оформление праздничного стола цветами и декором для дней рождения, юбилеев, корпоративов в нашем ресторане или банкетном зале.'
@@ -253,6 +263,7 @@ window.I18N = {
       rooms: 'Нөмірлер',
       gastronomy: 'Гастрономия',
       banquet: 'Банкет залы',
+      concerts: 'Концерттер',
       services: 'Қызметтер',
       contacts: 'Байланыс'
     },
@@ -306,9 +317,21 @@ window.I18N = {
       banquet_overline: '— Ерекше іс-шаралар —',
       banquet_title: 'Банкет залы',
       banquet_tagline: 'Салтанатты, корпоративтік және іскерлік іс-шараларға арналған кеңістік',
+      concerts_overline: '— Тірі музыка —',
+      concerts_title: 'Концерттер',
+      concerts_tagline: 'Кешен қабырғасындағы тірі өнер көрсетілімдер мен ерекше кештер',
       services_overline: '— Қосымша қызметтер —',
       services_title: 'Қызметтер',
       services_tagline: 'Жайлы демалу мен салтанатты іс-шараларға арналған барлығы'
+    },
+    concerts: {
+      watch: 'Бейнені көру',
+      tasso_name: 'TASSO',
+      tasso_date: '2026 жылғы 17 маусым',
+      tasso_desc: 'MEDEU жазғы верандасындағы тірі дауыс кеші. Атмосфералық сет, жылы жазғы кеш және қала орталығындағы шынымен әдемі дыбыс.',
+      jazz_name: 'Джаз кеші',
+      jazz_date: '2026 жылғы 3 мамыр',
+      jazz_desc: 'Lounge-мейрамханадағы тірі джаз: саксофон, контрабас және бір бокал шарап астындағы жұмсақ вокал. Талғампаздарға арналған сабырлы талғампаздық кеші.'
     },
     rooms: {
       area: 'м²',
@@ -379,9 +402,6 @@ window.I18N = {
       transfer_name: 'Трансфер',
       transfer_subtitle: 'Әуежай, вокзал, шығулар',
       transfer_desc: '«Қонақ үй ↔ әуежай» трансфері, тақтайшамен қарсы алу, жүргізушісі бар автомобильді сағаттық жалға алу, облысқа шығулар.',
-      bike_name: 'Велосипед жалға алу',
-      bike_subtitle: 'Қала бойынша серуенге',
-      bike_desc: 'Қостанай бойынша серуендеуге арналған велосипед жалға беру. Жылы мезгілде қаламен танысудың ыңғайлы тәсілі.',
       decor_name: 'Мерекелік үстелді безендіру',
       decor_subtitle: 'Салтанаттарға декор',
       decor_desc: 'Туған күндерге, мерейтойларға, корпоративтерге арналған мерекелік үстелді гүлдермен және декормен безендіру — мейрамханамызда немесе банкет залында.'
@@ -499,6 +519,7 @@ window.I18N = {
       rooms: 'Rooms',
       gastronomy: 'Gastronomy',
       banquet: 'Banquet Hall',
+      concerts: 'Concerts',
       services: 'Services',
       contacts: 'Contacts'
     },
@@ -552,9 +573,21 @@ window.I18N = {
       banquet_overline: '— Special Events —',
       banquet_title: 'Banquet Hall',
       banquet_tagline: 'A space for celebrations, corporate and business events',
+      concerts_overline: '— Live Music —',
+      concerts_title: 'Concerts',
+      concerts_tagline: 'Live performances and special evenings within the complex',
       services_overline: '— Additional Services —',
       services_title: 'Services',
       services_tagline: 'Everything for a comfortable stay and memorable events'
+    },
+    concerts: {
+      watch: 'Watch video',
+      tasso_name: 'TASSO',
+      tasso_date: 'June 17, 2026',
+      tasso_desc: 'An evening of live sound on the MEDEU summer terrace. An atmospheric set, a warm summer night and truly beautiful music in the heart of the city.',
+      jazz_name: 'Jazz Evening',
+      jazz_date: 'May 3, 2026',
+      jazz_desc: 'Live jazz at the lounge restaurant: saxophone, double bass and soft vocals over a glass of wine. An evening of quiet elegance for connoisseurs.'
     },
     rooms: {
       area: 'm²',
@@ -625,9 +658,6 @@ window.I18N = {
       transfer_name: 'Transfer',
       transfer_subtitle: 'Airport, station, regional trips',
       transfer_desc: 'Hotel ↔ airport transfer, meet-and-greet service, hourly chauffeur car rental, regional trips.',
-      bike_name: 'Bicycle Rental',
-      bike_subtitle: 'For city tours',
-      bike_desc: 'Bicycle rental for sightseeing in Kostanay. A convenient way to explore the city in warm weather.',
       decor_name: 'Festive Table Decoration',
       decor_subtitle: 'Decoration for celebrations',
       decor_desc: 'Festive table decoration with flowers and decor for birthdays, anniversaries and corporate events in our restaurant or banquet hall.'

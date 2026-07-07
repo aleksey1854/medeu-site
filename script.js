@@ -46,6 +46,7 @@
     rooms: document.getElementById('page-rooms'),
     restaurant: document.getElementById('page-restaurant'),
     banquet: document.getElementById('page-banquet'),
+    concerts: document.getElementById('page-concerts'),
     services: document.getElementById('page-services'),
     contacts: document.getElementById('page-contacts')
   };
@@ -61,6 +62,7 @@
     let waNumber = DATA.contacts.waReception;
     if (pageId === 'restaurant') waNumber = DATA.contacts.waRestaurant;
     if (pageId === 'banquet') waNumber = DATA.contacts.waBanquet;
+    if (pageId === 'concerts') waNumber = DATA.contacts.waBanquet;
     if (waFloat) waFloat.href = 'https://wa.me/' + waNumber.replace(/[^0-9]/g, '');
     window.scrollTo({
       top: 0,
@@ -308,6 +310,69 @@
         touchStartX = null;
       });
     }
+    const concertsStack = document.getElementById('concerts-stack');
+    if (concertsStack && DATA.concerts) {
+      concertsStack.innerHTML = DATA.concerts.map(function(concert, idx) {
+        var imgs = concert.images || [];
+        var isSingle = imgs.length <= 1;
+        var slidesHtml = imgs.map(function(src, i) {
+          return '<div class="room-gallery-slide' + (i === 0 ? ' is-active' : '') + '">' + '<div class="venue-image lazy-bg' + (i === 0 ? ' img-skeleton' : '') + '" data-bg="' + src + '"></div>' + '</div>';
+        }).join('');
+        var dotsHtml = imgs.map(function(_, i) {
+          return '<button class="room-gallery-dot' + (i === 0 ? ' is-active' : '') + '" aria-label="' + (window.I18N ? I18N.t('carousel.slide') : 'Слайд') + ' ' + (i + 1) + '" data-idx="' + i + '"></button>';
+        }).join('');
+        // видео-блок: фасад (превью + кнопка play), плеер грузится только по клику
+        var videoHtml = '';
+        var watchLabel = window.I18N ? I18N.t('concerts.watch') : 'Смотреть видео';
+        if (concert.video && concert.videoType === 'youtube') {
+          var m = String(concert.video).match(/(?:youtu\.be\/|v=|embed\/|shorts\/)([\w-]{6,})/);
+          var vid = m ? m[1] : '';
+          if (vid) {
+            videoHtml = '' +
+              '<div class="concert-video concert-video--facade" data-video-type="youtube" data-video-id="' + vid + '" role="button" tabindex="0" aria-label="' + watchLabel + '">' +
+                '<img class="concert-video-poster" src="https://i.ytimg.com/vi/' + vid + '/maxresdefault.jpg" onerror="if(!this.dataset.f){this.dataset.f=1;this.src=\'https://i.ytimg.com/vi/' + vid + '/hqdefault.jpg\'}" alt="" loading="lazy">' +
+                '<span class="concert-video-scrim"></span>' +
+                '<span class="concert-play"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.5v13l11-6.5z"/></svg></span>' +
+                '<span class="concert-video-hint">' + watchLabel + '</span>' +
+              '</div>';
+          }
+        } else if (concert.video && concert.videoType === 'file') {
+          videoHtml = '' +
+            '<div class="concert-video concert-video--facade" data-video-type="file" data-video-src="' + concert.video + '" role="button" tabindex="0" aria-label="' + watchLabel + '">' +
+              (concert.videoPoster ? '<img class="concert-video-poster" src="' + concert.videoPoster + '" alt="" loading="lazy">' : '<span class="concert-video-poster concert-video-poster--dark"></span>') +
+              '<span class="concert-video-scrim"></span>' +
+              '<span class="concert-play"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.5v13l11-6.5z"/></svg></span>' +
+              '<span class="concert-video-hint">' + watchLabel + '</span>' +
+            '</div>';
+        }
+        var name = window.I18N && concert.nameKey ? I18N.t(concert.nameKey) : concert.name;
+        var date = window.I18N && concert.dateKey ? I18N.t(concert.dateKey) : concert.date;
+        var desc = window.I18N && concert.descKey ? I18N.t(concert.descKey) : concert.description;
+        var reverse = idx % 2 === 1;
+        return '' +
+          '<div class="venue-row concert-row' + (reverse ? ' venue-row--reverse' : '') + '">' +
+            '<div class="venue-image-wrap">' +
+              '<div class="room-gallery venue-gallery' + (isSingle ? ' is-single' : '') + '" data-gallery="concert-' + idx + '">' +
+                '<div class="room-gallery-track">' + slidesHtml + '</div>' +
+                '<button class="room-gallery-arrow room-gallery-arrow--prev" aria-label="' + (window.I18N ? I18N.t('carousel.slide') : 'Назад') + '" data-dir="-1"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg></button>' +
+                '<button class="room-gallery-arrow room-gallery-arrow--next" aria-label="' + (window.I18N ? I18N.t('carousel.slide') : 'Вперёд') + '" data-dir="1"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></button>' +
+                '<div class="room-gallery-dots">' + dotsHtml + '</div>' +
+              '</div>' +
+            '</div>' +
+            '<div class="venue-info">' +
+              (date ? '<div class="overline" style="margin-bottom: 12px;">' + date + '</div>' : '') +
+              '<h3 class="display-h3">' + name + '</h3>' +
+              '<div class="vignette my-6">' +
+                '<span class="vignette-line"></span>' +
+                '<svg width="28" height="10" viewBox="0 0 28 10" aria-hidden="true"><path d="M14 1 L20 5 L14 9 L8 5 Z" fill="none" stroke="currentColor" stroke-width="0.6" style="color: var(--c-gold);"/><circle cx="14" cy="5" r="0.8" fill="currentColor" style="color: var(--c-gold);"/></svg>' +
+                '<span class="vignette-line"></span>' +
+              '</div>' +
+              (desc ? '<p class="body-prose">' + desc + '</p>' : '') +
+              videoHtml +
+            '</div>' +
+          '</div>';
+      }).join('');
+    }
     window.initGallery = initGallery;
     document.querySelectorAll('.room-gallery').forEach(initGallery);
     const servicesList = document.getElementById('services-list');
@@ -341,6 +406,132 @@
     triggerLazyLoad();
   }
   renderDynamic();
+
+  // ───────────────────────────────────────────────────────────────────────
+  // КОНЦЕРТЫ: запуск видео по клику (фасад → плеер)
+  // Обработчик делегированный — переживает перерендер при смене языка.
+  // ───────────────────────────────────────────────────────────────────────
+  function activateConcertVideo(facade) {
+    if (!facade || facade.dataset.activated) return;
+    facade.dataset.activated = '1';
+    var type = facade.dataset.videoType;
+    if (type === 'youtube' && facade.dataset.videoId) {
+      var iframe = document.createElement('iframe');
+      iframe.src = 'https://www.youtube-nocookie.com/embed/' + facade.dataset.videoId + '?autoplay=1&rel=0';
+      iframe.title = facade.getAttribute('aria-label') || 'Video';
+      iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
+      iframe.allowFullscreen = true;
+      iframe.setAttribute('frameborder', '0');
+      facade.innerHTML = '';
+      facade.appendChild(iframe);
+      facade.classList.add('is-playing');
+    } else if (type === 'file' && facade.dataset.videoSrc) {
+      var video = document.createElement('video');
+      video.src = facade.dataset.videoSrc;
+      video.controls = true;
+      video.autoplay = true;
+      video.playsInline = true;
+      facade.innerHTML = '';
+      facade.appendChild(video);
+      facade.classList.add('is-playing');
+    }
+  }
+  document.addEventListener('click', function(e) {
+    var facade = e.target.closest('.concert-video--facade');
+    if (facade && !facade.dataset.activated) activateConcertVideo(facade);
+  });
+  document.addEventListener('keydown', function(e) {
+    if ((e.key === 'Enter' || e.key === ' ') && document.activeElement && document.activeElement.classList && document.activeElement.classList.contains('concert-video--facade')) {
+      e.preventDefault();
+      activateConcertVideo(document.activeElement);
+    }
+  });
+
+  // ───────────────────────────────────────────────────────────────────────
+  // КОНЦЕРТЫ: полноэкранный лайтбокс для фото
+  // Клик по фото концерта → просмотр во весь экран.
+  // Стрелки / свайп / Esc / клик по фону. Счётчик кадров. Прелоад соседних.
+  // ───────────────────────────────────────────────────────────────────────
+  var lb = null, lbImgs = [], lbIdx = 0, lbTouchX = null;
+  function lbEnsure() {
+    if (lb) return lb;
+    lb = document.createElement('div');
+    lb.className = 'concert-lightbox';
+    lb.setAttribute('role', 'dialog');
+    lb.setAttribute('aria-modal', 'true');
+    lb.innerHTML = '' +
+      '<button class="clb-close" aria-label="Закрыть"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button>' +
+      '<button class="clb-arrow clb-arrow--prev" aria-label="Назад"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg></button>' +
+      '<figure class="clb-stage"><img class="clb-img" alt=""></figure>' +
+      '<button class="clb-arrow clb-arrow--next" aria-label="Вперёд"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></button>' +
+      '<div class="clb-caption"><span class="clb-title"></span><span class="clb-count"></span></div>';
+    document.body.appendChild(lb);
+    lb.querySelector('.clb-close').addEventListener('click', lbClose);
+    lb.querySelector('.clb-arrow--prev').addEventListener('click', function() { lbShow(lbIdx - 1); });
+    lb.querySelector('.clb-arrow--next').addEventListener('click', function() { lbShow(lbIdx + 1); });
+    lb.addEventListener('click', function(e) { if (e.target === lb || e.target.classList.contains('clb-stage')) lbClose(); });
+    lb.addEventListener('touchstart', function(e) { lbTouchX = e.touches[0].clientX; }, { passive: true });
+    lb.addEventListener('touchend', function(e) {
+      if (lbTouchX === null) return;
+      var dx = e.changedTouches[0].clientX - lbTouchX;
+      if (Math.abs(dx) > 48) lbShow(lbIdx + (dx < 0 ? 1 : -1));
+      lbTouchX = null;
+    }, { passive: true });
+    return lb;
+  }
+  function lbShow(i) {
+    if (!lbImgs.length) return;
+    lbIdx = (i + lbImgs.length) % lbImgs.length;
+    var img = lb.querySelector('.clb-img');
+    img.classList.remove('is-loaded');
+    img.src = lbImgs[lbIdx];
+    if (img.complete) img.classList.add('is-loaded');
+    else img.onload = function() { img.classList.add('is-loaded'); };
+    lb.querySelector('.clb-count').textContent = lbImgs.length > 1 ? (lbIdx + 1) + ' / ' + lbImgs.length : '';
+    var single = lbImgs.length <= 1;
+    lb.querySelector('.clb-arrow--prev').style.display = single ? 'none' : '';
+    lb.querySelector('.clb-arrow--next').style.display = single ? 'none' : '';
+    // прелоад соседних кадров
+    if (!single) {
+      [lbIdx + 1, lbIdx - 1].forEach(function(n) {
+        var pre = new Image();
+        pre.src = lbImgs[(n + lbImgs.length) % lbImgs.length];
+      });
+    }
+  }
+  function lbOpen(images, startIdx, title) {
+    lbEnsure();
+    lbImgs = images || [];
+    lb.querySelector('.clb-title').textContent = title || '';
+    lbShow(startIdx || 0);
+    lb.classList.add('is-open');
+    document.body.style.overflow = 'hidden';
+  }
+  function lbClose() {
+    if (!lb) return;
+    lb.classList.remove('is-open');
+    document.body.style.overflow = '';
+  }
+  document.addEventListener('keydown', function(e) {
+    if (!lb || !lb.classList.contains('is-open')) return;
+    if (e.key === 'Escape') lbClose();
+    if (e.key === 'ArrowRight') lbShow(lbIdx + 1);
+    if (e.key === 'ArrowLeft') lbShow(lbIdx - 1);
+  });
+  document.addEventListener('click', function(e) {
+    var slide = e.target.closest('.concert-row .room-gallery-slide');
+    if (!slide || e.target.closest('.room-gallery-arrow') || e.target.closest('.room-gallery-dot')) return;
+    var gal = slide.closest('.room-gallery');
+    var m = gal && gal.dataset.gallery && gal.dataset.gallery.match(/^concert-(\d+)$/);
+    if (!m || !window.DATA || !DATA.concerts) return;
+    var concert = DATA.concerts[parseInt(m[1], 10)];
+    if (!concert || !concert.images || !concert.images.length) return;
+    var slides = gal.querySelectorAll('.room-gallery-slide');
+    var idx = Array.prototype.indexOf.call(slides, slide);
+    var title = window.I18N && concert.nameKey ? I18N.t(concert.nameKey) : concert.name;
+    lbOpen(concert.images, Math.max(idx, 0), title);
+  });
+
   const PAYMENT_METHODS = [
     { key: 'visa',       name: 'Visa',             color: '#1A1F71', aspect: 'wide'   },
     { key: 'mastercard', name: 'Mastercard',       color: '#EB001B', aspect: 'square' },
