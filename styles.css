@@ -1045,6 +1045,81 @@ img { display: block; max-width: 100%; height: auto; }
 }
 .concert-video.is-playing { cursor: default; }
 
+/* Hero-видео (фоновая петля на странице концертов) */
+.page-hero--video { position: relative; }
+.page-hero-video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 0;
+  pointer-events: none;
+}
+.page-hero--video::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(180deg, rgba(10,9,8,0.45), rgba(10,9,8,0.82));
+}
+.page-hero--video .page-hero-content { position: relative; z-index: 2; }
+
+/* Концерты — блок-обёртка одного концерта */
+.concert-block { margin-bottom: 96px; }
+.concert-block:last-of-type { margin-bottom: 0; }
+
+/* Концерты — видео первым слайдом галереи (заставка = videoPoster).
+   Заполняет ячейку галереи как обычное фото: без рамки, кадр по размеру. */
+.concert-media-video .concert-video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  aspect-ratio: auto;
+  margin: 0;
+  border: 0;
+}
+.concert-media-video .concert-video video {
+  object-fit: cover;
+}
+/* Подпись «Смотреть видео» — под кнопкой play, а не у нижнего края:
+   иначе пересекается с точками переключения галереи. */
+.concert-media-video .concert-video-hint {
+  top: calc(50% + 50px);
+  bottom: auto;
+}
+
+/* Концерты — пустое состояние */
+.concerts-empty {
+  text-align: center;
+  max-width: 520px;
+  margin: 0 auto;
+  padding: 40px 0 20px;
+}
+.concerts-empty svg {
+  width: 54px;
+  height: 54px;
+  color: var(--c-gold);
+  margin: 0 auto 26px;
+  opacity: .8;
+}
+.concerts-empty__title {
+  font-family: var(--f-display);
+  font-size: 26px;
+  color: var(--c-text);
+  margin-bottom: 16px;
+}
+.concerts-empty__text {
+  color: var(--c-text-dim);
+  line-height: 1.7;
+  margin-bottom: 32px;
+}
+
+@media (max-width: 640px) {
+  .concert-block { margin-bottom: 64px; }
+}
+
 /* Концерты — фото открываются во весь экран */
 .concert-row .room-gallery-slide { cursor: zoom-in; }
 
@@ -1131,7 +1206,7 @@ img { display: block; max-width: 100%; height: auto; }
   pointer-events: none;
 }
 .clb-title {
-  font-family: var(--font-serif, Georgia, serif);
+  font-family: var(--f-display);
   font-size: 16px;
   letter-spacing: .06em;
   color: #e8dcc6;

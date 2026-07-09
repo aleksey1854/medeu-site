@@ -167,19 +167,20 @@ window.DATA = {
     dateKey: 'concerts.tasso_date',
     description: 'Вечер живого звука на летней веранде MEDEU. Атмосферный сет, тёплый летний вечер и по-настоящему красивое звучание в самом центре города.',
     descKey: 'concerts.tasso_desc',
-    video: 'https://youtu.be/C96NTdHquvA',
-    videoType: 'youtube',
-    images: [ 'assets/photos/concerts/tasso-1.webp', 'assets/photos/concerts/tasso-2.webp', 'assets/photos/concerts/tasso-3.webp' ]
+    video: 'assets/videos/tasso.mp4',
+    videoType: 'file',
+    videoPoster: 'assets/photos/concerts/tasso-3.webp',
+    images: [ 'assets/photos/concerts/tasso-4.webp', 'assets/photos/concerts/tasso-1.webp', 'assets/photos/concerts/tasso-2.webp' ]
   }, {
-    name: 'Джазовый вечер',
-    nameKey: 'concerts.jazz_name',
-    date: '3 мая 2026',
-    dateKey: 'concerts.jazz_date',
-    description: 'Живой джаз в lounge-ресторане: саксофон, контрабас и мягкий вокал под бокал вина. Вечер сдержанной элегантности для ценителей.',
-    descKey: 'concerts.jazz_desc',
+    name: 'Вечер 8 Марта · Диас Тулегенов',
+    nameKey: 'concerts.march8_name',
+    date: '8 марта 2026',
+    dateKey: 'concerts.march8_date',
+    description: 'Праздничный вечер 8 Марта в ресторане MEDEU. Живой вокал Диаса Тулегенова, welcome drink, красивый праздничный зал и комплимент от шеф-кондитера — атмосфера уюта, красоты и вдохновения.',
+    descKey: 'concerts.march8_desc',
     video: '',
     videoType: '',
-    images: [ 'assets/photos/concerts/jazz-1.webp', 'assets/photos/concerts/jazz-2.webp' ]
+    images: [ 'assets/photos/concerts/march8-1.webp', 'assets/photos/concerts/march8-2.webp', 'assets/photos/concerts/march8-3.webp', 'assets/photos/concerts/march8-4.webp', 'assets/photos/concerts/march8-5.webp', 'assets/photos/concerts/march8-6.webp', 'assets/photos/concerts/march8-7.webp' ]
   } ],
 
   conferenceImage: 'assets/photos/banquet/conference-2.webp',
@@ -234,6 +235,13 @@ window.DATA = {
     banquet: 'assets/photos/banquet/main-10.webp',
     concerts: 'assets/photos/concerts/hero.webp',
     services: 'assets/photos/restaurant/billiard-4.webp'
+  },
+  // Видео-петля на фон hero страницы «Концерты» (без звука, зациклено, автозапуск).
+  // Постер (hero-poster) показывается, пока видео грузится / если не запустилось.
+  // Убрать видео с hero — просто поставьте '' здесь.
+  pageHeroVideo: {
+    concerts: 'assets/videos/concerts-hero.mp4',
+    concertsPoster: 'assets/photos/concerts/hero-poster.webp'
   },
   pageHeroSlides: {
     restaurant: [ 'assets/photos/restaurant/gastronomy-hero-1.webp', 'assets/photos/restaurant/gastronomy-hero-2.webp', 'assets/photos/restaurant/gastronomy-hero-3.webp', 'assets/photos/restaurant/gastronomy-hero-4.webp', 'assets/photos/restaurant/gastronomy-hero-5.webp' ]

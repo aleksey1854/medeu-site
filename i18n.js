@@ -70,12 +70,18 @@ window.I18N = {
     },
     concerts: {
       watch: 'Смотреть видео',
+      videoLabel: 'Видео с вечера',
+      emptyTitle: 'Скоро здесь появятся концерты',
+      emptyText: 'Мы готовим новые музыкальные вечера. Следите за анонсами или уточните ближайшие события у банкетного менеджера.',
+      ctaTitle: 'Хотите провести событие у нас?',
+      ctaText: 'Живые концерты, банкеты и особые вечера — подберём площадку и организуем всё под ключ. Напишите банкетному менеджеру.',
+      ctaButton: 'Обсудить событие',
       tasso_name: 'TASSO',
       tasso_date: '17 июня 2026',
       tasso_desc: 'Вечер живого звука на летней веранде MEDEU. Атмосферный сет, тёплый летний вечер и по-настоящему красивое звучание в самом центре города.',
-      jazz_name: 'Джазовый вечер',
-      jazz_date: '3 мая 2026',
-      jazz_desc: 'Живой джаз в lounge-ресторане: саксофон, контрабас и мягкий вокал под бокал вина. Вечер сдержанной элегантности для ценителей.'
+      march8_name: 'Вечер 8 Марта · Диас Тулегенов',
+      march8_date: '8 марта 2026',
+      march8_desc: 'Праздничный вечер 8 Марта в ресторане MEDEU. Живой вокал Диаса Тулегенова, welcome drink, красивый праздничный зал и комплимент от шеф-кондитера — атмосфера уюта, красоты и вдохновения.'
     },
     rooms: {
       area: 'м²',
@@ -326,12 +332,18 @@ window.I18N = {
     },
     concerts: {
       watch: 'Бейнені көру',
+      videoLabel: 'Кеш бейнесі',
+      emptyTitle: 'Жақында мұнда концерттер пайда болады',
+      emptyText: 'Біз жаңа музыкалық кештер дайындап жатырмыз. Жаңалықтарды қадағалаңыз немесе жақын арадағы іс-шараларды банкет менеджерінен сұраңыз.',
+      ctaTitle: 'Бізде іс-шара өткізгіңіз келе ме?',
+      ctaText: 'Тірі концерттер, банкеттер және ерекше кештер — алаңды таңдап, барлығын кілтке дейін ұйымдастырамыз. Банкет менеджеріне жазыңыз.',
+      ctaButton: 'Іс-шараны талқылау',
       tasso_name: 'TASSO',
       tasso_date: '2026 жылғы 17 маусым',
       tasso_desc: 'MEDEU жазғы верандасындағы тірі дауыс кеші. Атмосфералық сет, жылы жазғы кеш және қала орталығындағы шынымен әдемі дыбыс.',
-      jazz_name: 'Джаз кеші',
-      jazz_date: '2026 жылғы 3 мамыр',
-      jazz_desc: 'Lounge-мейрамханадағы тірі джаз: саксофон, контрабас және бір бокал шарап астындағы жұмсақ вокал. Талғампаздарға арналған сабырлы талғампаздық кеші.'
+      march8_name: '8 Наурыз кеші · Диас Төлегенов',
+      march8_date: '2026 жылғы 8 наурыз',
+      march8_desc: 'MEDEU мейрамханасындағы мерекелік 8 Наурыз кеші. Диас Төлегеновтің тірі вокалы, welcome drink, әдемі мерекелік зал және аспаз-кондитерден комплимент — жайлылық, сұлулық пен шабыт атмосферасы.'
     },
     rooms: {
       area: 'м²',
@@ -582,12 +594,18 @@ window.I18N = {
     },
     concerts: {
       watch: 'Watch video',
+      videoLabel: 'Video from the evening',
+      emptyTitle: 'Concerts are coming soon',
+      emptyText: 'We are preparing new musical evenings. Follow the announcements or ask the banquet manager about upcoming events.',
+      ctaTitle: 'Want to host an event with us?',
+      ctaText: 'Live concerts, banquets and special evenings — we will find the venue and organise everything turnkey. Message the banquet manager.',
+      ctaButton: 'Discuss an event',
       tasso_name: 'TASSO',
       tasso_date: 'June 17, 2026',
       tasso_desc: 'An evening of live sound on the MEDEU summer terrace. An atmospheric set, a warm summer night and truly beautiful music in the heart of the city.',
-      jazz_name: 'Jazz Evening',
-      jazz_date: 'May 3, 2026',
-      jazz_desc: 'Live jazz at the lounge restaurant: saxophone, double bass and soft vocals over a glass of wine. An evening of quiet elegance for connoisseurs.'
+      march8_name: 'March 8 Evening · Dias Tulegenov',
+      march8_date: 'March 8, 2026',
+      march8_desc: 'A festive March 8 evening at the MEDEU restaurant. Live vocals by Dias Tulegenov, a welcome drink, a beautiful celebration hall and a treat from the pastry chef — an atmosphere of comfort, beauty and inspiration.'
     },
     rooms: {
       area: 'm²',
