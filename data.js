@@ -183,6 +183,33 @@ window.DATA = {
     images: [ 'assets/photos/concerts/march8-1.webp', 'assets/photos/concerts/march8-2.webp', 'assets/photos/concerts/march8-3.webp', 'assets/photos/concerts/march8-4.webp', 'assets/photos/concerts/march8-5.webp', 'assets/photos/concerts/march8-6.webp', 'assets/photos/concerts/march8-7.webp' ]
   } ],
 
+  // ───────────────────────────────────────────────────────────────────────
+  // КОНЦЕРТЫ — «медиа-стена» (мозаика фото и видео, без привязки к датам).
+  // Порядок в массиве = порядок плиток. Добавить фото — просто новая строка.
+  //   type   : 'photo' | 'video'
+  //   src    : фото — путь к картинке; видео — файл .mp4 или ссылка YouTube
+  //   poster : (video) картинка-заставка; для YouTube можно не указывать
+  //   videoType: (video) 'file' | 'youtube' (по умолчанию — file)
+  //   span   : размер плитки в мозаике —
+  //            не указан → 1×1 (квадрат); 'w2' → шире (2×1);
+  //            'h2' → выше (1×2); 'big' → крупная (2×2)
+  //   label  : (необязательно) маленькая подпись-тег в углу плитки, напр. 'TASSO'
+  // Фото открываются на весь экран (лайтбокс), видео проигрывается прямо в плитке.
+  // ───────────────────────────────────────────────────────────────────────
+  concertsGallery: [
+    { type: 'video', src: 'assets/videos/tasso.mp4', videoType: 'file', poster: 'assets/photos/concerts/tasso-3.webp', span: 'big', label: 'TASSO' },
+    { type: 'photo', src: 'assets/photos/concerts/tasso-1.webp', span: 'w2' },
+    { type: 'photo', src: 'assets/photos/concerts/tasso-2.webp' },
+    { type: 'photo', src: 'assets/photos/concerts/tasso-4.webp' },
+    { type: 'photo', src: 'assets/photos/concerts/march8-1.webp', span: 'h2' },
+    { type: 'photo', src: 'assets/photos/concerts/march8-3.webp' },
+    { type: 'photo', src: 'assets/photos/concerts/march8-2.webp', span: 'w2' },
+    { type: 'photo', src: 'assets/photos/concerts/march8-5.webp' },
+    { type: 'photo', src: 'assets/photos/concerts/march8-4.webp' },
+    { type: 'photo', src: 'assets/photos/concerts/march8-6.webp', span: 'h2' },
+    { type: 'photo', src: 'assets/photos/concerts/march8-7.webp' }
+  ],
+
   conferenceImage: 'assets/photos/banquet/conference-2.webp',
   conferenceImages: [ 'assets/photos/banquet/conference-2.webp', 'assets/photos/banquet/conference-1.webp' ],
   services: [ {

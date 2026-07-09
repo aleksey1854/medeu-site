@@ -316,9 +316,10 @@
     }
     const concertsStack = document.getElementById('concerts-stack');
     if (concertsStack) {
-      var concerts = DATA.concerts || [];
-      if (!concerts.length) {
-        // Пустое состояние — если концертов пока нет, страница не пустует
+      var cMedia = (DATA.concertsGallery && DATA.concertsGallery.length) ? DATA.concertsGallery : [];
+      var watchLabel = window.I18N ? I18N.t('concerts.watch') : 'Смотреть видео';
+      if (!cMedia.length) {
+        // Пустое состояние — если медиа пока нет, страница не пустует
         concertsStack.innerHTML = '' +
           '<div class="concerts-empty">' +
             '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" aria-hidden="true"><path d="M9 18V5l12-2v13" stroke-linecap="round" stroke-linejoin="round"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>' +
@@ -327,83 +328,44 @@
             '<a href="https://wa.me/' + DATA.contacts.waBanquet + '" target="_blank" rel="noopener noreferrer" class="gold-btn"><span class="gold-btn__bg"></span><span class="gold-btn__label">' + (window.I18N ? I18N.t('concerts.ctaButton') : 'Узнать о ближайших событиях') + '</span></a>' +
           '</div>';
       } else {
-      concertsStack.innerHTML = concerts.map(function(concert, idx) {
-        var imgs = concert.images || [];
-        var name = window.I18N && concert.nameKey ? I18N.t(concert.nameKey) : concert.name;
-        var date = window.I18N && concert.dateKey ? I18N.t(concert.dateKey) : concert.date;
-        var desc = window.I18N && concert.descKey ? I18N.t(concert.descKey) : concert.description;
-        var watchLabel = window.I18N ? I18N.t('concerts.watch') : 'Смотреть видео';
-        var reverse = idx % 2 === 1;
-
-        // Видео вечера — ПЕРВЫМ слайдом галереи (заставка = concert.videoPoster).
-        var videoSlide = '';
-        if (concert.video && (concert.videoType === 'youtube' || concert.videoType === 'file')) {
-          var facadeInner = '';
-          if (concert.videoType === 'youtube') {
-            var m = String(concert.video).match(/(?:youtu\.be\/|v=|embed\/|shorts\/)([\w-]{6,})/);
-            var vid = m ? m[1] : '';
-            if (vid) {
-              facadeInner = '' +
-                '<div class="concert-video concert-video--facade" data-video-type="youtube" data-video-id="' + vid + '" role="button" tabindex="0" aria-label="' + watchLabel + ' — ' + name + '">' +
-                  '<img class="concert-video-poster" src="https://i.ytimg.com/vi/' + vid + '/maxresdefault.jpg" onerror="if(!this.dataset.f){this.dataset.f=1;this.src=\'https://i.ytimg.com/vi/' + vid + '/hqdefault.jpg\'}" alt="" loading="lazy">' +
+        // «Медиа-стена»: мозаика фото и видео. Порядок = порядок массива concertsGallery.
+        var spanClass = function(sp) {
+          return sp === 'big' ? ' cgal-item--big' : sp === 'w2' ? ' cgal-item--w2' : sp === 'h2' ? ' cgal-item--h2' : '';
+        };
+        var tilesHtml = cMedia.map(function(item) {
+          if (!item || !item.src) return '';
+          var sc = spanClass(item.span);
+          var tag = item.label ? '<span class="cgal-tag">' + item.label + '</span>' : '';
+          if (item.type === 'video') {
+            var isYt = item.videoType === 'youtube' || /youtu\.?be/.test(String(item.src));
+            var facade;
+            if (isYt) {
+              var m = String(item.src).match(/(?:youtu\.be\/|v=|embed\/|shorts\/)([\w-]{6,})/);
+              var vid = m ? m[1] : '';
+              var yPoster = item.poster || (vid ? 'https://i.ytimg.com/vi/' + vid + '/maxresdefault.jpg' : '');
+              facade = '<div class="concert-video concert-video--facade cgal-media" data-video-type="youtube" data-video-id="' + vid + '" role="button" tabindex="0" aria-label="' + watchLabel + '">' +
+                  (yPoster ? '<img class="concert-video-poster" src="' + yPoster + '" onerror="if(!this.dataset.f){this.dataset.f=1;this.src=\'https://i.ytimg.com/vi/' + vid + '/hqdefault.jpg\'}" alt="" loading="lazy">' : '<span class="concert-video-poster concert-video-poster--dark"></span>') +
+                  '<span class="concert-video-scrim"></span>' +
+                  '<span class="concert-play"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.5v13l11-6.5z"/></svg></span>' +
+                  '<span class="concert-video-hint">' + watchLabel + '</span>' +
+                '</div>';
+            } else {
+              facade = '<div class="concert-video concert-video--facade cgal-media" data-video-type="file" data-video-src="' + item.src + '" role="button" tabindex="0" aria-label="' + watchLabel + '">' +
+                  (item.poster ? '<img class="concert-video-poster" src="' + item.poster + '" alt="" loading="lazy">' : '<span class="concert-video-poster concert-video-poster--dark"></span>') +
                   '<span class="concert-video-scrim"></span>' +
                   '<span class="concert-play"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.5v13l11-6.5z"/></svg></span>' +
                   '<span class="concert-video-hint">' + watchLabel + '</span>' +
                 '</div>';
             }
-          } else {
-            facadeInner = '' +
-              '<div class="concert-video concert-video--facade" data-video-type="file" data-video-src="' + concert.video + '" role="button" tabindex="0" aria-label="' + watchLabel + ' — ' + name + '">' +
-                (concert.videoPoster ? '<img class="concert-video-poster" src="' + concert.videoPoster + '" alt="" loading="lazy">' : '<span class="concert-video-poster concert-video-poster--dark"></span>') +
-                '<span class="concert-video-scrim"></span>' +
-                '<span class="concert-play"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.5v13l11-6.5z"/></svg></span>' +
-                '<span class="concert-video-hint">' + watchLabel + '</span>' +
-              '</div>';
+            return '<div class="cgal-item cgal-item--video' + sc + '">' + facade + tag + '</div>';
           }
-          if (facadeInner) {
-            videoSlide = '<div class="room-gallery-slide concert-media-video is-active">' + facadeInner + '</div>';
-          }
-        }
-        var hasVideo = videoSlide !== '';
-
-        var photoSlides = imgs.map(function(src, i) {
-          var act = (!hasVideo && i === 0);
-          return '<div class="room-gallery-slide' + (act ? ' is-active' : '') + '">' + '<div class="venue-image lazy-bg' + (act ? ' img-skeleton' : '') + '" data-bg="' + src + '"></div>' + '</div>';
+          // фото
+          return '<div class="cgal-item cgal-item--photo' + sc + '" role="button" tabindex="0" aria-label="' + (window.I18N ? I18N.t('carousel.slide') : 'Фото') + '">' +
+              '<div class="cgal-media lazy-bg img-skeleton" data-bg="' + item.src + '"></div>' +
+              tag +
+            '</div>';
         }).join('');
-        var slidesHtml = videoSlide + photoSlides;
-
-        var totalSlides = imgs.length + (hasVideo ? 1 : 0);
-        var isSingle = totalSlides <= 1;
-        var dotArr = [];
-        for (var d = 0; d < totalSlides; d++) {
-          dotArr.push('<button class="room-gallery-dot' + (d === 0 ? ' is-active' : '') + '" aria-label="' + (window.I18N ? I18N.t('carousel.slide') : 'Слайд') + ' ' + (d + 1) + '" data-idx="' + d + '"></button>');
-        }
-        var dotsHtml = dotArr.join('');
-
-        return '' +
-          '<article class="concert-block">' +
-            '<div class="venue-row concert-row' + (reverse ? ' venue-row--reverse' : '') + '">' +
-              '<div class="venue-image-wrap">' +
-                '<div class="room-gallery venue-gallery' + (isSingle ? ' is-single' : '') + '" data-gallery="concert-' + idx + '">' +
-                  '<div class="room-gallery-track">' + slidesHtml + '</div>' +
-                  '<button class="room-gallery-arrow room-gallery-arrow--prev" aria-label="' + (window.I18N ? I18N.t('carousel.slide') : 'Назад') + '" data-dir="-1"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg></button>' +
-                  '<button class="room-gallery-arrow room-gallery-arrow--next" aria-label="' + (window.I18N ? I18N.t('carousel.slide') : 'Вперёд') + '" data-dir="1"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></button>' +
-                  '<div class="room-gallery-dots">' + dotsHtml + '</div>' +
-                '</div>' +
-              '</div>' +
-              '<div class="venue-info">' +
-                (date ? '<div class="overline" style="margin-bottom: 12px;">' + date + '</div>' : '') +
-                '<h3 class="display-h3">' + name + '</h3>' +
-                '<div class="vignette my-6">' +
-                  '<span class="vignette-line"></span>' +
-                  '<svg width="28" height="10" viewBox="0 0 28 10" aria-hidden="true"><path d="M14 1 L20 5 L14 9 L8 5 Z" fill="none" stroke="currentColor" stroke-width="0.6" style="color: var(--c-gold);"/><circle cx="14" cy="5" r="0.8" fill="currentColor" style="color: var(--c-gold);"/></svg>' +
-                  '<span class="vignette-line"></span>' +
-                '</div>' +
-                (desc ? '<p class="body-prose">' + desc + '</p>' : '') +
-              '</div>' +
-            '</div>' +
-          '</article>';
-      }).join('');
+        concertsStack.innerHTML = '<div class="cgal">' + tilesHtml + '</div>';
       }
     }
     window.initGallery = initGallery;
@@ -572,20 +534,29 @@
       else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
     }
   });
+  function openConcertPhoto(tile) {
+    if (!tile) return;
+    var wall = tile.closest('.cgal');
+    if (!wall) return;
+    var photoTiles = Array.prototype.slice.call(wall.querySelectorAll('.cgal-item--photo'));
+    var list = photoTiles.map(function(t) {
+      var bg = t.querySelector('[data-bg]');
+      return bg ? bg.dataset.bg : '';
+    }).filter(Boolean);
+    if (!list.length) return;
+    var idx = photoTiles.indexOf(tile);
+    var title = window.I18N ? I18N.t('pageHero.concerts_title') : 'Концерты';
+    lbOpen(list, Math.max(idx, 0), title);
+  }
   document.addEventListener('click', function(e) {
-    var slide = e.target.closest('.concert-row .room-gallery-slide');
-    if (!slide || e.target.closest('.room-gallery-arrow') || e.target.closest('.room-gallery-dot')) return;
-    if (slide.classList.contains('concert-media-video') || e.target.closest('.concert-video--facade')) return; // видео-слайд запускает ролик, а не лайтбокс
-    var gal = slide.closest('.room-gallery');
-    var m = gal && gal.dataset.gallery && gal.dataset.gallery.match(/^concert-(\d+)$/);
-    if (!m || !window.DATA || !DATA.concerts) return;
-    var concert = DATA.concerts[parseInt(m[1], 10)];
-    if (!concert || !concert.images || !concert.images.length) return;
-    var slides = gal.querySelectorAll('.room-gallery-slide');
-    var galIdx = Array.prototype.indexOf.call(slides, slide);
-    var photoIdx = galIdx - (gal.querySelector('.concert-media-video') ? 1 : 0); // видео-слайд не входит в concert.images
-    var title = window.I18N && concert.nameKey ? I18N.t(concert.nameKey) : concert.name;
-    lbOpen(concert.images, Math.max(photoIdx, 0), title);
+    var tile = e.target.closest('.cgal-item--photo');
+    if (tile) openConcertPhoto(tile);
+  });
+  document.addEventListener('keydown', function(e) {
+    if ((e.key === 'Enter' || e.key === ' ') && document.activeElement && document.activeElement.classList && document.activeElement.classList.contains('cgal-item--photo')) {
+      e.preventDefault();
+      openConcertPhoto(document.activeElement);
+    }
   });
 
   const PAYMENT_METHODS = [
