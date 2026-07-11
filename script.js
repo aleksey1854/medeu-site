@@ -328,14 +328,47 @@
             '<a href="https://wa.me/' + DATA.contacts.waBanquet + '" target="_blank" rel="noopener noreferrer" class="gold-btn"><span class="gold-btn__bg"></span><span class="gold-btn__label">' + (window.I18N ? I18N.t('concerts.ctaButton') : 'Узнать о ближайших событиях') + '</span></a>' +
           '</div>';
       } else {
-        // «Медиа-стена»: мозаика фото и видео. Порядок = порядок массива concertsGallery.
-        var spanClass = function(sp) {
-          return sp === 'big' ? ' cgal-item--big' : sp === 'w2' ? ' cgal-item--w2' : sp === 'h2' ? ' cgal-item--h2' : '';
+        // «Медиа-стена»: редакционная мозаика на CSS Grid.
+        // Каждая плитка имеет фиксированный размер (size) и пропорцию —
+        // высоты в ряду совпадают, стена ровная, без сдвигов при загрузке (CLS = 0).
+        // size: 'hero' | 'wide' | 'half' | 'std' | 'stdw' (описание — в data.js).
+        // pos: 'top'|'bottom' — точка кадрирования (по умолчанию center).
+        var posValue = function(p) { return p === 'top' ? 'center top' : p === 'bottom' ? 'center bottom' : ''; };
+        var SIZE_CLASSES = { hero: 'hero', wide: 'wide', half: 'half', std: 'std', stdw: 'stdw' };
+        // Ритм для плиток без size: [wide+std] [std+std+stdw] [half+half] — циклом.
+        var AUTO_RHYTHM = ['wide', 'std', 'std', 'std', 'stdw', 'half', 'half'];
+        var autoIdx = 0;
+        var sizeOf = function(item) {
+          if (item.size && SIZE_CLASSES[item.size]) return item.size;
+          if (item.span === 'full') return 'hero'; // обратная совместимость
+          var s = AUTO_RHYTHM[autoIdx % AUTO_RHYTHM.length];
+          autoIdx++;
+          return s;
         };
-        var tilesHtml = cMedia.map(function(item) {
+        // Подпись события — закреплена в левом нижнем углу hero-баннера,
+        // геометрия привязана к самой плитке (не «плавает» над стеной).
+        var heroNote = DATA.concertsHeadingNoteKey && window.I18N ? I18N.t(DATA.concertsHeadingNoteKey) : '';
+        var captionHtml = DATA.concertsHeading ? '<figcaption class="cgal-caption">' +
+            (heroNote ? '<span class="cgal-caption__note">' + heroNote + '</span>' : '') +
+            '<span class="cgal-caption__title">' + DATA.concertsHeading + '</span>' +
+            '<span class="cgal-caption__rule"><span></span><svg width="9" height="9" viewBox="0 0 10 10" aria-hidden="true"><path d="M5 0 L10 5 L5 10 L0 5 Z" fill="currentColor"/></svg></span>' +
+          '</figcaption>' : '';
+        var captionUsed = false;
+        var tilesHtml = cMedia.map(function(item, idx) {
           if (!item || !item.src) return '';
-          var sc = spanClass(item.span);
+          var size = sizeOf(item);
+          var isHero = size === 'hero';
+          var sizeCls = ' cgal-item--' + SIZE_CLASSES[size];
+          var pos = posValue(item.pos);
+          var posStyle = pos ? ' style="object-position:' + pos + '"' : '';
           var tag = item.label ? '<span class="cgal-tag">' + item.label + '</span>' : '';
+          var delay = ' style="--cgal-d:' + ((idx % 3) * 90) + 'ms"';
+          // Подпись вставляем только в первый hero-баннер
+          var caption = '';
+          if (isHero && !captionUsed && captionHtml) {
+            caption = '<span class="cgal-caption-scrim" aria-hidden="true"></span>' + captionHtml;
+            captionUsed = true;
+          }
           if (item.type === 'video') {
             var isYt = item.videoType === 'youtube' || /youtu\.?be/.test(String(item.src));
             var facade;
@@ -343,29 +376,42 @@
               var m = String(item.src).match(/(?:youtu\.be\/|v=|embed\/|shorts\/)([\w-]{6,})/);
               var vid = m ? m[1] : '';
               var yPoster = item.poster || (vid ? 'https://i.ytimg.com/vi/' + vid + '/maxresdefault.jpg' : '');
-              facade = '<div class="concert-video concert-video--facade cgal-media" data-video-type="youtube" data-video-id="' + vid + '" role="button" tabindex="0" aria-label="' + watchLabel + '">' +
-                  (yPoster ? '<img class="concert-video-poster" src="' + yPoster + '" onerror="if(!this.dataset.f){this.dataset.f=1;this.src=\'https://i.ytimg.com/vi/' + vid + '/hqdefault.jpg\'}" alt="" loading="lazy">' : '<span class="concert-video-poster concert-video-poster--dark"></span>') +
+              facade = '<div class="concert-video concert-video--facade cgal-media" data-video-type="youtube" data-video-id="' + vid + '" data-poster="' + (yPoster || '') + '" role="button" tabindex="0" aria-label="' + watchLabel + '">' +
+                  (yPoster ? '<img class="concert-video-poster" src="' + yPoster + '"' + posStyle + ' onerror="if(!this.dataset.f){this.dataset.f=1;this.src=\'https://i.ytimg.com/vi/' + vid + '/hqdefault.jpg\'}" alt="" loading="lazy" decoding="async">' : '<span class="concert-video-poster concert-video-poster--dark"></span>') +
                   '<span class="concert-video-scrim"></span>' +
                   '<span class="concert-play"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.5v13l11-6.5z"/></svg></span>' +
                   '<span class="concert-video-hint">' + watchLabel + '</span>' +
                 '</div>';
             } else {
-              facade = '<div class="concert-video concert-video--facade cgal-media" data-video-type="file" data-video-src="' + item.src + '" role="button" tabindex="0" aria-label="' + watchLabel + '">' +
-                  (item.poster ? '<img class="concert-video-poster" src="' + item.poster + '" alt="" loading="lazy">' : '<span class="concert-video-poster concert-video-poster--dark"></span>') +
+              facade = '<div class="concert-video concert-video--facade cgal-media" data-video-type="file" data-video-src="' + item.src + '" data-poster="' + (item.poster || '') + '" role="button" tabindex="0" aria-label="' + watchLabel + '">' +
+                  (item.poster ? '<img class="concert-video-poster" src="' + item.poster + '"' + posStyle + ' alt="" loading="' + (isHero ? 'eager" fetchpriority="high' : 'lazy') + '" decoding="async">' : '<span class="concert-video-poster concert-video-poster--dark"></span>') +
                   '<span class="concert-video-scrim"></span>' +
                   '<span class="concert-play"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.5v13l11-6.5z"/></svg></span>' +
                   '<span class="concert-video-hint">' + watchLabel + '</span>' +
                 '</div>';
             }
-            return '<div class="cgal-item cgal-item--video' + sc + '">' + facade + tag + '</div>';
+            return '<figure class="cgal-item cgal-item--video' + sizeCls + '"' + delay + '>' + facade + caption + tag + '</figure>';
           }
-          // фото
-          return '<div class="cgal-item cgal-item--photo' + sc + '" role="button" tabindex="0" aria-label="' + (window.I18N ? I18N.t('carousel.slide') : 'Фото') + '">' +
-              '<div class="cgal-media lazy-bg img-skeleton" data-bg="' + item.src + '"></div>' +
-              tag +
-            '</div>';
+          // фото — кадрируется под пропорцию плитки (object-fit: cover)
+          return '<figure class="cgal-item cgal-item--photo' + sizeCls + '" role="button" tabindex="0" aria-label="' + (window.I18N ? I18N.t('carousel.slide') : 'Фото') + '"' + delay + '>' +
+              '<img class="cgal-photo-img" src="' + item.src + '"' + posStyle + ' alt="" loading="lazy" decoding="async">' +
+              caption + tag +
+            '</figure>';
         }).join('');
         concertsStack.innerHTML = '<div class="cgal">' + tilesHtml + '</div>';
+        // Плавное появление плиток при прокрутке (уважает prefers-reduced-motion)
+        var cgalTiles = concertsStack.querySelectorAll('.cgal-item');
+        var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        if (!reduceMotion && 'IntersectionObserver' in window) {
+          var cgalIO = new IntersectionObserver(function(entries) {
+            entries.forEach(function(en) {
+              if (en.isIntersecting) { en.target.classList.add('is-in'); cgalIO.unobserve(en.target); }
+            });
+          }, { rootMargin: '0px 0px -8% 0px', threshold: 0.08 });
+          cgalTiles.forEach(function(t) { cgalIO.observe(t); });
+        } else {
+          cgalTiles.forEach(function(t) { t.classList.add('is-in'); });
+        }
       }
     }
     window.initGallery = initGallery;
@@ -450,7 +496,7 @@
   // Клик по фото концерта → просмотр во весь экран.
   // Стрелки / свайп / Esc / клик по фону. Счётчик кадров. Прелоад соседних.
   // ───────────────────────────────────────────────────────────────────────
-  var lb = null, lbImgs = [], lbIdx = 0, lbTouchX = null;
+  var lb = null, lbItems = [], lbIdx = 0, lbTouchX = null;
   function lbEnsure() {
     if (lb) return lb;
     lb = document.createElement('div');
@@ -460,7 +506,7 @@
     lb.innerHTML = '' +
       '<button class="clb-close" aria-label="Закрыть"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button>' +
       '<button class="clb-arrow clb-arrow--prev" aria-label="Назад"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg></button>' +
-      '<figure class="clb-stage"><img class="clb-img" alt=""></figure>' +
+      '<figure class="clb-stage"><img class="clb-img" alt=""><div class="clb-video"></div></figure>' +
       '<button class="clb-arrow clb-arrow--next" aria-label="Вперёд"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></button>' +
       '<div class="clb-caption"><span class="clb-title"></span><span class="clb-count"></span></div>';
     document.body.appendChild(lb);
@@ -468,7 +514,7 @@
     lb.querySelector('.clb-arrow--prev').addEventListener('click', function() { lbShow(lbIdx - 1); });
     lb.querySelector('.clb-arrow--next').addEventListener('click', function() { lbShow(lbIdx + 1); });
     lb.addEventListener('click', function(e) { if (e.target === lb || e.target.classList.contains('clb-stage')) lbClose(); });
-    lb.addEventListener('touchstart', function(e) { lbTouchX = e.touches[0].clientX; }, { passive: true });
+    lb.addEventListener('touchstart', function(e) { lbTouchX = e.target.closest('.clb-video') ? null : e.touches[0].clientX; }, { passive: true });
     lb.addEventListener('touchend', function(e) {
       if (lbTouchX === null) return;
       var dx = e.changedTouches[0].clientX - lbTouchX;
@@ -477,30 +523,78 @@
     }, { passive: true });
     return lb;
   }
+  function lbStopVideo() {
+    if (!lb) return;
+    var vbox = lb.querySelector('.clb-video');
+    if (vbox) { vbox.innerHTML = ''; vbox.classList.remove('is-on'); }
+  }
   function lbShow(i) {
-    if (!lbImgs.length) return;
-    lbIdx = (i + lbImgs.length) % lbImgs.length;
+    if (!lbItems.length) return;
+    lbIdx = (i + lbItems.length) % lbItems.length;
+    var item = lbItems[lbIdx];
     var img = lb.querySelector('.clb-img');
-    img.classList.remove('is-loaded');
-    img.src = lbImgs[lbIdx];
-    if (img.complete) img.classList.add('is-loaded');
-    else img.onload = function() { img.classList.add('is-loaded'); };
-    lb.querySelector('.clb-count').textContent = lbImgs.length > 1 ? (lbIdx + 1) + ' / ' + lbImgs.length : '';
-    var single = lbImgs.length <= 1;
+    var vbox = lb.querySelector('.clb-video');
+    lbStopVideo();
+    if (item.kind === 'img') {
+      img.style.display = '';
+      img.classList.remove('is-loaded');
+      img.src = item.src;
+      if (img.complete) img.classList.add('is-loaded');
+      else img.onload = function() { img.classList.add('is-loaded'); };
+    } else {
+      // видео-слайд: файл — <video controls> с постером; YouTube — iframe.
+      // Без автозапуска: пользователь стартует сам (мобильный трафик).
+      img.style.display = 'none';
+      vbox.classList.add('is-on');
+      var watch = window.I18N ? I18N.t('concerts.watch') : 'Смотреть видео';
+      if (item.kind === 'youtube' && item.id) {
+        var ifr = document.createElement('iframe');
+        ifr.src = 'https://www.youtube-nocookie.com/embed/' + item.id + '?rel=0';
+        ifr.title = watch;
+        ifr.allow = 'accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
+        ifr.allowFullscreen = true;
+        ifr.setAttribute('frameborder', '0');
+        vbox.appendChild(ifr);
+      } else if (item.src) {
+        var vd = document.createElement('video');
+        vd.src = item.src;
+        vd.controls = true;
+        vd.playsInline = true;
+        vd.preload = 'metadata';
+        if (item.poster) vd.poster = item.poster;
+        vd.setAttribute('aria-label', watch);
+        vd.addEventListener('play', function() {
+          if (!vd.dataset.tracked && window.MedeuAnalytics && MedeuAnalytics.track) {
+            vd.dataset.tracked = '1';
+            MedeuAnalytics.track('concert_video_play', { type: 'file', label: 'lightbox' });
+          }
+        });
+        vbox.appendChild(vd);
+      }
+    }
+    lb.querySelector('.clb-count').textContent = lbItems.length > 1 ? (lbIdx + 1) + ' / ' + lbItems.length : '';
+    var single = lbItems.length <= 1;
     lb.querySelector('.clb-arrow--prev').style.display = single ? 'none' : '';
     lb.querySelector('.clb-arrow--next').style.display = single ? 'none' : '';
-    // прелоад соседних кадров
+    // прелоад соседних кадров (только изображения)
     if (!single) {
       [lbIdx + 1, lbIdx - 1].forEach(function(n) {
-        var pre = new Image();
-        pre.src = lbImgs[(n + lbImgs.length) % lbImgs.length];
+        var nb = lbItems[(n + lbItems.length) % lbItems.length];
+        if (nb && nb.kind === 'img') {
+          var pre = new Image();
+          pre.src = nb.src;
+        }
       });
     }
   }
   var lbReturnFocus = null;
-  function lbOpen(images, startIdx, title) {
+  function lbOpen(items, startIdx, title) {
     lbEnsure();
-    lbImgs = images || [];
+    lbItems = items || [];
+    // ставим на паузу видео, играющие в плитках стены, — чтобы не было двух звуков
+    document.querySelectorAll('.cgal .concert-video video').forEach(function(v) {
+      try { v.pause(); } catch (err) {}
+    });
     lb.querySelector('.clb-title').textContent = title || '';
     lbShow(startIdx || 0);
     lb.classList.add('is-open');
@@ -509,11 +603,12 @@
     var closeBtn = lb.querySelector('.clb-close');
     if (closeBtn) closeBtn.focus();
     if (window.MedeuAnalytics && MedeuAnalytics.track) {
-      MedeuAnalytics.track('concert_photo_view', { concert: title || '', count: lbImgs.length });
+      MedeuAnalytics.track('concert_photo_view', { concert: title || '', count: lbItems.length });
     }
   }
   function lbClose() {
     if (!lb) return;
+    lbStopVideo();
     lb.classList.remove('is-open');
     document.body.style.overflow = '';
     if (lbReturnFocus && lbReturnFocus.focus) { try { lbReturnFocus.focus(); } catch (e) {} }
@@ -534,28 +629,48 @@
       else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
     }
   });
-  function openConcertPhoto(tile) {
+  function openConcertMedia(tile) {
     if (!tile) return;
     var wall = tile.closest('.cgal');
     if (!wall) return;
-    var photoTiles = Array.prototype.slice.call(wall.querySelectorAll('.cgal-item--photo'));
-    var list = photoTiles.map(function(t) {
-      var bg = t.querySelector('[data-bg]');
-      return bg ? bg.dataset.bg : '';
-    }).filter(Boolean);
-    if (!list.length) return;
-    var idx = photoTiles.indexOf(tile);
+    // Собираем ВСЕ медиа стены в порядке раскладки: фото и видео.
+    var tiles = Array.prototype.slice.call(wall.querySelectorAll('.cgal-item'));
+    var items = [];
+    var tileToItem = [];
+    tiles.forEach(function(t) {
+      var img = t.querySelector('img.cgal-photo-img');
+      if (img && img.getAttribute('src')) {
+        tileToItem.push(items.length);
+        items.push({ kind: 'img', src: img.getAttribute('src') });
+        return;
+      }
+      var f = t.querySelector('.concert-video');
+      if (f && f.dataset && f.dataset.videoType === 'youtube' && f.dataset.videoId) {
+        tileToItem.push(items.length);
+        items.push({ kind: 'youtube', id: f.dataset.videoId, poster: f.dataset.poster || '' });
+        return;
+      }
+      if (f && f.dataset && f.dataset.videoSrc) {
+        tileToItem.push(items.length);
+        items.push({ kind: 'video', src: f.dataset.videoSrc, poster: f.dataset.poster || '' });
+        return;
+      }
+      tileToItem.push(-1);
+    });
+    if (!items.length) return;
+    var tIdx = tiles.indexOf(tile);
+    var start = tIdx >= 0 && tileToItem[tIdx] >= 0 ? tileToItem[tIdx] : 0;
     var title = window.I18N ? I18N.t('pageHero.concerts_title') : 'Концерты';
-    lbOpen(list, Math.max(idx, 0), title);
+    lbOpen(items, start, title);
   }
   document.addEventListener('click', function(e) {
     var tile = e.target.closest('.cgal-item--photo');
-    if (tile) openConcertPhoto(tile);
+    if (tile) openConcertMedia(tile);
   });
   document.addEventListener('keydown', function(e) {
     if ((e.key === 'Enter' || e.key === ' ') && document.activeElement && document.activeElement.classList && document.activeElement.classList.contains('cgal-item--photo')) {
       e.preventDefault();
-      openConcertPhoto(document.activeElement);
+      openConcertMedia(document.activeElement);
     }
   });
 

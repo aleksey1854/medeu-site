@@ -1070,15 +1070,17 @@ img { display: block; max-width: 100%; height: auto; }
 .concert-block:last-of-type { margin-bottom: 0; }
 
 /* ─────────────────────────────────────────────────────────────────────────
-   КОНЦЕРТЫ — «медиа-стена» (мозаика фото и видео).
-   Плитки разного размера в грид-мозаике; кадр обрезается по плитке (cover).
-   Стиль намеренно чуть отличается от карточек сайта: image-forward, без текста.
+   КОНЦЕРТЫ — «медиа-стена»: редакционная мозаика (CSS Grid).
+   Каждая плитка имеет фиксированную колонку и пропорцию (aspect-ratio),
+   кадр заполняет её с обрезкой (object-fit: cover). Высоты плиток в ряду
+   совпадают по построению — стена всегда ровная, без «рваного» низа,
+   без сдвигов раскладки при загрузке (CLS = 0).
+   Схема рядов (6 колонок): [hero·6] [wide·4 + std·2] [std·2 ×3] [half·3 ×2]
    ───────────────────────────────────────────────────────────────────────── */
 .cgal {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  grid-auto-rows: clamp(140px, 15vw, 210px);
-  grid-auto-flow: dense;
+  grid-template-columns: repeat(6, 1fr);
+  grid-auto-flow: dense; /* страховка: закрывает дыру, если ряд собран с ошибкой */
   gap: 12px;
 }
 .cgal-item {
@@ -1086,24 +1088,52 @@ img { display: block; max-width: 100%; height: auto; }
   overflow: hidden;
   cursor: pointer;
   background: var(--c-bg-card);
-  grid-column: span 1;
-  grid-row: span 1;
+  margin: 0;
+  /* появление при прокрутке (см. .is-in; --cgal-d — ступенчатая задержка) */
+  opacity: 0;
+  transform: translateY(22px);
+  transition:
+    opacity .7s ease var(--cgal-d, 0ms),
+    transform .9s cubic-bezier(.22, .61, .36, 1) var(--cgal-d, 0ms);
 }
-.cgal-item--w2  { grid-column: span 2; }
-.cgal-item--h2  { grid-row: span 2; }
-.cgal-item--big { grid-column: span 2; grid-row: span 2; }
+.cgal-item.is-in {
+  opacity: 1;
+  transform: none;
+}
+
+/* Размеры плиток. Пропорции подобраны так, чтобы высоты в ряду совпадали:
+   wide (4к, 8:5) и std (2к, 4:5) — одна высота; два half (3к, 3:2) — одна. */
+.cgal-item--hero { grid-column: span 6; aspect-ratio: 21 / 9; }
+.cgal-item--wide { grid-column: span 4; aspect-ratio: 8 / 5; }
+.cgal-item--half { grid-column: span 3; aspect-ratio: 3 / 2; }
+.cgal-item--std,
+.cgal-item--stdw { grid-column: span 2; aspect-ratio: 4 / 5; }
+
 .cgal-item:focus-visible { outline: 2px solid var(--c-gold); outline-offset: 3px; }
 
-.cgal-media {
+/* Фото заполняет плитку с кадрированием; точку кадра задаёт object-position */
+.cgal-photo-img {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
-  background-size: cover;
-  background-position: center;
+  object-fit: cover;
   transition: transform 1.2s cubic-bezier(.22, .61, .36, 1);
 }
-.cgal-item--photo:hover .cgal-media { transform: scale(1.06); }
+.cgal-item--photo:hover .cgal-photo-img { transform: scale(1.05); }
+
+/* мягкое затемнение нижней трети фото — проявляется на наведении */
+.cgal-item--photo::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: linear-gradient(to top, rgba(8, 7, 6, .35), transparent 45%);
+  opacity: 0;
+  transition: opacity .5s ease;
+}
+.cgal-item--photo:hover::before { opacity: 1; }
 
 /* тонкая золотая рамка проявляется на наведении */
 .cgal-item::after {
@@ -1113,16 +1143,16 @@ img { display: block; max-width: 100%; height: auto; }
   pointer-events: none;
   box-shadow: inset 0 0 0 1px rgba(154, 126, 80, 0);
   transition: box-shadow .4s ease;
-  z-index: 2;
+  z-index: 4;
 }
 .cgal-item:hover::after { box-shadow: inset 0 0 0 1px var(--c-gold); }
 
-/* маленький тег в углу плитки (напр. TASSO) */
+/* маленький тег в углу плитки */
 .cgal-tag {
   position: absolute;
   top: 12px;
   left: 12px;
-  z-index: 3;
+  z-index: 5;
   pointer-events: none;
   font-family: var(--f-body);
   font-size: 10px;
@@ -1136,7 +1166,7 @@ img { display: block; max-width: 100%; height: auto; }
   -webkit-backdrop-filter: blur(6px);
 }
 
-/* видео-плитка: фасад заполняет ячейку, кадр по размеру */
+/* видео растягивается на всю плитку; пропорцию задаёт .cgal-item--* */
 .cgal-item .concert-video {
   position: absolute;
   inset: 0;
@@ -1148,16 +1178,105 @@ img { display: block; max-width: 100%; height: auto; }
 }
 .cgal-item .concert-video video { object-fit: cover; }
 
-@media (max-width: 1024px) {
-  .cgal { grid-template-columns: repeat(3, 1fr); }
+/* ── Подпись события на hero-баннере (левый нижний угол) ──────────────────
+   Закреплена внутри плитки — не зависит от высоты стены и не «плывёт».
+   Цвета фиксированные: подпись лежит на тёмном кадре в обеих темах. */
+.cgal-caption-scrim {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 58%;
+  z-index: 2;
+  pointer-events: none;
+  background: linear-gradient(to top, rgba(8, 6, 4, .72), rgba(8, 6, 4, .26) 52%, transparent);
+  transition: opacity .4s ease, visibility .4s ease;
 }
-@media (max-width: 640px) {
+.cgal-caption {
+  position: absolute;
+  left: clamp(18px, 3.5vw, 48px);
+  bottom: clamp(16px, 3vw, 42px);
+  z-index: 3;
+  margin: 0;
+  pointer-events: none;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: clamp(7px, .8vw, 12px);
+  text-align: left;
+  transition: opacity .4s ease, visibility .4s ease;
+}
+.cgal-caption__note {
+  font-family: var(--f-body);
+  font-size: clamp(9px, 1vw, 12px);
+  font-weight: 400;
+  letter-spacing: .32em;
+  text-transform: uppercase;
+  color: #d9c39a;
+}
+.cgal-caption__title {
+  font-family: var(--f-logo, 'Cinzel', serif);
+  font-size: clamp(30px, 4.6vw, 58px);
+  line-height: 1;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: #f5ebd7;
+  text-shadow: 0 2px 26px rgba(0, 0, 0, .5);
+}
+.cgal-caption__rule {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #c9a96a;
+}
+.cgal-caption__rule span {
+  display: block;
+  height: 1px;
+  width: clamp(28px, 3.2vw, 46px);
+  background: currentColor;
+  opacity: .7;
+}
+/* когда видео запущено — подпись и скрим уходят, освобождая место контролам */
+.cgal-item .concert-video.is-playing ~ .cgal-caption,
+.cgal-item .concert-video.is-playing ~ .cgal-caption-scrim {
+  opacity: 0;
+  visibility: hidden;
+}
+/* на hero подсказка «Смотреть видео» — справа, чтобы не спорить с подписью */
+.cgal-item--hero .concert-video-hint {
+  left: auto;
+  right: 26px;
+  transform: none;
+}
+
+/* ── Адаптив ─────────────────────────────────────────────────────────────
+   ≥768px — сетка 6 колонок (полный ритм); <768px — 2 колонки. */
+@media (max-width: 767px) {
   .cgal {
     grid-template-columns: repeat(2, 1fr);
-    grid-auto-rows: clamp(120px, 34vw, 190px);
-    gap: 8px;
+    gap: 10px;
   }
+  .cgal-item--hero,
+  .cgal-item--wide { grid-column: span 2; aspect-ratio: 16 / 9; }
+  .cgal-item--stdw { grid-column: span 2; aspect-ratio: 3 / 2; }
+  .cgal-item--half,
+  .cgal-item--std  { grid-column: span 1; aspect-ratio: 4 / 5; }
   .cgal-tag { font-size: 9px; letter-spacing: .22em; padding: 5px 10px; top: 8px; left: 8px; }
+  .cgal-caption { left: 14px; bottom: 13px; gap: 5px; }
+  .cgal-caption__note { font-size: 8px; letter-spacing: .26em; }
+  .cgal-caption__title { font-size: clamp(24px, 8vw, 34px); letter-spacing: .15em; }
+  .cgal-caption__rule span { width: 22px; }
+  .cgal-item--hero .concert-video-hint { display: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cgal-item {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  .cgal-photo-img { transition: none; }
+  .cgal-item--photo:hover .cgal-photo-img { transform: none; }
 }
 
 /* Концерты — пустое состояние */
@@ -1228,6 +1347,24 @@ img { display: block; max-width: 100%; height: auto; }
   transition: opacity .45s, transform .45s;
 }
 .clb-img.is-loaded { opacity: 1; transform: none; }
+/* видео-слайд лайтбокса: файл — <video controls>, YouTube — iframe */
+.clb-video {
+  display: none;
+  width: min(1180px, 92vw);
+  max-height: 82vh;
+  aspect-ratio: 16 / 9;
+  background: #000;
+}
+.clb-video.is-on { display: block; }
+.clb-video video,
+.clb-video iframe {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  background: #000;
+  object-fit: contain;
+}
 .clb-close {
   position: absolute;
   top: 22px;
@@ -1294,6 +1431,7 @@ img { display: block; max-width: 100%; height: auto; }
   .clb-arrow--next { right: 10px; }
   .clb-close { top: 14px; right: 14px; }
   .clb-stage { max-width: 96vw; }
+  .clb-video { width: 96vw; }
 }
 
 .venue-image-meta {

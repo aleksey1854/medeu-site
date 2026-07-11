@@ -70,6 +70,7 @@ window.I18N = {
     },
     concerts: {
       watch: 'Смотреть видео',
+      heroNote: 'Живой звук · ресторан «Медеу»',
       videoLabel: 'Видео с вечера',
       emptyTitle: 'Скоро здесь появятся концерты',
       emptyText: 'Мы готовим новые музыкальные вечера. Следите за анонсами или уточните ближайшие события у банкетного менеджера.',
@@ -332,6 +333,7 @@ window.I18N = {
     },
     concerts: {
       watch: 'Бейнені көру',
+      heroNote: 'Тірі дауыс · «Медеу» мейрамханасы',
       videoLabel: 'Кеш бейнесі',
       emptyTitle: 'Жақында мұнда концерттер пайда болады',
       emptyText: 'Біз жаңа музыкалық кештер дайындап жатырмыз. Жаңалықтарды қадағалаңыз немесе жақын арадағы іс-шараларды банкет менеджерінен сұраңыз.',
@@ -594,6 +596,7 @@ window.I18N = {
     },
     concerts: {
       watch: 'Watch video',
+      heroNote: 'Live music · Medeu restaurant',
       videoLabel: 'Video from the evening',
       emptyTitle: 'Concerts are coming soon',
       emptyText: 'We are preparing new musical evenings. Follow the announcements or ask the banquet manager about upcoming events.',

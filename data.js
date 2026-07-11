@@ -184,30 +184,64 @@ window.DATA = {
   } ],
 
   // ───────────────────────────────────────────────────────────────────────
-  // КОНЦЕРТЫ — «медиа-стена» (мозаика фото и видео, без привязки к датам).
-  // Порядок в массиве = порядок плиток. Добавить фото — просто новая строка.
+  // КОНЦЕРТЫ — «медиа-стена»: редакционная мозаика (CSS Grid).
+  // Кадры кадрируются под фиксированные пропорции (object-fit: cover) —
+  // стена всегда выглядит собранной, без «рваного» низа и дыр.
+  //
   //   type   : 'photo' | 'video'
   //   src    : фото — путь к картинке; видео — файл .mp4 или ссылка YouTube
   //   poster : (video) картинка-заставка; для YouTube можно не указывать
   //   videoType: (video) 'file' | 'youtube' (по умолчанию — file)
-  //   span   : размер плитки в мозаике —
-  //            не указан → 1×1 (квадрат); 'w2' → шире (2×1);
-  //            'h2' → выше (1×2); 'big' → крупная (2×2)
-  //   label  : (необязательно) маленькая подпись-тег в углу плитки, напр. 'TASSO'
-  // Фото открываются на весь экран (лайтбокс), видео проигрывается прямо в плитке.
+  //   size   : размер плитки в мозаике (см. схему ниже). Если не указан —
+  //            подберётся автоматически по повторяющемуся ритму.
+  //   pos    : точка кадрирования, если лицо/сцена срезается —
+  //            'top' | 'bottom' (по умолчанию center).
+  //   label  : (необязательно) маленький тег в углу плитки
+  //
+  //   Размеры (десктоп — сетка 6 колонок / мобильный — 2 колонки):
+  //     'hero' — кинобаннер во всю ширину (21:9). Обычно один, сверху.
+  //     'wide' — 4 колонки, 8:5. Лучший размер для видео.
+  //     'half' — 3 колонки, 3:2. Ставить ПАРАМИ (два подряд).
+  //     'std'  — 2 колонки, 4:5 (портрет). Ставить ПАРАМИ.
+  //     'stdw' — как 'std', но на мобильном занимает всю ширину.
+  //              Использовать ТРЕТЬИМ после пары 'std' (ряд из трёх).
+  //   Ряды должны складываться в 6 колонок: [wide+std], [std+std+stdw],
+  //   [half+half], [hero]. Тогда стена идеально ровная на всех экранах.
+  //
+  // concertsHeading / concertsHeadingNoteKey — подпись, закреплённая в левом
+  // нижнем углу hero-баннера (название события + строка-надпись над ним).
+  // Фото открываются на весь экран (лайтбокс), видео проигрывается в плитке.
   // ───────────────────────────────────────────────────────────────────────
+  concertsHeading: 'TASSO',
+  concertsHeadingNoteKey: 'concerts.heroNote',
   concertsGallery: [
-    { type: 'video', src: 'assets/videos/tasso.mp4', videoType: 'file', poster: 'assets/photos/concerts/tasso-3.webp', span: 'big', label: 'TASSO' },
-    { type: 'photo', src: 'assets/photos/concerts/tasso-1.webp', span: 'w2' },
-    { type: 'photo', src: 'assets/photos/concerts/tasso-2.webp' },
-    { type: 'photo', src: 'assets/photos/concerts/tasso-4.webp' },
-    { type: 'photo', src: 'assets/photos/concerts/march8-1.webp', span: 'h2' },
-    { type: 'photo', src: 'assets/photos/concerts/march8-3.webp' },
-    { type: 'photo', src: 'assets/photos/concerts/march8-2.webp', span: 'w2' },
-    { type: 'photo', src: 'assets/photos/concerts/march8-5.webp' },
-    { type: 'photo', src: 'assets/photos/concerts/march8-4.webp' },
-    { type: 'photo', src: 'assets/photos/concerts/march8-6.webp', span: 'h2' },
-    { type: 'photo', src: 'assets/photos/concerts/march8-7.webp' }
+    // ряд 0 — кинобаннер: видео TASSO. Постер — профессиональное фото
+    // (tasso-live-3), а не кадр из видео: резче и держит 21:9.
+    { type: 'video', src: 'assets/videos/tasso-live.mp4', videoType: 'file', poster: 'assets/photos/concerts/tasso-live-3.webp', pos: 'top', size: 'hero' },
+    // ряды 1–2 — [wide + std][std + wide]: видео + фото TASSO (KVO).
+    // Важно: ряды с wide идут ПАРАМИ (wide+std, затем std+wide) — так
+    // на мобильном два портрета всегда встают рядом, без дыр.
+    { type: 'video', src: 'assets/videos/concert-05.mp4', videoType: 'file', poster: 'assets/photos/concerts/concert-05-poster.webp', size: 'wide' },
+    { type: 'photo', src: 'assets/photos/concerts/tasso-live-1.webp', size: 'std' },
+    { type: 'photo', src: 'assets/photos/concerts/tasso-live-2.webp', size: 'std' },
+    { type: 'video', src: 'assets/videos/concert-06.mp4', videoType: 'file', poster: 'assets/photos/concerts/concert-06-poster.webp', size: 'wide' },
+    // ряд 3 — [std + std + stdw]
+    { type: 'photo', src: 'assets/photos/concerts/tasso-live-4.webp', size: 'std' },
+    { type: 'photo', src: 'assets/photos/concerts/march8-1.webp', size: 'std' },
+    { type: 'photo', src: 'assets/photos/concerts/march8-2.webp', size: 'stdw' },
+    // ряд 4 — [half + half]
+    { type: 'photo', src: 'assets/photos/concerts/march8-3.webp', size: 'half' },
+    { type: 'photo', src: 'assets/photos/concerts/march8-4.webp', size: 'half' },
+    // ряды 5–6 — [wide + std][std + wide]: видео из архива + финал
+    { type: 'video', src: 'assets/videos/concert-01.mp4', videoType: 'file', poster: 'assets/photos/concerts/concert-01-poster.webp', size: 'wide' },
+    { type: 'photo', src: 'assets/photos/concerts/march8-6.webp', size: 'std' },
+    { type: 'photo', src: 'assets/photos/concerts/march8-5.webp', size: 'std' },
+    { type: 'photo', src: 'assets/photos/concerts/march8-7.webp', size: 'wide' }
+    // ── Резерв (раскомментируйте, чтобы вернуть на стену; соблюдайте ряды):
+    // { type: 'photo', src: 'assets/photos/concerts/tasso-live-3.webp', size: 'wide' },
+    // { type: 'video', src: 'assets/videos/concert-02.mp4', videoType: 'file', poster: 'assets/photos/concerts/concert-02-poster.webp', size: 'wide' },
+    // { type: 'video', src: 'assets/videos/concert-04.mp4', videoType: 'file', poster: 'assets/photos/concerts/concert-04-poster.webp', size: 'wide' },
+    // { type: 'photo', src: 'assets/photos/concerts/tasso-1.webp', size: 'std' }
   ],
 
   conferenceImage: 'assets/photos/banquet/conference-2.webp',
