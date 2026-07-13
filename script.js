@@ -345,15 +345,26 @@
           autoIdx++;
           return s;
         };
-        // Подпись события — закреплена в левом нижнем углу hero-баннера,
-        // геометрия привязана к самой плитке (не «плавает» над стеной).
-        var heroNote = DATA.concertsHeadingNoteKey && window.I18N ? I18N.t(DATA.concertsHeadingNoteKey) : '';
-        var captionHtml = DATA.concertsHeading ? '<figcaption class="cgal-caption">' +
-            (heroNote ? '<span class="cgal-caption__note">' + heroNote + '</span>' : '') +
-            '<span class="cgal-caption__title">' + DATA.concertsHeading + '</span>' +
-            '<span class="cgal-caption__rule"><span></span><svg width="9" height="9" viewBox="0 0 10 10" aria-hidden="true"><path d="M5 0 L10 5 L5 10 L0 5 Z" fill="currentColor"/></svg></span>' +
-          '</figcaption>' : '';
-        var captionUsed = false;
+        // Подпись артиста — крупная, поверх кадра, на градиентной подложке.
+        // Ставится на «обложку» группы (caption: true в data.js); остальным
+        // кадрам артиста хватает artistKey — имя видно в просмотрщике.
+        var artistOf = function(item) {
+          return item.artistKey && window.I18N ? I18N.t(item.artistKey) : (item.artist || '');
+        };
+        var noteOf = function(item) {
+          return item.noteKey && window.I18N ? I18N.t(item.noteKey) : (item.note || '');
+        };
+        var captionHtml = function(item) {
+          var artist = artistOf(item);
+          if (!item.caption || !artist) return '';
+          var note = noteOf(item);
+          return '<span class="cgal-caption-scrim" aria-hidden="true"></span>' +
+            '<figcaption class="cgal-caption">' +
+              (note ? '<span class="cgal-caption__note">' + note + '</span>' : '') +
+              '<span class="cgal-caption__title">' + artist + '</span>' +
+              '<span class="cgal-caption__rule"><span></span><svg width="9" height="9" viewBox="0 0 10 10" aria-hidden="true"><path d="M5 0 L10 5 L5 10 L0 5 Z" fill="currentColor"/></svg></span>' +
+            '</figcaption>';
+        };
         var tilesHtml = cMedia.map(function(item, idx) {
           if (!item || !item.src) return '';
           var size = sizeOf(item);
@@ -361,14 +372,14 @@
           var sizeCls = ' cgal-item--' + SIZE_CLASSES[size];
           var pos = posValue(item.pos);
           var posStyle = pos ? ' style="object-position:' + pos + '"' : '';
-          var tag = item.label ? '<span class="cgal-tag">' + item.label + '</span>' : '';
+          // тег в углу плитки (мелкая плашка) — опция для служебных пометок
+          var labelText = item.labelKey && window.I18N ? I18N.t(item.labelKey) : (item.label || '');
+          var tag = labelText ? '<span class="cgal-tag">' + labelText + '</span>' : '';
           var delay = ' style="--cgal-d:' + ((idx % 3) * 90) + 'ms"';
-          // Подпись вставляем только в первый hero-баннер
-          var caption = '';
-          if (isHero && !captionUsed && captionHtml) {
-            caption = '<span class="cgal-caption-scrim" aria-hidden="true"></span>' + captionHtml;
-            captionUsed = true;
-          }
+          var caption = captionHtml(item);
+          // имя артиста — в атрибут: просмотрщик показывает его в заголовке
+          var artist = artistOf(item);
+          var artistAttr = artist ? ' data-artist="' + artist + '"' : '';
           if (item.type === 'video') {
             var isYt = item.videoType === 'youtube' || /youtu\.?be/.test(String(item.src));
             var facade;
@@ -390,10 +401,10 @@
                   '<span class="concert-video-hint">' + watchLabel + '</span>' +
                 '</div>';
             }
-            return '<figure class="cgal-item cgal-item--video' + sizeCls + '"' + delay + '>' + facade + caption + tag + '</figure>';
+            return '<figure class="cgal-item cgal-item--video' + sizeCls + '"' + artistAttr + delay + '>' + facade + caption + tag + '</figure>';
           }
           // фото — кадрируется под пропорцию плитки (object-fit: cover)
-          return '<figure class="cgal-item cgal-item--photo' + sizeCls + '" role="button" tabindex="0" aria-label="' + (window.I18N ? I18N.t('carousel.slide') : 'Фото') + '"' + delay + '>' +
+          return '<figure class="cgal-item cgal-item--photo' + sizeCls + '" role="button" tabindex="0" aria-label="' + (artist || (window.I18N ? I18N.t('carousel.slide') : 'Фото')) + '"' + artistAttr + delay + '>' +
               '<img class="cgal-photo-img" src="' + item.src + '"' + posStyle + ' alt="" loading="lazy" decoding="async">' +
               caption + tag +
             '</figure>';
@@ -496,7 +507,7 @@
   // Клик по фото концерта → просмотр во весь экран.
   // Стрелки / свайп / Esc / клик по фону. Счётчик кадров. Прелоад соседних.
   // ───────────────────────────────────────────────────────────────────────
-  var lb = null, lbItems = [], lbIdx = 0, lbTouchX = null;
+  var lb = null, lbItems = [], lbIdx = 0, lbTouchX = null, lbTitle = '';
   function lbEnsure() {
     if (lb) return lb;
     lb = document.createElement('div');
@@ -572,6 +583,8 @@
         vbox.appendChild(vd);
       }
     }
+    // в заголовке — имя артиста этого кадра, иначе общее название раздела
+    lb.querySelector('.clb-title').textContent = item.label || lbTitle;
     lb.querySelector('.clb-count').textContent = lbItems.length > 1 ? (lbIdx + 1) + ' / ' + lbItems.length : '';
     var single = lbItems.length <= 1;
     lb.querySelector('.clb-arrow--prev').style.display = single ? 'none' : '';
@@ -595,7 +608,7 @@
     document.querySelectorAll('.cgal .concert-video video').forEach(function(v) {
       try { v.pause(); } catch (err) {}
     });
-    lb.querySelector('.clb-title').textContent = title || '';
+    lbTitle = title || '';
     lbShow(startIdx || 0);
     lb.classList.add('is-open');
     document.body.style.overflow = 'hidden';
@@ -637,22 +650,27 @@
     var tiles = Array.prototype.slice.call(wall.querySelectorAll('.cgal-item'));
     var items = [];
     var tileToItem = [];
+    // имя артиста плитки — из data-артибута (проставляется при рендере)
+    var labelOf = function(t) {
+      return (t.dataset && t.dataset.artist) || '';
+    };
     tiles.forEach(function(t) {
+      var label = labelOf(t);
       var img = t.querySelector('img.cgal-photo-img');
       if (img && img.getAttribute('src')) {
         tileToItem.push(items.length);
-        items.push({ kind: 'img', src: img.getAttribute('src') });
+        items.push({ kind: 'img', src: img.getAttribute('src'), label: label });
         return;
       }
       var f = t.querySelector('.concert-video');
       if (f && f.dataset && f.dataset.videoType === 'youtube' && f.dataset.videoId) {
         tileToItem.push(items.length);
-        items.push({ kind: 'youtube', id: f.dataset.videoId, poster: f.dataset.poster || '' });
+        items.push({ kind: 'youtube', id: f.dataset.videoId, poster: f.dataset.poster || '', label: label });
         return;
       }
       if (f && f.dataset && f.dataset.videoSrc) {
         tileToItem.push(items.length);
-        items.push({ kind: 'video', src: f.dataset.videoSrc, poster: f.dataset.poster || '' });
+        items.push({ kind: 'video', src: f.dataset.videoSrc, poster: f.dataset.poster || '', label: label });
         return;
       }
       tileToItem.push(-1);
@@ -888,6 +906,60 @@
   const bookingModal = document.getElementById('booking-modal');
   const bookingForm = document.getElementById('booking-form');
   const bookingRoomSelect = document.getElementById('booking-room');
+  const bookingAdults = document.getElementById('booking-adults');
+  const bookingCapHint = document.getElementById('booking-capacity-hint');
+
+  // ── Вместимость номера (capacity / extraGuestPrice в data.js).
+  // Стандарт и Полулюкс рассчитаны на одного гостя: поле «Взрослых» ставится
+  // в 1, второй гость возможен — с доплатой, о чём говорит подсказка.
+  // У номеров без capacity поле работает как раньше (до 10 гостей).
+  function bookingRoomData() {
+    var list = (window.DATA && DATA.rooms) || [];
+    var val = bookingRoomSelect ? bookingRoomSelect.value : '';
+    for (var i = 0; i < list.length; i++) {
+      if (list[i].name === val) return list[i];
+    }
+    return null;
+  }
+  function bookingFmtPrice(n) {
+    return String(n).replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
+  }
+  // reset = true — номер только что выбран: возвращаем штатную вместимость
+  function bookingSyncCapacity(reset) {
+    if (!bookingAdults) return;
+    var room = bookingRoomData();
+    var cap = room && room.capacity ? room.capacity : 0;
+    var extra = room && room.extraGuestPrice ? room.extraGuestPrice : 0;
+    if (!cap) {
+      bookingAdults.max = '10';
+      if (bookingCapHint) {
+        bookingCapHint.hidden = true;
+        bookingCapHint.textContent = '';
+        bookingCapHint.classList.remove('is-active');
+      }
+      return;
+    }
+    var max = cap + (extra ? 1 : 0);
+    bookingAdults.max = String(max);
+    if (reset) bookingAdults.value = String(cap);
+    var n = parseInt(bookingAdults.value, 10) || cap;
+    if (n > max) { n = max; bookingAdults.value = String(max); }
+    if (n < 1) { n = 1; bookingAdults.value = '1'; }
+    if (!bookingCapHint) return;
+    var t = function(k) { return window.I18N ? I18N.t(k) : ''; };
+    var over = n > cap;
+    var text;
+    if (over) {
+      text = t('modal.extraGuestOn').replace('{price}', bookingFmtPrice(extra));
+    } else {
+      text = cap === 1 ? t('modal.capacityOne') : '';
+      if (extra) text += (text ? ' ' : '') + t('modal.extraGuest').replace('{price}', bookingFmtPrice(extra));
+    }
+    bookingCapHint.textContent = text;
+    bookingCapHint.hidden = !text;
+    bookingCapHint.classList.toggle('is-active', over);
+  }
+
   function openBookingModal(prefRoom) {
     if (!bookingModal) return;
     if (prefRoom && bookingRoomSelect) {
@@ -895,6 +967,8 @@
         if (opt.value === prefRoom) opt.selected = true;
       });
     }
+    // переход с карточки номера — ставим вместимость этого номера
+    bookingSyncCapacity(!!prefRoom);
     bookingModal.classList.add('modal--open');
     document.body.style.overflow = 'hidden';
     const today = new Date;
@@ -913,6 +987,12 @@
     document.body.style.overflow = '';
   }
   if (bookingModal) {
+    if (bookingRoomSelect) {
+      bookingRoomSelect.addEventListener('change', function() { bookingSyncCapacity(true); });
+    }
+    if (bookingAdults) {
+      bookingAdults.addEventListener('input', function() { bookingSyncCapacity(false); });
+    }
     const transferCheckbox = document.getElementById('booking-transfer');
     const transferBlock = document.getElementById('booking-transfer-block');
     if (transferCheckbox && transferBlock) {
@@ -1005,6 +1085,12 @@
       const lines = [ 'Заявка на бронирование номера с сайта medeuhotel.kz', '', 'Имя: ' + d.name, 'Телефон: ' + d.phone ];
       if (d.email) lines.push('E-mail: ' + d.email);
       lines.push('Кол-во взрослых: ' + d.adults, 'Кол-во детей: ' + d.children, 'Дата прибытия: ' + d.dateIn + ' - ' + d.timeIn, 'Дата убытия: ' + d.dateOut + ' - ' + d.timeOut, 'Тип номера: ' + d.roomType, 'Способ оплаты: ' + d.payment);
+      // если гостей больше штатной вместимости — отдельной строкой, чтобы
+      // менеджер сразу видел доплату за второе место
+      var bkRoom = (window.DATA && DATA.rooms || []).filter(function(r) { return r.name === d.roomType; })[0];
+      if (bkRoom && bkRoom.capacity && bkRoom.extraGuestPrice && (parseInt(d.adults, 10) || 0) > bkRoom.capacity) {
+        lines.push('ВНИМАНИЕ: двухместное размещение в номере на ' + bkRoom.capacity + ' гостя — доплата ' + bookingFmtPrice(bkRoom.extraGuestPrice) + ' ₸ в сутки');
+      }
       if (d.transfer) {
         lines.push('');
         lines.push('Услуги трансфера: ДА');

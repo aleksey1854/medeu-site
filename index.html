@@ -637,12 +637,13 @@
         <div class="form-row">
           <label class="form-field">
             <span class="form-label" data-i18n="modal.adults">Взрослых</span>
-            <input type="number" name="adults" min="1" max="10" value="2">
+            <input type="number" name="adults" id="booking-adults" min="1" max="10" value="1">
           </label>
           <label class="form-field">
             <span class="form-label" data-i18n="modal.children">Детей</span>
             <input type="number" name="children" min="0" max="10" value="0">
           </label>
+          <p class="form-hint" id="booking-capacity-hint" hidden></p>
         </div>
 
         <div class="form-row">

@@ -30,12 +30,20 @@ window.DATA = {
     descKey: 'facilities.contacts_desc',
     img: 'assets/photos/restaurant/billiard-4.webp'
   } ],
+  // capacity      — на сколько гостей рассчитан номер (форма бронирования
+  //                 подставляет это число в поле «Взрослых»).
+  // extraGuestPrice — доплата за дополнительного гостя, ₸/сутки. Если задана,
+  //                 форма разрешает +1 гостя сверх capacity и показывает
+  //                 подсказку о доплате; в заявку добавляется отдельная строка.
+  // Если поля не заданы — поле «Взрослых» работает как раньше (до 10).
   rooms: [ {
     name: 'Стандарт',
     nameKey: 'rooms.standard_name',
     area: '27',
     price: '28 000 ₸',
-    description: 'Уютный номер 27 м² с удобной кроватью, рабочей зоной и всем необходимым для комфортного проживания. Шведский стол на завтрак включён.',
+    capacity: 1,
+    extraGuestPrice: 10000,
+    description: 'Уютный номер 27 м² с удобной кроватью, рабочей зоной и всем необходимым для комфортного проживания. Шведский стол на завтрак включён. Номер рассчитан на одного гостя; двухместное размещение возможно за дополнительную плату 10 000 ₸ в сутки.',
     descKey: 'rooms.standard_desc',
     image: 'assets/photos/rooms/standard-2.webp',
     images: [ 'assets/photos/rooms/standard-2.webp', 'assets/photos/rooms/standard-1.webp', 'assets/photos/rooms/standard-3.webp' ]
@@ -44,7 +52,9 @@ window.DATA = {
     nameKey: 'rooms.polulux_name',
     area: '48',
     price: '34 000 ₸',
-    description: 'Просторный полулюкс 48 м² с гостиной зоной и улучшенной отделкой. Идеален для деловых поездок и продолжительного пребывания.',
+    capacity: 1,
+    extraGuestPrice: 10000,
+    description: 'Просторный полулюкс 48 м² с гостиной зоной и улучшенной отделкой. Идеален для деловых поездок и продолжительного пребывания. Номер рассчитан на одного гостя; двухместное размещение возможно за дополнительную плату 10 000 ₸ в сутки.',
     descKey: 'rooms.polulux_desc',
     image: 'assets/photos/rooms/polulux-1.webp',
     images: [ 'assets/photos/rooms/polulux-1.webp', 'assets/photos/rooms/polulux-2.webp', 'assets/photos/rooms/polulux-3.webp' ]
@@ -196,49 +206,63 @@ window.DATA = {
   //            подберётся автоматически по повторяющемуся ритму.
   //   pos    : точка кадрирования, если лицо/сцена срезается —
   //            'top' | 'bottom' (по умолчанию center).
-  //   label  : (необязательно) маленький тег в углу плитки
+  //
+  //   ── Подписи артистов ──────────────────────────────────────────────
+  //   artistKey / artist : имя артиста. Ключ перевода из i18n.js
+  //            (concerts.artists.*) либо просто текст.
+  //   caption: true      : показать на этой плитке КРУПНУЮ подпись —
+  //            имя артиста поверх кадра, на градиентной подложке.
+  //   noteKey / note     : строка-надпись над именем (необязательно).
+  //
+  //   Подпись ставится на «обложку» группы — одну крупную плитку
+  //   ('hero', 'wide' или 'half'); на узких портретах она не читается.
+  //   Остальным фото артиста хватает artistKey без caption: подписи на
+  //   кадре нет, но имя показывается в просмотрщике при листании.
+  //   Так стена читается как журнальный разворот: один заголовок на серию.
   //
   //   Размеры (десктоп — сетка 6 колонок / мобильный — 2 колонки):
   //     'hero' — кинобаннер во всю ширину (21:9). Обычно один, сверху.
-  //     'wide' — 4 колонки, 8:5. Лучший размер для видео.
+  //     'wide' — 4 колонки, 8:5. Лучший размер для видео и для обложки.
   //     'half' — 3 колонки, 3:2. Ставить ПАРАМИ (два подряд).
   //     'std'  — 2 колонки, 4:5 (портрет). Ставить ПАРАМИ.
   //     'stdw' — как 'std', но на мобильном занимает всю ширину.
   //              Использовать ТРЕТЬИМ после пары 'std' (ряд из трёх).
   //   Ряды должны складываться в 6 колонок: [wide+std], [std+std+stdw],
   //   [half+half], [hero]. Тогда стена идеально ровная на всех экранах.
+  //   Ряды с 'wide' идут ПАРАМИ: [wide+std], следом [std+wide] — тогда
+  //   на мобильном два портрета всегда встают рядом, без дыр.
   //
-  // concertsHeading / concertsHeadingNoteKey — подпись, закреплённая в левом
-  // нижнем углу hero-баннера (название события + строка-надпись над ним).
   // Фото открываются на весь экран (лайтбокс), видео проигрывается в плитке.
   // ───────────────────────────────────────────────────────────────────────
-  concertsHeading: 'TASSO',
-  concertsHeadingNoteKey: 'concerts.heroNote',
   concertsGallery: [
-    // ряд 0 — кинобаннер: видео TASSO. Постер — профессиональное фото
-    // (tasso-live-3), а не кадр из видео: резче и держит 21:9.
-    { type: 'video', src: 'assets/videos/tasso-live.mp4', videoType: 'file', poster: 'assets/photos/concerts/tasso-live-3.webp', pos: 'top', size: 'hero' },
-    // ряды 1–2 — [wide + std][std + wide]: видео + фото TASSO (KVO).
-    // Важно: ряды с wide идут ПАРАМИ (wide+std, затем std+wide) — так
-    // на мобильном два портрета всегда встают рядом, без дыр.
+    // ── TASSO ── обложка: кинобаннер (постер — профессиональное фото)
+    { type: 'video', src: 'assets/videos/tasso-live.mp4', videoType: 'file', poster: 'assets/photos/concerts/tasso-live-3.webp', pos: 'top', size: 'hero',
+      artistKey: 'concerts.artists.tasso', caption: true, noteKey: 'concerts.heroNote' },
+    // ряд [std + std + stdw] — фото TASSO
+    { type: 'photo', src: 'assets/photos/concerts/tasso-live-1.webp', size: 'std', artistKey: 'concerts.artists.tasso' },
+    { type: 'photo', src: 'assets/photos/concerts/tasso-live-2.webp', size: 'std', artistKey: 'concerts.artists.tasso' },
+    { type: 'photo', src: 'assets/photos/concerts/tasso-live-4.webp', size: 'stdw', artistKey: 'concerts.artists.tasso' },
+
+    // ── ВИНТАЖ ── ряд [wide + std]: обложка с подписью + кадр
+    { type: 'photo', src: 'assets/photos/concerts/march8-2.webp', size: 'wide', artistKey: 'concerts.artists.vintage', caption: true },
+    { type: 'photo', src: 'assets/photos/concerts/march8-1.webp', size: 'std', artistKey: 'concerts.artists.vintage' },
+
+    // ── НОДАР РЕВИЯ ── ряд [std + wide]: кадр + обложка с подписью
+    { type: 'photo', src: 'assets/photos/concerts/march8-4.webp', size: 'std', artistKey: 'concerts.artists.nodar' },
+    { type: 'photo', src: 'assets/photos/concerts/march8-3.webp', size: 'wide', artistKey: 'concerts.artists.nodar', caption: true },
+
+    // ── СЕРЕБРО ── ряды [wide + std][std + wide]: обложка + два кадра
+    { type: 'photo', src: 'assets/photos/concerts/march8-7.webp', size: 'wide', artistKey: 'concerts.artists.serebro', caption: true },
+    { type: 'photo', src: 'assets/photos/concerts/march8-6.webp', size: 'std', artistKey: 'concerts.artists.serebro' },
+    { type: 'photo', src: 'assets/photos/concerts/march8-5.webp', size: 'std', artistKey: 'concerts.artists.serebro' },
+
+    // ── Атмосфера вечера (видео) ── подписей нет: артисты не уточнены
     { type: 'video', src: 'assets/videos/concert-05.mp4', videoType: 'file', poster: 'assets/photos/concerts/concert-05-poster.webp', size: 'wide' },
-    { type: 'photo', src: 'assets/photos/concerts/tasso-live-1.webp', size: 'std' },
-    { type: 'photo', src: 'assets/photos/concerts/tasso-live-2.webp', size: 'std' },
-    { type: 'video', src: 'assets/videos/concert-06.mp4', videoType: 'file', poster: 'assets/photos/concerts/concert-06-poster.webp', size: 'wide' },
-    // ряд 3 — [std + std + stdw]
-    { type: 'photo', src: 'assets/photos/concerts/tasso-live-4.webp', size: 'std' },
-    { type: 'photo', src: 'assets/photos/concerts/march8-1.webp', size: 'std' },
-    { type: 'photo', src: 'assets/photos/concerts/march8-2.webp', size: 'stdw' },
-    // ряд 4 — [half + half]
-    { type: 'photo', src: 'assets/photos/concerts/march8-3.webp', size: 'half' },
-    { type: 'photo', src: 'assets/photos/concerts/march8-4.webp', size: 'half' },
-    // ряды 5–6 — [wide + std][std + wide]: видео из архива + финал
-    { type: 'video', src: 'assets/videos/concert-01.mp4', videoType: 'file', poster: 'assets/photos/concerts/concert-01-poster.webp', size: 'wide' },
-    { type: 'photo', src: 'assets/photos/concerts/march8-6.webp', size: 'std' },
-    { type: 'photo', src: 'assets/photos/concerts/march8-5.webp', size: 'std' },
-    { type: 'photo', src: 'assets/photos/concerts/march8-7.webp', size: 'wide' }
+    // ряд [half + half]
+    { type: 'video', src: 'assets/videos/concert-06.mp4', videoType: 'file', poster: 'assets/photos/concerts/concert-06-poster.webp', size: 'half' },
+    { type: 'video', src: 'assets/videos/concert-01.mp4', videoType: 'file', poster: 'assets/photos/concerts/concert-01-poster.webp', size: 'half' }
+
     // ── Резерв (раскомментируйте, чтобы вернуть на стену; соблюдайте ряды):
-    // { type: 'photo', src: 'assets/photos/concerts/tasso-live-3.webp', size: 'wide' },
     // { type: 'video', src: 'assets/videos/concert-02.mp4', videoType: 'file', poster: 'assets/photos/concerts/concert-02-poster.webp', size: 'wide' },
     // { type: 'video', src: 'assets/videos/concert-04.mp4', videoType: 'file', poster: 'assets/photos/concerts/concert-04-poster.webp', size: 'wide' },
     // { type: 'photo', src: 'assets/photos/concerts/tasso-1.webp', size: 'std' }
