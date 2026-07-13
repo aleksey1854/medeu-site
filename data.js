@@ -43,7 +43,7 @@ window.DATA = {
     price: '28 000 ₸',
     capacity: 1,
     extraGuestPrice: 10000,
-    description: 'Уютный номер 27 м² с удобной кроватью, рабочей зоной и всем необходимым для комфортного проживания. Шведский стол на завтрак включён. Номер рассчитан на одного гостя; двухместное размещение возможно за дополнительную плату 10 000 ₸ в сутки.',
+    description: 'Уютный номер 27 м² с удобной кроватью, рабочей зоной и всем необходимым для комфортного проживания. Шведский стол на завтрак включён. Номер рассчитан на одного гостя. Двухместное размещение — доплата 10 000 ₸ в сутки.',
     descKey: 'rooms.standard_desc',
     image: 'assets/photos/rooms/standard-2.webp',
     images: [ 'assets/photos/rooms/standard-2.webp', 'assets/photos/rooms/standard-1.webp', 'assets/photos/rooms/standard-3.webp' ]
@@ -54,7 +54,7 @@ window.DATA = {
     price: '34 000 ₸',
     capacity: 1,
     extraGuestPrice: 10000,
-    description: 'Просторный полулюкс 48 м² с гостиной зоной и улучшенной отделкой. Идеален для деловых поездок и продолжительного пребывания. Номер рассчитан на одного гостя; двухместное размещение возможно за дополнительную плату 10 000 ₸ в сутки.',
+    description: 'Просторный полулюкс 48 м² с гостиной зоной и улучшенной отделкой. Идеален для деловых поездок и продолжительного пребывания. Номер рассчитан на одного гостя. Двухместное размещение — доплата 10 000 ₸ в сутки.',
     descKey: 'rooms.polulux_desc',
     image: 'assets/photos/rooms/polulux-1.webp',
     images: [ 'assets/photos/rooms/polulux-1.webp', 'assets/photos/rooms/polulux-2.webp', 'assets/photos/rooms/polulux-3.webp' ]

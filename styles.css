@@ -126,6 +126,9 @@ img { display: block; max-width: 100%; height: auto; }
   color: var(--c-text-dim);
   font-weight: 300;
   margin: 0;
+  /* не оставляет одинокое слово в последней строке (браузеры без поддержки
+     просто игнорируют) */
+  text-wrap: pretty;
   transition: color 0.5s ease;
 }
 .body-prose--bright { color: var(--c-text); }

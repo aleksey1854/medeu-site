@@ -921,8 +921,10 @@
     }
     return null;
   }
-  function bookingFmtPrice(n) {
-    return String(n).replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
+  // разряды тысяч неразрывным пробелом, чтобы «10 000 ₸» не рвалось по строкам;
+  // plain = true — обычный пробел (для текста заявки на почту)
+  function bookingFmtPrice(n, plain) {
+    return String(n).replace(/\B(?=(\d{3})+(?!\d))/g, plain ? ' ' : '\u00A0');
   }
   // reset = true — номер только что выбран: возвращаем штатную вместимость
   function bookingSyncCapacity(reset) {
@@ -1089,7 +1091,7 @@
       // менеджер сразу видел доплату за второе место
       var bkRoom = (window.DATA && DATA.rooms || []).filter(function(r) { return r.name === d.roomType; })[0];
       if (bkRoom && bkRoom.capacity && bkRoom.extraGuestPrice && (parseInt(d.adults, 10) || 0) > bkRoom.capacity) {
-        lines.push('ВНИМАНИЕ: двухместное размещение в номере на ' + bkRoom.capacity + ' гостя — доплата ' + bookingFmtPrice(bkRoom.extraGuestPrice) + ' ₸ в сутки');
+        lines.push('ВНИМАНИЕ: двухместное размещение в номере на ' + bkRoom.capacity + ' гостя — доплата ' + bookingFmtPrice(bkRoom.extraGuestPrice, true) + ' ₸ в сутки');
       }
       if (d.transfer) {
         lines.push('');
