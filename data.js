@@ -258,6 +258,13 @@ window.DATA = {
 
     // ── Атмосфера вечера (видео) ── подписей нет: артисты не уточнены
     { type: 'video', src: 'assets/videos/concert-05.mp4', videoType: 'file', poster: 'assets/photos/concerts/concert-05-poster.webp', size: 'wide' },
+
+    // ── ВАЛЕРИЙ МЕЛАДЗЕ ── ряд [hero]: кинобаннер с подписью, следом ряд [half + half]
+    { type: 'photo', src: 'assets/photos/concerts/meladze-1.webp', size: 'hero',
+      artistKey: 'concerts.artists.meladze', caption: true, noteKey: 'concerts.meladzeNote' },
+    { type: 'photo', src: 'assets/photos/concerts/meladze-2.webp', size: 'half', artistKey: 'concerts.artists.meladze' },
+    { type: 'photo', src: 'assets/photos/concerts/meladze-3.webp', size: 'half', artistKey: 'concerts.artists.meladze' },
+
     // ряд [half + half]
     { type: 'video', src: 'assets/videos/concert-06.mp4', videoType: 'file', poster: 'assets/photos/concerts/concert-06-poster.webp', size: 'half' },
     { type: 'video', src: 'assets/videos/concert-01.mp4', videoType: 'file', poster: 'assets/photos/concerts/concert-01-poster.webp', size: 'half' }

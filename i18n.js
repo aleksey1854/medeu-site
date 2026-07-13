@@ -71,11 +71,13 @@ window.I18N = {
     concerts: {
       watch: 'Смотреть видео',
       heroNote: 'Живой звук · ресторан «Медеу»',
+      meladzeNote: 'MEDEU представляет · Костанай',
       artists: {
         tasso: 'TASSO',
         vintage: 'Винтаж',
         nodar: 'Нодар Ревия',
-        serebro: 'Серебро'
+        serebro: 'Серебро',
+        meladze: 'Валерий Меладзе'
       },
       videoLabel: 'Видео с вечера',
       emptyTitle: 'Скоро здесь появятся концерты',
@@ -343,11 +345,13 @@ window.I18N = {
     concerts: {
       watch: 'Бейнені көру',
       heroNote: 'Тірі дауыс · «Медеу» мейрамханасы',
+      meladzeNote: 'MEDEU ұсынады · Қостанай',
       artists: {
         tasso: 'TASSO',
         vintage: 'Винтаж',
         nodar: 'Нодар Ревия',
-        serebro: 'Серебро'
+        serebro: 'Серебро',
+        meladze: 'Валерий Меладзе'
       },
       videoLabel: 'Кеш бейнесі',
       emptyTitle: 'Жақында мұнда концерттер пайда болады',
@@ -615,11 +619,13 @@ window.I18N = {
     concerts: {
       watch: 'Watch video',
       heroNote: 'Live music · Medeu restaurant',
+      meladzeNote: 'Presented by MEDEU · Kostanay',
       artists: {
         tasso: 'TASSO',
         vintage: 'Vintage',
         nodar: 'Nodar Revia',
-        serebro: 'Serebro'
+        serebro: 'Serebro',
+        meladze: 'Valery Meladze'
       },
       videoLabel: 'Video from the evening',
       emptyTitle: 'Concerts are coming soon',
