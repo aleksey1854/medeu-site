@@ -113,7 +113,7 @@ window.DATA = {
     subtitleKey: 'venues.medeu_subtitle',
     tagline: 'Пространство с атмосферой сдержанной элегантности',
     taglineKey: 'venues.medeu_tagline',
-    description: 'Эффектное двухуровневое пространство с комфортной посадкой и атмосферой lounge-ресторана. Создано для гастрономических встреч и деловых ужинов. Работаем ежедневно с 07:30 до 01:00. Шведский стол — 07:00–10:30 (5 000 ₸/чел). Бизнес-ланчи по будням 12:00–15:00.',
+    description: 'Эффектное двухуровневое пространство с комфортной посадкой и атмосферой lounge-ресторана. Создано для гастрономических встреч и деловых ужинов. Работаем ежедневно с 07:00 до 01:00. Шведский стол — 07:00–10:30 (5 000 ₸/чел). Бизнес-ланчи по будням 12:00–15:00.',
     descKey: 'venues.medeu_desc',
     image: 'assets/photos/restaurant/medeu-6.webp',
     images: [ 'assets/photos/restaurant/medeu-6.webp', 'assets/photos/restaurant/medeu-0.webp', 'assets/photos/restaurant/medeu-1.webp', 'assets/photos/restaurant/medeu-2.webp', 'assets/photos/restaurant/medeu-3.webp', 'assets/photos/restaurant/medeu-4.webp' ]
