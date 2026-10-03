@@ -385,7 +385,10 @@ window.DATA = {
   //   version            : строка. Меняйте при смене акции — увидят все,
   //                        даже те, кто уже закрывал старое окно.
   //   image              : путь к картинке (положите файл в assets/photos/promo/)
-  //   showDelayMs        : через сколько мс после загрузки страницы показать
+  //   imageRatio         : пропорции картинки, например '2 / 3' (необязательно).
+  //                        Если не указать — картинка обрезается под 3:4
+  //                        (на телефоне 4:5). Укажите, если постер обрезается.
+  //   showDelayMs       : через сколько мс после загрузки страницы показать
   //                        (1500 — комфортно, не агрессивно)
   //   hideAfterCloseDays : на сколько дней спрятать после закрытия (по куки)
   //   ctaUrl             : куда ведёт кнопка / клик по картинке:
@@ -412,30 +415,31 @@ window.DATA = {
   //   cta         : текст кнопки (необязательно)
   // ─────────────────────────────────────────────────────────────────────────
   promoModal: {
-    enabled: false,                // ← окно скрыто. Поменяйте на true, чтобы снова показать (контент акции ниже сохранён)
-    version: '2026-06-tasso',
-    image: 'assets/photos/promo/tasso-17-iyunya.webp',
+    enabled: false,                // ← пока выключено: ждём файл баннера. true — показать окно
+    version: '2026-10-met-gala',
+    image: 'assets/photos/promo/novogodnij-korporativ-met-gala.webp',
+    imageRatio: '2 / 3',           // постер вертикальный 2:3 — показываем целиком, без обрезки
     showDelayMs: 1500,
     hideAfterCloseDays: 0,         // 0 — показывать при каждом открытии сайта (без кулдауна). 7 — раз в неделю.
     ctaUrl: '#whatsapp',           // кнопка открывает WhatsApp (см. waNumber и waMessage)
     waNumber: '77755215706',       // номер WhatsApp банкетного менеджера (цифры, без + и пробелов)
     waMessage: 'Здравствуйте! Пишу с сайта medeuhotel.kz — хочу узнать подробнее об акции и забронировать.',
     ru: {
-      overline: '— 17 июня · Летняя веранда MEDEU —',
-      title: 'TASSO. Живой звук',
-      description: 'Место, где лето звучит красиво. Сбор гостей в 19:00, начало в 20:00. Стоимость билета — 17 000 ₸.',
+      overline: '— Новогодний корпоратив —',
+      title: 'В стиле Met Gala',
+      description: 'Хедлайнер вечера — группа Soul’нце, ведущий — Илья Вохмяков. Эксклюзивная шоу-программа, живой звук и отдельный комплимент за лучший новогодний образ. Стоимость — 38 000 ₸.',
       cta: 'Забронировать'
     },
     kz: {
-      overline: '— 17 маусым · MEDEU жазғы верандасы —',
-      title: 'TASSO. Тірі дауыс',
-      description: 'Жаз әдемі естілетін орын. Қонақтарды күту 19:00-де, басталуы 20:00-де. Билет құны — 17 000 ₸.',
+      overline: '— Жаңа жылдық корпоратив —',
+      title: 'Met Gala стилінде',
+      description: 'Кештің хедлайнері — Soul’нце тобы, жүргізуші — Илья Вохмяков. Эксклюзивті шоу-бағдарлама, тірі дауыс және ең үздік жаңа жылдық образ үшін арнайы сыйлық. Құны — 38 000 ₸.',
       cta: 'Брондау'
     },
     en: {
-      overline: '— June 17 · MEDEU Summer Terrace —',
-      title: 'TASSO. Live music',
-      description: 'A place where summer sounds beautiful. Guests at 19:00, show starts at 20:00. Ticket — 17 000 ₸.',
+      overline: '— New Year Corporate Party —',
+      title: 'Met Gala Style',
+      description: 'Headliner of the evening — the band Soul’нце, host — Ilya Vokhmyakov. An exclusive show, live sound and a special gift for the best New Year look. Price — 38 000 ₸.',
       cta: 'Reserve'
     }
   }
