@@ -415,7 +415,7 @@ window.DATA = {
   //   cta         : текст кнопки (необязательно)
   // ─────────────────────────────────────────────────────────────────────────
   promoModal: {
-    enabled: false,                // ← пока выключено: ждём файл баннера. true — показать окно
+    enabled: true,                 // ← false — скрыть окно (контент акции ниже сохранится)
     version: '2026-10-met-gala',
     image: 'assets/photos/promo/novogodnij-korporativ-met-gala.webp',
     imageRatio: '2 / 3',           // постер вертикальный 2:3 — показываем целиком, без обрезки
