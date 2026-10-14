@@ -41,9 +41,8 @@ window.DATA = {
     nameKey: 'rooms.standard_name',
     area: '27',
     price: '28 000 ₸',
-    capacity: 1,
-    extraGuestPrice: 10000,
-    description: 'Уютный номер 27 м² с удобной кроватью, рабочей зоной и всем необходимым для комфортного проживания. Шведский стол на завтрак включён. Номер рассчитан на одного гостя. Двухместное размещение — доплата 10 000 ₸ в сутки.',
+    capacity: 1,                   // строго один гость: без extraGuestPrice второго взрослого выбрать нельзя
+    description: 'Уютный номер 27 м² с удобной кроватью, рабочей зоной и всем необходимым для комфортного проживания. Шведский стол на завтрак включён. Номер рассчитан на одного гостя.',
     descKey: 'rooms.standard_desc',
     image: 'assets/photos/rooms/standard-2.webp',
     images: [ 'assets/photos/rooms/standard-2.webp', 'assets/photos/rooms/standard-1.webp', 'assets/photos/rooms/standard-3.webp' ]
