@@ -94,8 +94,10 @@
     modal.setAttribute('aria-modal', 'true');
     modal.setAttribute('aria-labelledby', 'promo-modal-title');
 
+    // imageRatio (например '2 / 3') — свои пропорции вместо 3:4 / 4:5 из CSS
+    var ratioAttr = cfg.imageRatio ? ' style="aspect-ratio: ' + esc(cfg.imageRatio) + '"' : '';
     var imgHtml = cfg.image
-      ? '<div class="promo-modal-image-wrap">' +
+      ? '<div class="promo-modal-image-wrap"' + ratioAttr + '>' +
           '<img src="' + esc(cfg.image) + '" alt="' + esc(loc.title || 'Promo') + '" class="promo-modal-image">' +
         '</div>'
       : '';
