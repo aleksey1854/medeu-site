@@ -150,6 +150,7 @@
     });
     if (typeof renderDynamic === 'function') renderDynamic();
     if (typeof renderPayments === 'function') renderPayments();
+    if (typeof window.MedeuBookingSync === 'function') window.MedeuBookingSync();
     try {
       localStorage.setItem('medeu_lang', lang);
     } catch (e) {}
@@ -908,12 +909,16 @@
   const bookingRoomSelect = document.getElementById('booking-room');
   const bookingAdults = document.getElementById('booking-adults');
   const bookingCapHint = document.getElementById('booking-capacity-hint');
+  const bookingChildren = bookingForm ? bookingForm.querySelector('input[name="children"]') : null;
 
-  // ── Вместимость номера (capacity / extraGuestPrice в data.js).
+  // ── Вместимость номера (capacity / extraGuestPrice / maxGuests в data.js).
   // Стандарт и Полулюкс рассчитаны на одного гостя: поле «Взрослых» ставится
-  // в 1. Второй гость возможен только там, где задан extraGuestPrice
-  // (Полулюкс) — с доплатой, о чём говорит подсказка. В Стандарте — строго 1.
-  // У номеров без capacity поле работает как раньше (до 10 гостей).
+  // в 1. Второй взрослый возможен только там, где задан extraGuestPrice
+  // (Полулюкс): цена в списке и подсказка меняются на итоговую за двоих
+  // (34 000 + 10 000 = 44 000 ₸). В Стандарте — строго 1.
+  // maxGuests — предел гостей всего, взрослые + дети (Люкс — 2, Семейный — 4);
+  // цена у таких номеров не меняется.
+  // У номеров без этих полей форма работает как раньше (до 10 гостей).
   function bookingRoomData() {
     var list = (window.DATA && DATA.rooms) || [];
     var val = bookingRoomSelect ? bookingRoomSelect.value : '';
@@ -927,41 +932,83 @@
   function bookingFmtPrice(n, plain) {
     return String(n).replace(/\B(?=(\d{3})+(?!\d))/g, plain ? ' ' : '\u00A0');
   }
-  // reset = true — номер только что выбран: возвращаем штатную вместимость
-  function bookingSyncCapacity(reset) {
+  // цена номера числом: '34 000 ₸' → 34000
+  function bookingBasePrice(room) {
+    return room && room.price ? (parseInt(String(room.price).replace(/\D/g, ''), 10) || 0) : 0;
+  }
+  // подписи в списке номеров берём из переводов; у выбранного номера
+  // при двухместном размещении подставляем итоговую цену (34 000 → 44 000)
+  function bookingSetOptionPrice(total) {
+    if (!bookingRoomSelect || !window.I18N) return;
+    Array.prototype.forEach.call(bookingRoomSelect.options, function(opt) {
+      var key = opt.getAttribute('data-i18n');
+      var label = key ? I18N.t(key) : '';
+      if (!label || label === key) return;
+      if (total && opt.value && opt.value === bookingRoomSelect.value) {
+        label = label.replace(/\d{1,3}(?:[  ]\d{3})+/, bookingFmtPrice(total, true));
+      }
+      if (opt.textContent !== label) opt.textContent = label;
+    });
+  }
+  function bookingShowHint(text, active) {
+    if (!bookingCapHint) return;
+    bookingCapHint.textContent = text;
+    bookingCapHint.hidden = !text;
+    bookingCapHint.classList.toggle('is-active', !!active);
+  }
+  // reset = true — номер только что выбран: возвращаем штатную вместимость;
+  // changed — поле, которое гость сейчас меняет (при превышении правим именно его)
+  function bookingSyncCapacity(reset, changed) {
     if (!bookingAdults) return;
     var room = bookingRoomData();
     var cap = room && room.capacity ? room.capacity : 0;
     var extra = room && room.extraGuestPrice ? room.extraGuestPrice : 0;
-    if (!cap) {
+    var limit = room && room.maxGuests ? room.maxGuests : 0;
+    if (!cap && !limit) {
       bookingAdults.max = '10';
-      if (bookingCapHint) {
-        bookingCapHint.hidden = true;
-        bookingCapHint.textContent = '';
-        bookingCapHint.classList.remove('is-active');
-      }
+      if (bookingChildren) bookingChildren.max = '10';
+      bookingSetOptionPrice(0);
+      bookingShowHint('', false);
       return;
     }
-    var max = cap + (extra ? 1 : 0);
-    bookingAdults.max = String(max);
-    if (reset) bookingAdults.value = String(cap);
-    var n = parseInt(bookingAdults.value, 10) || cap;
-    if (n > max) { n = max; bookingAdults.value = String(max); }
-    if (n < 1) { n = 1; bookingAdults.value = '1'; }
-    if (!bookingCapHint) return;
-    var t = function(k) { return window.I18N ? I18N.t(k) : ''; };
-    var over = n > cap;
-    var text;
-    if (over) {
-      text = t('modal.extraGuestOn').replace('{price}', bookingFmtPrice(extra));
-    } else {
-      text = cap === 1 ? t('modal.capacityOne') : '';
-      if (extra) text += (text ? ' ' : '') + t('modal.extraGuest').replace('{price}', bookingFmtPrice(extra));
+    var maxAdults = cap ? cap + (extra ? 1 : 0) : limit;
+    if (limit && maxAdults > limit) maxAdults = limit;
+    if (reset && cap) bookingAdults.value = String(cap);
+    // пустое поле не трогаем, пока гость печатает число
+    var rawA = parseInt(bookingAdults.value, 10);
+    var rawC = bookingChildren ? parseInt(bookingChildren.value, 10) : NaN;
+    var n = isNaN(rawA) ? (cap || 1) : Math.min(Math.max(rawA, 1), maxAdults);
+    var kids = isNaN(rawC) ? 0 : Math.max(rawC, 0);
+    if (limit) {
+      if (changed === bookingAdults) n = Math.max(1, Math.min(n, limit - kids));
+      kids = Math.min(kids, Math.max(0, limit - n));
     }
-    bookingCapHint.textContent = text;
-    bookingCapHint.hidden = !text;
-    bookingCapHint.classList.toggle('is-active', over);
+    if (!isNaN(rawA) && rawA !== n) bookingAdults.value = String(n);
+    if (bookingChildren && !isNaN(rawC) && rawC !== kids) bookingChildren.value = String(kids);
+    bookingAdults.max = String(limit ? Math.max(1, Math.min(maxAdults, limit - kids)) : maxAdults);
+    if (bookingChildren) bookingChildren.max = String(limit ? Math.max(0, limit - n) : 10);
+
+    var t = function(k) { var v = window.I18N ? I18N.t(k) : ''; return v && v !== k ? v : ''; };
+    var price = bookingBasePrice(room);
+    var fill = function(s) {
+      return s.replace('{price}', bookingFmtPrice(extra))
+              .replace('{total}', bookingFmtPrice(price + extra))
+              .replace('{n}', limit);
+    };
+    var over = !!(cap && extra && n > cap);
+    var parts = [];
+    if (over) {
+      parts.push(fill(t('modal.extraGuestOn')));
+    } else {
+      if (cap === 1) parts.push(t('modal.capacityOne'));
+      if (extra) parts.push(fill(t('modal.extraGuest')));
+      if (limit) parts.push(fill(t('modal.maxGuests')));
+    }
+    bookingSetOptionPrice(over && price ? price + extra : 0);
+    bookingShowHint(parts.filter(Boolean).join(' '), over);
   }
+  // смена языка перерисовывает подписи — восстанавливаем цену и подсказку
+  window.MedeuBookingSync = function() { bookingSyncCapacity(false); };
 
   function openBookingModal(prefRoom) {
     if (!bookingModal) return;
@@ -994,7 +1041,10 @@
       bookingRoomSelect.addEventListener('change', function() { bookingSyncCapacity(true); });
     }
     if (bookingAdults) {
-      bookingAdults.addEventListener('input', function() { bookingSyncCapacity(false); });
+      bookingAdults.addEventListener('input', function() { bookingSyncCapacity(false, bookingAdults); });
+    }
+    if (bookingChildren) {
+      bookingChildren.addEventListener('input', function() { bookingSyncCapacity(false, bookingChildren); });
     }
     const transferCheckbox = document.getElementById('booking-transfer');
     const transferBlock = document.getElementById('booking-transfer-block');
@@ -1092,7 +1142,8 @@
       // менеджер сразу видел доплату за второе место
       var bkRoom = (window.DATA && DATA.rooms || []).filter(function(r) { return r.name === d.roomType; })[0];
       if (bkRoom && bkRoom.capacity && bkRoom.extraGuestPrice && (parseInt(d.adults, 10) || 0) > bkRoom.capacity) {
-        lines.push('ВНИМАНИЕ: двухместное размещение в номере на ' + bkRoom.capacity + ' гостя — доплата ' + bookingFmtPrice(bkRoom.extraGuestPrice, true) + ' ₸ в сутки');
+        var bkPrice = bookingBasePrice(bkRoom);
+        lines.push('ВНИМАНИЕ: двухместное размещение — ' + bookingFmtPrice(bkPrice + bkRoom.extraGuestPrice, true) + ' ₸ в сутки (' + bookingFmtPrice(bkPrice, true) + ' ₸ + доплата ' + bookingFmtPrice(bkRoom.extraGuestPrice, true) + ' ₸)');
       }
       if (d.transfer) {
         lines.push('');
@@ -1119,6 +1170,7 @@
         form.style.display = '';
         success.style.display = 'none';
         form.reset();
+        bookingSyncCapacity(false);
         const tb = document.getElementById('booking-transfer-block');
         if (tb) tb.style.display = 'none';
       }
